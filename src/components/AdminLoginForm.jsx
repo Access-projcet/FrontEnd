@@ -1,13 +1,32 @@
 import React, { useState } from "react";
 import { TextField, Button, Link, Grid } from "@mui/material";
 import styled, { keyframes } from "styled-components";
+import { useMutation } from "react-query";
+import { loginbusiness } from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLoginForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const mutation = useMutation(loginbusiness, {
+    onSuccess: (data) => {
+      console.log(data);
+      navigate("/company/main");
+    },
+    onError: (error) => {
+      console.log(error.response);
+    },
+  });
+
   const HandlerGuestLogin = (e) => {
     e.preventDefault();
+    const user = {
+      userid: email,
+      password: password,
+    };
+    mutation.mutate(user);
     console.log("로그인");
   };
 
