@@ -1,5 +1,5 @@
 import axios from "axios";
-import { removeCookie, setCookie } from "./cookies";
+import { removeCookie, setCookie, getCookie } from "./cookies";
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -32,7 +32,7 @@ instance.interceptors.request.use(
   (error) => {
     console.log("데이터 보내는중 오류!");
     return Promise.reject(error);
-  }
+  },
 );
 
 instance.interceptors.response.use(
@@ -84,6 +84,6 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 export default instance;
