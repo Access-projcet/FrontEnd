@@ -9,6 +9,7 @@
     "@mui/joy": "^5.0.0-alpha.72",
     "@mui/material": "^5.11.14",
     "@mui/styled-engine-sc": "^5.11.11",
+    "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -21,8 +22,10 @@
     "react-dom": "^18.2.0",
     "react-kakao-maps-sdk": "^1.1.7",
     "react-query": "^3.39.3",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.1",
     "styled-components": "^5.3.9",
     "web-vitals": "^2.1.0"
   },
