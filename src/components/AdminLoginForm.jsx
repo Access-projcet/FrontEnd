@@ -23,7 +23,7 @@ export default function AdminLoginForm() {
   const HandlerGuestLogin = (e) => {
     e.preventDefault();
     const user = {
-      userid: email,
+      userId: email,
       password: password,
     };
     mutation.mutate(user);
@@ -55,14 +55,7 @@ export default function AdminLoginForm() {
           required
           fullWidth
         />
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          fullWidth
-          sx={{ mt: 2, mb: 2 }}
-          size="large"
-        >
+        <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2, mb: 2 }} size="large">
           관리자 로그인
         </Button>
       </form>

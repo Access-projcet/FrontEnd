@@ -14,7 +14,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { MuiTelInput } from "mui-tel-input";
 import { FormControl, FormHelperText } from "@mui/material";
-import Checkbox2 from "@mui/joy/Checkbox";
+import { useMutation, useQueryClient } from "react-query";
+import { guestSignUp } from "../apis/api";
+import { useNavigate } from "react-router";
 
 function Copyright(props) {
   return (
@@ -32,7 +34,26 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
+  const [name, setName] = React.useState("");
+  const [guestId, setGuestId] = React.useState("");
+  const [guestPw, setGuestPw] = React.useState("");
+  const [guestPwCheck, setGuestPwCheck] = React.useState("");
+  const [phoneNum, setPhoneNum] = React.useState("");
   const [phone, setPhone] = React.useState("+82");
+
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const mutation = useMutation(guestSignUp, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries("guest");
+      console.log(response.data.username);
+      navigate("/");
+      alert("회원가입 되셨습니다!!");
+    },
+    onError: (response) => {
+      alert(response.response.data.message);
+    },
+  });
 
   const handleChange = (newPhone) => {
     setPhone(newPhone);
@@ -41,10 +62,13 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    const newGuest = {
+      userId: data.get("userId"),
       password: data.get("password"),
-    });
+      name: data.get("name"),
+      phoneNum: data.get("phoneNum"),
+    };
+    mutation.mutate(newGuest);
   };
 
   return (
@@ -68,31 +92,22 @@ export default function SignUp() {
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField autoComplete="Name" name="Name" required fullWidth id="name" label="이름" autoFocus />
+                <TextField name="name" required fullWidth id="name" label="이름" autoFocus />
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id="id" label="아이디" name="id" autoComplete="ID" />
-                <TextField
+                <TextField required fullWidth id="userId" label="아이디" name="userId" />
+                {/* <TextField
                   error
                   required
                   fullWidth
-                  id="id"
+                  id="userId"
                   label="아이디"
-                  name="id"
-                  autoComplete="ID"
+                  name="userId"
                   helperText="양식에 맞지 않습니다."
-                />
+                /> */}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="비밀번호"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                <TextField required fullWidth name="password" label="비밀번호" type="password" id="password" />
                 <TextField
                   error
                   fullWidth
@@ -100,7 +115,6 @@ export default function SignUp() {
                   label="비밀번호"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
                   helperText="양식에 맞지 않습니다."
                 />
               </Grid>
@@ -112,7 +126,6 @@ export default function SignUp() {
                   label="비밀번호 확인"
                   type="password"
                   id="passwordCheck"
-                  autoComplete="check-password"
                 />
                 <TextField
                   error
@@ -121,18 +134,11 @@ export default function SignUp() {
                   label="비밀번호 확인"
                   type="password"
                   id="passwordCheck"
-                  autoComplete="check-password"
                   helperText="비밀번호가 일치하지 않습니다."
                 />
               </Grid>
               <Grid item xs={12}>
-                <MuiTelInput
-                  fullWidth
-                  value={phone}
-                  onChange={handleChange}
-                  langOfCountryName="kr"
-                  onlyCountries={["KR"]}
-                />
+                <TextField required fullWidth id="phoneNum" label="전화번호" name="phoneNum" />
               </Grid>
               <Grid item xs={12}>
                 <FormControl size="sm" sx={{ width: 400 }}>

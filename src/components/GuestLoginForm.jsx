@@ -23,7 +23,7 @@ export default function GuestLoginForm() {
   const HandlerGuestLogin = (e) => {
     e.preventDefault();
     const user = {
-      userid: email,
+      userId: email,
       password: password,
     };
     mutation.mutate(user);
@@ -55,13 +55,7 @@ export default function GuestLoginForm() {
           required
           fullWidth
         />
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{ mt: 2, mb: 2 }}
-          size="large"
-        >
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, mb: 2 }} size="large">
           게스트 로그인
         </Button>
       </form>
