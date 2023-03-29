@@ -7,6 +7,7 @@ import ConfirmForm from "../pages/ConfirmForm";
 import Company from "../pages/Company";
 import GuestMyPage from "../pages/GuestMyPage";
 import GuestSignUp from "../pages/GuestSignUp";
+import AdminMain from "../pages/AdminMain";
 
 const Router = () => {
   return (
@@ -19,6 +20,8 @@ const Router = () => {
         <Route path="/guest/company" element={<Company />} />
         <Route path="/guest/confirmform" element={<ConfirmForm />} />
         <Route path="/guest/mypage" element={<GuestMyPage />} />
+        <Route path="/guest/mypage" element={<GuestMyPage />} />
+        <Route path="/admin/main" element={<AdminMain />} />
       </Routes>
     </BrowserRouter>
   );

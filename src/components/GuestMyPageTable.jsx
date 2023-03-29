@@ -12,7 +12,7 @@ export default function GuestMyPageTable() {
   const [sorting, setSorting] = useState([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 15,
   });
 
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
@@ -32,9 +32,9 @@ export default function GuestMyPageTable() {
         globalFilter: globalFilter ?? "",
         sorting: JSON.stringify(sorting ?? []),
       };
-      const instance = "https://www.material-react-table.com";
+      const instance = `${process.env.REACT_APP_SERVER_URL}`;
 
-      const response = await axios.get(`${instance}/api/data`, {
+      const response = await axios.get(`${instance}/visit/guest`, {
         params: queryParams,
       });
       return response.data;
@@ -78,7 +78,9 @@ export default function GuestMyPageTable() {
     <MaterialReactTable
       columns={columns}
       data={data?.data ?? []} //data is undefined on first render
-      initialState={{ showColumnFilters: true }}
+      initialState={{
+        showColumnFilters: true,
+      }}
       manualFiltering
       manualPagination
       manualSorting
@@ -135,6 +137,9 @@ export default function GuestMyPageTable() {
         showAlertBanner: isError,
         showProgressBars: isFetching,
         sorting,
+      }}
+      muiTablePaginationProps={{
+        rowsPerPageOptions: [15],
       }}
     />
   );

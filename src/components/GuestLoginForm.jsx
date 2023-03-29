@@ -13,9 +13,11 @@ export default function GuestLoginForm() {
   const mutation = useMutation(loginguest, {
     onSuccess: (data) => {
       console.log(data);
+      alert("로그인 성공");
       navigate("/guest/main");
     },
     onError: (error) => {
+      alert("로그인 실패");
       console.log(error.response);
     },
   });
