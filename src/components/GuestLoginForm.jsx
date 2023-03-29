@@ -23,6 +23,9 @@ export default function GuestLoginForm() {
 
       alert("로그인 성공");
       navigate("/guest/main");
+      setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
+      localStorage.setItem("name", data.data.name);
     },
     onError: (error) => {
       alert("로그인 실패");
@@ -65,13 +68,7 @@ export default function GuestLoginForm() {
           required
           fullWidth
         />
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{ mt: 2, mb: 2 }}
-          size="large"
-        >
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, mb: 2 }} size="large">
           게스트 로그인
         </Button>
       </form>

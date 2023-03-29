@@ -21,7 +21,11 @@ export default function AdminLoginForm() {
       );
       localStorage.setItem("name", data.data.data.name);
       alert("로그인 성공");
-      navigate("/admin/main");
+      navigate("/company/main");
+      setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
+      localStorage.setItem("name", data.data.name);
+
     },
     onError: (error) => {
       alert("로그인 실패");
@@ -64,14 +68,7 @@ export default function AdminLoginForm() {
           required
           fullWidth
         />
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          fullWidth
-          sx={{ mt: 2, mb: 2 }}
-          size="large"
-        >
+        <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2, mb: 2 }} size="large">
           관리자 로그인
         </Button>
       </form>

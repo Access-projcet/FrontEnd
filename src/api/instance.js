@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getCookie, removeCookie, setCookie } from "./cookies";
 
+
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
   headers: {
@@ -10,11 +11,11 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   //요청을 보내기 전 수행
-  (config) => {
-    // // 토큰을 요청이 시작될 때 가져옴
-    // const accessToken = getCookie("ACCESS_TOKEN");
-    // const refresh_token = localStorage.getItem("REFRESH_TOKEN");
-
+  // (config) => {
+  //   // // 토큰을 요청이 시작될 때 가져옴
+  //   const accessToken = getCookie("ACCESS_TOKEN");
+  //   config.headers["Authorization"] = accessToken;
+  //   // const refresh_token = localStorage.getItem("REFRESH_TOKEN");
     // 요청 config headers에 토큰모두(refresh, access) 넣어 줌
     // const accessToken = getCookie("ACCESS_TOKEN");
     // // 요청 config headers에 토큰을 넣어 줌
@@ -25,16 +26,18 @@ instance.interceptors.request.use(
     config.headers["Authorization"] = `Bearer ${accessToken}`;
     return config;
     // config.headers["Authorization"] = accessToken;
-    // // config.headers["RT_Authorization"] = accessToken;
 
-    // return config;
+  function (config) {
+    const accessToken = getCookie("ACCESS_TOKEN");
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
+    return config;
   },
 
   // 오류 요청을 보내기 전 수행
-  (error) => {
+  function (error) {
     console.log("데이터 보내는중 오류!");
     return Promise.reject(error);
-  }
+  },
 );
 
 instance.interceptors.response.use(
@@ -48,17 +51,16 @@ instance.interceptors.response.use(
     // const access_token = getCookie("ACCESS_TOKEN");
     if (response.headers.authorization) {
       console.log("토큰 받앗다?");
-      const re_access_token = response.headers.authorization.split(" ")[1];
+      const re_access_token = response.headers.authorization.split("")[1];
       setCookie("ACCESS_TOKEN", re_access_token);
     } else {
-      console.log("토큰 어없다?");
     }
     return response;
   },
 
   (error) => {
     const originalRequest = error.config;
-    // console.log(originalRequest);
+    console.log(originalRequest);
     if (error.response.status === 400) {
       console.log("400에러");
     }
@@ -71,7 +73,7 @@ instance.interceptors.response.use(
 
         //리프레쉬토큰을 받아와서 헤더에 추가
         const refresh_token = localStorage.getItem("REFRESH_TOKEN");
-        originalRequest.headers["refresh_token"] = `Bearer ${refresh_token}`;
+        originalRequest.headers["Refresh_Token"] = `Bearer ${refresh_token}`;
         //재요청
         console.log("재요청ㄹ합니다", originalRequest);
         return instance(originalRequest);
@@ -89,6 +91,6 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 export default instance;
