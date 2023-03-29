@@ -1,5 +1,5 @@
 import axios from "axios";
-import { removeCookie, setCookie } from "./cookies";
+import { getCookie, removeCookie, setCookie } from "./cookies";
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -15,12 +15,14 @@ instance.interceptors.request.use(
     // const accessToken = getCookie("ACCESS_TOKEN");
     // const refresh_token = localStorage.getItem("REFRESH_TOKEN");
 
-    // // 요청 config headers에 토큰모두(refresh, access) 넣어 줌
-    // if (accessToken) {
-    //   console.log("둘다있음");
-    //   config.headers["authorization"] = `Bearer ${accessToken}`;
-    // }
-    // console.log(config);
+    // 요청 config headers에 토큰모두(refresh, access) 넣어 줌
+    // const accessToken = getCookie("ACCESS_TOKEN");
+    // // 요청 config headers에 토큰을 넣어 줌
+    // config.headers["Authorization"] = accessToken;
+
+    const accessToken = getCookie("ACCESS_TOKEN");
+    // // 요청 config headers에 토큰을 넣어 줌
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
     return config;
     // config.headers["Authorization"] = accessToken;
     // // config.headers["RT_Authorization"] = accessToken;
@@ -38,6 +40,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   //서버로부터 정상 응답을 받는 경우
   (response) => {
+    console.log("response", response);
     //request에 토큰 두개 담아서 보냈으니? access가 만료되었으면 알아서 access를 재발급해준다고 하였음.
     // 그럼 우선적으로 access_token을 받아와 기존 Cookie에 저장되어있는 값이랑 비교해서 다르면 교체?
     // 그럼 refresh까지 만료되었다면? 어떤 메시지를 줄것인가?
@@ -61,6 +64,7 @@ instance.interceptors.response.use(
     }
 
     if (error.response.status === 401 && !originalRequest._retry) {
+      console.log("401에러");
       try {
         console.log("access_token 만료...재발급중...");
         originalRequest._retry = true;
@@ -69,6 +73,7 @@ instance.interceptors.response.use(
         const refresh_token = localStorage.getItem("REFRESH_TOKEN");
         originalRequest.headers["refresh_token"] = `Bearer ${refresh_token}`;
         //재요청
+        console.log("재요청ㄹ합니다", originalRequest);
         return instance(originalRequest);
       } catch (error) {
         //refresh_token이 만료

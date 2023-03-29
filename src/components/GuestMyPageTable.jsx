@@ -3,8 +3,9 @@ import MaterialReactTable from "material-react-table";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { useQuery } from "react-query";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import axios from "axios";
 import { Delete, Edit } from "@mui/icons-material";
+import { useMutation } from "react-query";
+import { guestdeleteVisit, guestVisit } from "../api/api";
 
 export default function GuestMyPageTable() {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -24,7 +25,7 @@ export default function GuestMyPageTable() {
       globalFilter,
       columnFilters,
     ],
-    async () => {
+    () => {
       const queryParams = {
         start: pagination.pageIndex * pagination.pageSize,
         size: pagination.pageSize,
@@ -32,43 +33,68 @@ export default function GuestMyPageTable() {
         globalFilter: globalFilter ?? "",
         sorting: JSON.stringify(sorting ?? []),
       };
-      const instance = `${process.env.REACT_APP_SERVER_URL}`;
-
-      const response = await axios.get(`${instance}/visit/guest`, {
-        params: queryParams,
-      });
-      return response.data;
+      return guestVisit(queryParams);
     },
     {
       keepPreviousData: true,
     }
   );
 
+  const deletemutaion = useMutation(guestdeleteVisit, {
+    onSuccess: (data) => {
+      console.log(data);
+      alert("방문기록 삭제 성공");
+      refetch();
+    },
+  });
+
+  const HandlerDeleteVisit = (id) => {
+    console.log(id);
+    deletemutaion.mutate(id);
+  };
+
+  const HandlerEditVisit = (id) => {
+    console.log("edit;", id);
+    // deletemutaion.mutate(id);
+  };
+  console.log(data);
+
   const columns = useMemo(
     () => [
       {
         accessorKey: "location",
         header: "방문지역",
+        size: 50,
       },
       {
         accessorKey: "place",
         header: "방문장소",
+        size: 100,
       },
       {
         accessorKey: "target",
         header: "찾아갈분",
+        size: 50,
       },
       {
         accessorKey: "purpose",
         header: "목적",
+        size: 300,
       },
       {
-        accessorKey: "startdate",
+        accessorKey: "startDate",
         header: "방문일자",
+        size: 50,
+      },
+      {
+        accessorKey: "startTime",
+        header: "방문시간",
+        size: 20,
       },
       {
         accessorKey: "status",
         header: "상태",
+        size: 50,
       },
     ],
     []
@@ -77,7 +103,7 @@ export default function GuestMyPageTable() {
   return (
     <MaterialReactTable
       columns={columns}
-      data={data?.data ?? []} //data is undefined on first render
+      data={data?.data.data ?? []} //data is undefined on first render
       initialState={{
         showColumnFilters: true,
       }}
@@ -109,8 +135,8 @@ export default function GuestMyPageTable() {
         <Box sx={{ display: "flex", gap: "1rem" }}>
           <Tooltip arrow placement="left" title="Edit">
             <IconButton
-              onClick={() => {
-                console.log("edit");
+              onClick={(e) => {
+                HandlerEditVisit(row.id);
               }}
             >
               <Edit />
@@ -120,6 +146,7 @@ export default function GuestMyPageTable() {
             <IconButton
               color="error"
               onClick={() => {
+                HandlerDeleteVisit(row.id);
                 console.log("del");
               }}
             >

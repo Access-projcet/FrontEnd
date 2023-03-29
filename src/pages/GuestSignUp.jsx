@@ -18,7 +18,12 @@ import Checkbox2 from "@mui/joy/Checkbox";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
@@ -65,13 +70,33 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField autoComplete="Name" name="Name" required fullWidth id="name" label="이름" autoFocus />
+                <TextField
+                  autoComplete="Name"
+                  name="Name"
+                  required
+                  fullWidth
+                  id="name"
+                  label="이름"
+                  autoFocus
+                />
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id="id" label="아이디" name="id" autoComplete="ID" />
+                <TextField
+                  required
+                  fullWidth
+                  id="id"
+                  label="아이디"
+                  name="id"
+                  autoComplete="ID"
+                />
                 <TextField
                   error
                   required
@@ -136,7 +161,10 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormControl size="sm" sx={{ width: 400 }}>
-                  <FormControlLabel control={<Checkbox />} label="약관에 동의합니다" />
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="약관에 동의합니다"
+                  />
                   <FormHelperText>
                     <Typography>
                       <Link href="#link">약관 읽기</Link>.
@@ -145,7 +173,12 @@ export default function SignUp() {
                 </FormControl>
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
               회원가입 하기
             </Button>
             <Grid container justifyContent="flex-end">

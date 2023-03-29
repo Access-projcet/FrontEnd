@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { useMutation } from "react-query";
 import { loginguest } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { setCookie } from "../api/cookies";
 
 export default function GuestLoginForm() {
   const navigate = useNavigate();
@@ -13,6 +14,13 @@ export default function GuestLoginForm() {
   const mutation = useMutation(loginguest, {
     onSuccess: (data) => {
       console.log(data);
+      setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
+      localStorage.setItem(
+        "REFRESH_TOKEN",
+        data.headers.refresh_token.split(" ")[1]
+      );
+      localStorage.setItem("name", data.data.data.name);
+
       alert("로그인 성공");
       navigate("/guest/main");
     },
@@ -25,7 +33,7 @@ export default function GuestLoginForm() {
   const HandlerGuestLogin = (e) => {
     e.preventDefault();
     const user = {
-      userid: email,
+      userId: email,
       password: password,
     };
     mutation.mutate(user);
