@@ -11,16 +11,10 @@ export default function AdminMenuBar({ menu }) {
 
   return (
     <DivMenubar>
-      <MenuButton
-        onClick={() => HandlerChangeMenu("dashboard")}
-        selected={menu === "dashboard"}
-      >
+      <MenuButton onClick={() => HandlerChangeMenu("dashboard")} selected={menu === "dashboard"}>
         출입현황
       </MenuButton>
-      <MenuButton
-        onClick={() => HandlerChangeMenu("approve")}
-        selected={menu === "approve"}
-      >
+      <MenuButton onClick={() => HandlerChangeMenu("approve")} selected={menu === "approve"}>
         승인현황
       </MenuButton>
     </DivMenubar>
@@ -28,7 +22,7 @@ export default function AdminMenuBar({ menu }) {
 }
 
 const DivMenubar = styled.div`
-  position: fixed;
+  /* position: fixed; */
   display: flex;
   align-items: center;
   flex-direction: column;

@@ -8,4 +8,9 @@ const loginbusiness = async (user) => {
   return await instance.post("/login/business", user);
 };
 
-export { loginguest, loginbusiness };
+const getMap = async () => {
+  const response = await instance.get(`/company`);
+  return response.data;
+};
+
+export { loginguest, loginbusiness, getMap };
