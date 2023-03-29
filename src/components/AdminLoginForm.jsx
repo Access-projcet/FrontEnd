@@ -13,9 +13,11 @@ export default function AdminLoginForm() {
   const mutation = useMutation(loginbusiness, {
     onSuccess: (data) => {
       console.log(data);
+      alert("로그인 성공");
       navigate("/company/main");
     },
     onError: (error) => {
+      alert("로그인 실패");
       console.log(error.response);
     },
   });
