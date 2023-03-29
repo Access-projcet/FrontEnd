@@ -2,18 +2,25 @@ import React, { useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import dayjs from "dayjs";
 
 const ConfirmForm = () => {
   const [location, setLocation] = useState("");
   const [place, setPlace] = useState("");
   const [target, setTarget] = useState("");
   const [purpose, setPurpose] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
 
   //datepicker 사용
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  // const [startDate, setStartDate] = useState(new Date().getFullYear());
+  // const [endDate, setEndDate] = useState(new Date().getFullYear());
+
+  const dateFormat = dayjs().format("YYYY-MM-DD");
 
   const onSubmitHandler = async () => {
     axios.post(
@@ -24,9 +31,9 @@ const ConfirmForm = () => {
         target,
         purpose,
         startDate,
-        // startTime,
+        startTime,
         endDate,
-        // endTime,
+        endTime,
         visitor,
         phoneNum,
         status: "1",
@@ -39,9 +46,9 @@ const ConfirmForm = () => {
       target,
       purpose,
       startDate,
-      // startTime,
+      startTime,
       endDate,
-      // endTime,
+      endTime,
       visitor,
       phoneNum,
       status: "1",
@@ -82,7 +89,39 @@ const ConfirmForm = () => {
         }}
       />
       <br />
-      {" 시작날짜:"}
+      {"방문날짜:"}
+      <input
+        type="date"
+        value={startDate}
+        onChange={(e) => {
+          setStartDate(e.target.value);
+        }}
+      ></input>
+      {"방문시간:"}
+      <input
+        value={startTime}
+        onChange={(e) => {
+          setStartTime(e.target.value);
+        }}
+      ></input>
+      <br />
+      {"퇴장날짜:"}
+      <input
+        type="date"
+        value={endDate}
+        onChange={(e) => {
+          setEndDate(e.target.value);
+        }}
+      ></input>
+      {"퇴장시간:"}
+      <input
+        value={endTime}
+        onChange={(e) => {
+          setEndTime(e.target.value);
+        }}
+      ></input>
+      <br />
+      {/* {" 시작날짜:"}
       <DatePicker
         selected={startDate}
         onChange={(date) => setStartDate(date)}
@@ -97,7 +136,7 @@ const ConfirmForm = () => {
         timeInputLabel="Time:"
         dateFormat="yyyy-mm-dd hh-mm aa"
         showTimeInput
-      />
+      /> */}
       {"이름:"}
       <input
         value={visitor}
