@@ -7,5 +7,14 @@ const loginguest = async (user) => {
 const loginbusiness = async (user) => {
   return await instance.post("/login/business", user);
 };
+ 
+const submitconfirmform = async (user) => {
+  return await instance.post("/visit", user);
+};
 
-export { loginguest, loginbusiness };
+const submitlobbycheckin = async (user) =>  {
+  return await instance.post("access-in", user)
+}
+
+
+export { loginguest, loginbusiness, submitconfirmform, submitlobbycheckin };
