@@ -8,7 +8,6 @@ const loginbusiness = async (user) => {
   return await instance.post("/login/business", user);
 };
 
-
 const guestSignUpUser = async (user) => {
   return await instance.post(`/signup/guest`, user);
 };
@@ -35,6 +34,12 @@ const adminModify = async (payload) => {
     status: payload.status,
   });
 };
+
+const getMap = async () => {
+  const response = await instance.get(`/company`);
+  return response.data;
+};
+
 export {
   loginguest,
   loginbusiness,
@@ -44,12 +49,5 @@ export {
   guestVisit,
   adminVisit,
   adminModify,
+  getMap,
 };
-
-const getMap = async () => {
-  const response = await instance.get(`/company`);
-  return response.data;
-};
-
-export { loginguest, loginbusiness, getMap };
-

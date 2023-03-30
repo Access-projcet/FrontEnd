@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getCookie, removeCookie, setCookie } from "./cookies";
 
-
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
   headers: {
@@ -16,16 +15,7 @@ instance.interceptors.request.use(
   //   const accessToken = getCookie("ACCESS_TOKEN");
   //   config.headers["Authorization"] = accessToken;
   //   // const refresh_token = localStorage.getItem("REFRESH_TOKEN");
-    // 요청 config headers에 토큰모두(refresh, access) 넣어 줌
-    // const accessToken = getCookie("ACCESS_TOKEN");
-    // // 요청 config headers에 토큰을 넣어 줌
-    // config.headers["Authorization"] = accessToken;
-
-    const accessToken = getCookie("ACCESS_TOKEN");
-    // // 요청 config headers에 토큰을 넣어 줌
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
-    return config;
-    // config.headers["Authorization"] = accessToken;
+  // 요청 config headers에 토큰모두(refresh, access) 넣어 줌
 
   function (config) {
     const accessToken = getCookie("ACCESS_TOKEN");

@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import "./MapContainer2.css";
 import ConfirmForm from "../../pages/ConfirmForm";
+import ReactDOM from "react-dom";
 
 const { kakao } = window;
 const MapContainer4 = () => {
@@ -14,9 +15,6 @@ const MapContainer4 = () => {
   const [map, setMap] = useState(null);
 
   //modal 창
-  const handleModal = () => {
-    setModalOn(!modalOn);
-  };
 
   useEffect(() => {
     if (data) {
@@ -50,51 +48,52 @@ const MapContainer4 = () => {
           image: markerImage,
           id: position.id,
         });
-        const content =
-          '<div class="wrap">' +
-          '    <div class="info">' +
-          '        <div class="title">' +
-          `${position.companyName}` +
-          '            <div class="close" title="닫기"></div>' +
-          "        </div>" +
-          '        <div class="body">' +
-          '            <div class="img">' +
-          '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
-          "           </div>" +
-          '            <div class="desc">' +
-          '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
-          '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
-          "                {modalOn && <ConfirmForm onClose={handleModal}>신청하기</ConfirmForm>}" +
-          "            </div>" +
-          "        </div>" +
-          "    </div>" +
-          "</div>";
+
+        const content = (
+          <div className="wrap">
+            <div className="info">
+              <div className="title">
+                {position.companyName}
+                <div className="close" onClick={closeOverlay()} title="닫기"></div>
+              </div>
+              <div className="body">
+                <div className="img">
+                  <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70" />
+                </div>
+                <div className="desc">
+                  <div className="ellipsis">제주특별자치도 제주시 첨단로 242</div>
+                  <div className="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>
+                  <ConfirmForm onClose={closeOverlay()}>신청하기</ConfirmForm>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
 
         const customOverlay = new kakao.maps.CustomOverlay({
           content: content,
-          map: newMap,
+          map: null,
           position: marker.getPosition(),
+          yAnchor: 2.5,
         });
-        // const customOverlay = new kakao.maps.CustomOverlay({
-        //   map: newMap,
-        //   position: position.latlng,
-        //   content: `<Modal open={modalOpen} close={closeModal} header="Modal heading"><div>${position.companyName}</div></Modal>`,
-        //   yAnchor: 2.5,
-        // });
+
+        function closeOverlay() {
+          customOverlay.setMap(null);
+        }
+
         kakao.maps.event.addListener(marker, "click", function () {
           customOverlay.setMap(newMap);
         });
-        const closeBtn = customOverlay.getContent().querySelector(".close");
-        kakao.maps.event.addListener(closeBtn, "click", function () {
-          customOverlay.setMap(null);
-        });
+
         return marker;
       });
 
       setMarkers(mapMarkers);
     }
   }, [data]);
-
+  const handleModal = () => {
+    setModalOn(!modalOn);
+  };
   return (
     <div style={{ display: "flex" }}>
       <div id="map" style={{ width: "70%", height: "500px" }}></div>
@@ -114,9 +113,3 @@ const MapContainer4 = () => {
 };
 
 export default MapContainer4;
-
-const StCustomOverLay = styled.div`
-  background-color: white;
-  font-size: 30px;
-  font-weight: 900;
-`;
