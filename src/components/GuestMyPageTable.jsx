@@ -57,7 +57,6 @@ export default function GuestMyPageTable() {
     console.log("edit;", id);
     // deletemutaion.mutate(id);
   };
-  console.log(data);
 
   const columns = useMemo(
     () => [

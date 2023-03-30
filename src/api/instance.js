@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getCookie, removeCookie, setCookie } from "./cookies";
 
-
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
   headers: {
@@ -11,33 +10,27 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   //요청을 보내기 전 수행
-  // (config) => {
-  //   // // 토큰을 요청이 시작될 때 가져옴
-  //   const accessToken = getCookie("ACCESS_TOKEN");
-  //   config.headers["Authorization"] = accessToken;
-  //   // const refresh_token = localStorage.getItem("REFRESH_TOKEN");
+  (config) => {
+    //   // // 토큰을 요청이 시작될 때 가져옴
+    //   const accessToken = getCookie("ACCESS_TOKEN");
+    //   config.headers["Authorization"] = accessToken;
+    //   // const refresh_token = localStorage.getItem("REFRESH_TOKEN");
     // 요청 config headers에 토큰모두(refresh, access) 넣어 줌
     // const accessToken = getCookie("ACCESS_TOKEN");
     // // 요청 config headers에 토큰을 넣어 줌
     // config.headers["Authorization"] = accessToken;
-
     const accessToken = getCookie("ACCESS_TOKEN");
     // // 요청 config headers에 토큰을 넣어 줌
     config.headers["Authorization"] = `Bearer ${accessToken}`;
     return config;
-    // config.headers["Authorization"] = accessToken;
-
-  function (config) {
-    const accessToken = getCookie("ACCESS_TOKEN");
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
-    return config;
   },
+  // config.headers["Authorization"] = accessToken;
 
   // 오류 요청을 보내기 전 수행
-  function (error) {
+  (error) => {
     console.log("데이터 보내는중 오류!");
     return Promise.reject(error);
-  },
+  }
 );
 
 instance.interceptors.response.use(
@@ -91,6 +84,6 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 export default instance;
