@@ -26,12 +26,11 @@ const DivMyPageContainer = styled.div`
   flex-direction: column;
 `;
 
-const DivLogo = styled.div`
-  width: 100%;
-`;
+// const DivLogo = styled.div`
+//   width: 100%;
+// `;
 const DivMyPageTable = styled.div`
   width: 80%;
   height: 80vh;
   margin-top: 100px;
-  border: 1px solid black;
 `;
