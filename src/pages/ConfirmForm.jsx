@@ -32,7 +32,7 @@ const ConfirmForm = ({ onClose }) => {
         visitor,
         phoneNum,
         status: "1",
-      },
+      }
       // { headers: { authorization: token } }
     );
     console.log({
@@ -51,94 +51,90 @@ const ConfirmForm = ({ onClose }) => {
   };
 
   return (
-    <Portal>
-      <Background>
-        <Content>
-          <header>
-            방문 신청하기
-            <button className="close">x</button>
-          </header>
+    <>
+      <header>
+        방문 신청하기
+        <button className="close">x</button>
+      </header>
 
-          <main>
-            <label htmlFor="location">방문지역</label>
-            <input
-              id="location"
-              value={location}
-              onChange={(e) => {
-                setLocation(e.target.value);
-              }}
-            />
+      <main>
+        <label htmlFor="location">방문지역</label>
+        <input
+          id="location"
+          value={location}
+          onChange={(e) => {
+            setLocation(e.target.value);
+          }}
+        />
 
-            <label htmlFor="place">방문장소</label>
-            <input
-              id={place}
-              value={place}
-              onChange={(e) => {
-                setPlace(e.target.value);
-              }}
-            />
+        <label htmlFor="place">방문장소</label>
+        <input
+          id={place}
+          value={place}
+          onChange={(e) => {
+            setPlace(e.target.value);
+          }}
+        />
 
-            <label htmlFor="target">찾아갈 분:</label>
-            <input
-              id="target"
-              value={target}
-              onChange={(e) => {
-                setTarget(e.target.value);
-              }}
-            />
+        <label htmlFor="target">찾아갈 분:</label>
+        <input
+          id="target"
+          value={target}
+          onChange={(e) => {
+            setTarget(e.target.value);
+          }}
+        />
 
-            <label htmlFor="purpose">목적:</label>
-            <input
-              id="purpose"
-              value={purpose}
-              onChange={(e) => {
-                setPurpose(e.target.value);
-              }}
-            />
+        <label htmlFor="purpose">목적:</label>
+        <input
+          id="purpose"
+          value={purpose}
+          onChange={(e) => {
+            setPurpose(e.target.value);
+          }}
+        />
 
-            <label htmlFor="startDate">시작날짜:</label>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              timeInputLabel="Time:"
-              dateFormat="yyyy-mm-dd hh-mm aa"
-              showTimeInput
-            />
+        <label htmlFor="startDate">시작날짜:</label>
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          timeInputLabel="Time:"
+          dateFormat="yyyy-mm-dd hh-mm aa"
+          showTimeInput
+        />
 
-            <label htmlFor="startDate">종료날짜:</label>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              timeInputLabel="Time:"
-              dateFormat="yyyy-mm-dd hh-mm aa"
-              showTimeInput
-            />
+        <label htmlFor="startDate">종료날짜:</label>
+        <DatePicker
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
+          timeInputLabel="Time:"
+          dateFormat="yyyy-mm-dd hh-mm aa"
+          showTimeInput
+        />
 
-            <label htmlFor="visitor">이름:</label>
-            <input
-              id="visitor"
-              value={visitor}
-              onChange={(e) => {
-                setVisitor(e.target.value);
-              }}
-            />
+        <label htmlFor="visitor">이름:</label>
+        <input
+          id="visitor"
+          value={visitor}
+          onChange={(e) => {
+            setVisitor(e.target.value);
+          }}
+        />
 
-            <label htmlFor="phoneNum">전화번호:</label>
-            <input
-              id="phoneNum"
-              value={phoneNum}
-              onChange={(e) => {
-                setPhoneNum(e.target.value);
-              }}
-            />
-          </main>
+        <label htmlFor="phoneNum">전화번호:</label>
+        <input
+          id="phoneNum"
+          value={phoneNum}
+          onChange={(e) => {
+            setPhoneNum(e.target.value);
+          }}
+        />
+      </main>
 
-          <footer>
-            <button onClick={onSubmitHandler}>신청하기</button>
-          </footer>
-        </Content>
-      </Background>
-    </Portal>
+      <footer>
+        <button onClick={onSubmitHandler}>신청하기</button>
+      </footer>
+    </>
   );
 };
 

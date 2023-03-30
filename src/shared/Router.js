@@ -20,7 +20,6 @@ const Router = () => {
         <Route path="/guest/company" element={<Company />} />
         <Route path="/guest/confirmform" element={<ConfirmForm />} />
         <Route path="/guest/mypage" element={<GuestMyPage />} />
-        <Route path="/guest/mypage" element={<GuestMyPage />} />
         <Route path="/admin/main" element={<AdminMain />} />
       </Routes>
     </BrowserRouter>
