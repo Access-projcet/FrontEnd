@@ -6,6 +6,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import { Delete, Edit } from "@mui/icons-material";
 import { useMutation } from "react-query";
 import { guestdeleteVisit, guestVisit } from "../api/api";
+import { color } from "../utils/styles/color";
 
 export default function GuestMyPageTable() {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -64,36 +65,45 @@ export default function GuestMyPageTable() {
         accessorKey: "location",
         header: "방문지역",
         size: 50,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Location" },
       },
       {
         accessorKey: "place",
         header: "방문장소",
         size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Place" },
       },
       {
         accessorKey: "target",
         header: "찾아갈분",
         size: 50,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "target" },
       },
       {
         accessorKey: "purpose",
         header: "목적",
         size: 300,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
         accessorKey: "startDate",
         header: "방문일자",
         size: 50,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
       {
         accessorKey: "startTime",
         header: "방문시간",
         size: 20,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "time" },
       },
       {
         accessorKey: "status",
         header: "상태",
         size: 50,
+        filterVariant: "select",
+        filterSelectOptions: ["1", "2", "3", "4"],
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
     []
@@ -104,7 +114,16 @@ export default function GuestMyPageTable() {
       columns={columns}
       data={data?.data.data ?? []} //data is undefined on first render
       initialState={{
-        showColumnFilters: true,
+        showColumnFilters: false,
+      }}
+      muiTableHeadCellProps={{
+        //simple styling with the `sx` prop, works just like a style prop in this example
+        sx: {
+          fontWeight: "bold",
+          fontSize: "15px",
+          backgroundColor: `${color.tableHeader}`,
+          color: `${color.textWhite}`,
+        },
       }}
       manualFiltering
       manualPagination

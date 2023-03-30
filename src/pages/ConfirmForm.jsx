@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import styled from "styled-components";
-import Portal from "../components/modal/Portal";
+// import styled from "styled-components";
 
 const ConfirmForm = ({ onClose }) => {
   const [location, setLocation] = useState("");
@@ -139,23 +138,23 @@ const ConfirmForm = ({ onClose }) => {
 };
 
 export default ConfirmForm;
-const Background = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  left: 0;
-  top: 0;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
+// const Background = styled.div`
+//   height: 100%;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   position: fixed;
+//   left: 0;
+//   top: 0;
+//   text-align: center;
+//   background-color: rgba(0, 0, 0, 0.5);
+// `;
 
-const Content = styled.div`
-  height: 100%;
-  width: 950px;
-  margin-top: 70px;
-  position: relative;
-  overflow: scroll;
-`;
+// const Content = styled.div`
+//   height: 100%;
+//   width: 950px;
+//   margin-top: 70px;
+//   position: relative;
+//   overflow: scroll;
+// `;
