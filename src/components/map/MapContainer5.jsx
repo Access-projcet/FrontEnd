@@ -58,7 +58,16 @@ export default function MapContainer5() {
 
   return (
     <DivMap>
-      <DivCompanyList>여기는 리스트</DivCompanyList>
+      <DivCompanyList>
+        {data?.data.map((e) => (
+          <div>
+            <h3>{e.companyName}</h3>
+            <p>{e.businessNum}</p>
+            <p>{e.businessCode}</p>
+            <button>방문하기 {e.id}</button>
+          </div>
+        ))}
+      </DivCompanyList>
       <DivMapContainer>
         <Map // 지도를 표시할 Container
           id={`map`}
@@ -165,5 +174,12 @@ const DivCompanyList = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 4px;
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+  }
 `;
