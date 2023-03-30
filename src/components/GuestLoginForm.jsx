@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { useMutation } from "react-query";
 import { loginguest } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { setCookie } from "../apis/cookies";
 
 export default function GuestLoginForm() {
   const navigate = useNavigate();
@@ -12,6 +13,12 @@ export default function GuestLoginForm() {
 
   const mutation = useMutation(loginguest, {
     onSuccess: (data) => {
+      setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
+      localStorage.setItem(
+        "REFRESH_TOKEN",
+        data.headers.refresh_token.split(" ")[1]
+      );
+      localStorage.setItem("name", data.data.name);
       console.log(data);
       alert("로그인 성공");
       navigate("/guest/main");
@@ -57,7 +64,13 @@ export default function GuestLoginForm() {
           required
           fullWidth
         />
-        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, mb: 2 }} size="large">
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          sx={{ mt: 2, mb: 2 }}
+          size="large"
+        >
           게스트 로그인
         </Button>
       </form>

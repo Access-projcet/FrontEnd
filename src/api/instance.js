@@ -1,5 +1,5 @@
 import axios from "axios";
-import { removeCookie, setCookie } from "./cookies";
+import { removeCookie, setCookie, getCookie } from "./cookies";
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -10,15 +10,16 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   //요청을 보내기 전 수행
+
   (config) => {
     // // 토큰을 요청이 시작될 때 가져옴
-    // const accessToken = getCookie("ACCESS_TOKEN");
+    const accessToken = getCookie("ACCESS_TOKEN");
     // const refresh_token = localStorage.getItem("REFRESH_TOKEN");
-
+    config.headers["Authorization"] = accessToken;
     // // 요청 config headers에 토큰모두(refresh, access) 넣어 줌
     // if (accessToken) {
     //   console.log("둘다있음");
-    //   config.headers["authorization"] = `Bearer ${accessToken}`;
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
     // }
     // console.log(config);
     return config;
@@ -67,7 +68,7 @@ instance.interceptors.response.use(
 
         //리프레쉬토큰을 받아와서 헤더에 추가
         const refresh_token = localStorage.getItem("REFRESH_TOKEN");
-        originalRequest.headers["refresh_token"] = `Bearer ${refresh_token}`;
+        originalRequest.headers["Refresh_token"] = `Bearer ${refresh_token}`;
         //재요청
         return instance(originalRequest);
       } catch (error) {

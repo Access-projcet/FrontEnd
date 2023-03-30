@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useMutation, useQueryClient } from "react-query";
+import { submitconfirmform } from "../api/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
@@ -20,27 +21,22 @@ const ConfirmForm = () => {
   // const [startDate, setStartDate] = useState(new Date().getFullYear());
   // const [endDate, setEndDate] = useState(new Date().getFullYear());
 
-  const dateFormat = dayjs().format("YYYY-MM-DD");
+  // const dateFormat = dayjs().format("YYYY-MM-DD");
 
-  const onSubmitHandler = async () => {
-    axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/api/reviews`,
-      {
-        location,
-        place,
-        target,
-        purpose,
-        startDate,
-        startTime,
-        endDate,
-        endTime,
-        visitor,
-        phoneNum,
-        status: "1",
-      }
-      // { headers: { authorization: token } }
-    );
-    console.log({
+  const queryClient = useQueryClient();
+  const mutation = useMutation(submitconfirmform, {
+    onSuccess: (response) => {
+      console.log(response);
+      queryClient.invalidateQueries("user");
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    const confirmform = {
       location,
       place,
       target,
@@ -52,7 +48,20 @@ const ConfirmForm = () => {
       visitor,
       phoneNum,
       status: "1",
+    };
+    console.log({
+      place,
+      target,
+      purpose,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      visitor,
+      phoneNum,
+      status: "1",
     });
+    mutation.mutate(confirmform);
   };
 
   return (
@@ -121,6 +130,7 @@ const ConfirmForm = () => {
         }}
       ></input>
       <br />
+
       {/* {" 시작날짜:"}
       <DatePicker
         selected={startDate}
@@ -137,6 +147,7 @@ const ConfirmForm = () => {
         dateFormat="yyyy-mm-dd hh-mm aa"
         showTimeInput
       /> */}
+
       {"이름:"}
       <input
         value={visitor}
