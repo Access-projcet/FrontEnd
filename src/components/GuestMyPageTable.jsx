@@ -88,15 +88,15 @@ export default function GuestMyPageTable() {
       {
         accessorKey: "startDate",
         header: "방문일자",
-        size: 50,
+        size: 200,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
-      {
-        accessorKey: "startTime",
-        header: "방문시간",
-        size: 20,
-        muiTableHeadCellFilterTextFieldProps: { placeholder: "time" },
-      },
+      // {
+      //   accessorKey: "startTime",
+      //   header: "방문시간",
+      //   size: 20,
+      //   muiTableHeadCellFilterTextFieldProps: { placeholder: "time" },
+      // },
       {
         accessorKey: "status",
         header: "상태",
@@ -112,7 +112,19 @@ export default function GuestMyPageTable() {
   return (
     <MaterialReactTable
       columns={columns}
-      data={data?.data.data ?? []} //data is undefined on first render
+      data={
+        data?.data.data.map((item) => ({
+          ...item,
+          startDate:
+            item.startDate +
+            " " +
+            item.startTime +
+            " - " +
+            item.endDate +
+            " " +
+            item.endTime,
+        })) ?? []
+      } //data is undefined on first render
       initialState={{
         showColumnFilters: false,
       }}
@@ -123,6 +135,13 @@ export default function GuestMyPageTable() {
           fontSize: "15px",
           backgroundColor: `${color.tableHeader}`,
           color: `${color.textWhite}`,
+          textAlign: "center",
+        },
+      }}
+      muiTableBodyCellProps={{
+        //simple styling with the `sx` prop, works just like a style prop in this example
+        sx: {
+          textAlign: "center",
         },
       }}
       manualFiltering
