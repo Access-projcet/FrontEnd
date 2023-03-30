@@ -5,10 +5,12 @@ import MapContainer3 from "../components/map/MapContainer3";
 import MapContainer4 from "../components/map/MapContainer4";
 import MapContainer5 from "../components/map/MapContainer5";
 import SearchPlace from "../components/map/SearchPlace";
+import Navbar from "../components/navbar/Navbar";
 
 const Company = () => {
   return (
     <>
+      <Navbar />
       {/* <MapContainer />
       <SearchPlace /> */}
       {/* <MapContainer2 /> */}

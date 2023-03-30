@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import GuestMyPageTable from "../components/GuestMyPageTable";
+import Navbar from "../components/navbar/Navbar";
 
 const GuestMyPage = () => {
   return (
-    <DivMyPageContainer>
-      <DivLogo>Logo</DivLogo>
-      <DivMyPageTable>
-        <GuestMyPageTable />
-      </DivMyPageTable>
-    </DivMyPageContainer>
+    <>
+      <DivMyPageContainer>
+        <Navbar />
+        <DivMyPageTable>
+          <GuestMyPageTable />
+        </DivMyPageTable>
+      </DivMyPageContainer>
+    </>
   );
 };
 

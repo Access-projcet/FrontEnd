@@ -11,7 +11,6 @@ const { kakao } = window;
 export default function MapContainer5() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [markers, setMarkers] = useState([]);
-
   const [selectedMarker, setSelectedMarker] = useState(null);
 
   const { data } = useQuery("map", getMap);
@@ -29,22 +28,17 @@ export default function MapContainer5() {
             id: e.id,
             companyName: e.companyName,
           },
-        ])
+        ]),
       );
     }
   }, [data]);
 
-  const imageSrc =
-    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+  const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
   const imageSize = new kakao.maps.Size(35, 40);
   const imageOption = {
     offset: new kakao.maps.Point(20, 40),
   };
-  const markerImage = new kakao.maps.MarkerImage(
-    imageSrc,
-    imageSize,
-    imageOption
-  );
+  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
   const handleMarkerClick = (marker) => {
     setSelectedMarker(marker);
@@ -86,45 +80,19 @@ export default function MapContainer5() {
               }}
             />
           ))}
-
-          {/* <MapMarker position={markerPosition} onClick={() => setIsOpen(true)} /> */}
           {selectedMarker && (
-            <CustomOverlayMap
-              position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
-            >
+            <CustomOverlayMap position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}>
               <div className="wrap">
                 <div className="info">
                   <div className="title">
                     {selectedMarker.companyName}
-                    <div
-                      className="close"
-                      onClick={() => setSelectedMarker(null)}
-                      title="닫기"
-                    ></div>
+                    <div className="close" onClick={() => setSelectedMarker(null)} title="닫기"></div>
                   </div>
                   <div className="body">
-                    {/* <div className="img">
-                    <img
-                      src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005"
-                      width="73"
-                      height="70"
-                      alt="카카오 스페이스닷원"
-                    />
-                  </div> */}
                     <div className="desc">
                       <div className="ellipsis">이클1</div>
                       <div className="jibun ellipsis">이클2</div>
                       <button onClick={HandlerModalOn}>모달 on</button>
-                      <div>
-                        <a
-                          href="https://www.kakaocorp.com/main"
-                          target="_blank"
-                          className="link"
-                          rel="noreferrer"
-                        >
-                          홈페이지
-                        </a>
-                      </div>
                     </div>
                   </div>
                 </div>

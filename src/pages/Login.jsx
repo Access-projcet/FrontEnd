@@ -4,6 +4,7 @@ import { AppBar, Avatar, Tab, Tabs, Typography } from "@mui/material";
 
 import GuestLoginForm from "../components/GuestLoginForm";
 import AdminLoginForm from "../components/AdminLoginForm";
+import mainImg from "../utils/img/background.png";
 const Login = () => {
   //로그인 타입 지정
   const [loginType, setLoginType] = useState("guest");
@@ -15,70 +16,48 @@ const Login = () => {
   return (
     <DivLoginContainer>
       <DivLoginBox>
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>로고</Avatar>
-        <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
-          VRS
-        </Typography>
         <DivLoginType>
-          <AppBar
-            position="static"
-            color="default"
-            sx={{ backgroundColor: "transparent" }}
+          <Tabs
+            value={loginType}
+            onChange={HandleChangeTab}
+            variant="fullWidth"
+            TabIndicatorProps={{ sx: { bgcolor: "white" } }}
           >
-            <Tabs
-              value={loginType}
-              onChange={HandleChangeTab}
-              variant="fullWidth"
-              TabIndicatorProps={{ sx: { bgcolor: "white" } }}
-            >
-              <Tab
-                label="게스트"
-                value="guest"
-                sx={{
-                  "&.Mui-selected": {
-                    color: "primary.main",
-                    fontWeight: "bold",
-                  },
-                  "&.Mui-selected::after": {
-                    content: "''",
-                    display: "block",
-                    backgroundColor: "primary.main",
-                    width: "100%",
-                  },
-                }}
-              />
-              <Tab
-                label="관리자"
-                value="admin"
-                sx={{
-                  "&.Mui-selected": {
-                    color: "secondary.main",
-                    fontWeight: "bold",
-                  },
-                  "&.Mui-selected::after": {
-                    content: "''",
-                    display: "block",
-                    backgroundColor: "secondary.main",
-                    width: "100%",
-                  },
-                }}
-              />
-            </Tabs>
-          </AppBar>
-          {/* 
-          <Button variant="contained" onClick={() => setLoginType("guest")}>
-            Guest
-          </Button>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => setLoginType("Admin")}
-          >
-            Admin
-          </Button> */}
+            <Tab
+              label="게스트로그인"
+              value="guest"
+              sx={{
+                "&.Mui-selected": {
+                  color: "primary.main",
+                  fontWeight: "bold",
+                },
+                "&.Mui-selected::after": {
+                  content: "''",
+                  display: "block",
+                  backgroundColor: "primary.main",
+                  width: "100%",
+                },
+              }}
+            />
+            <Tab
+              label="협력사로그인"
+              value="admin"
+              sx={{
+                "&.Mui-selected": {
+                  color: "secondary.main",
+                  fontWeight: "bold",
+                },
+                "&.Mui-selected::after": {
+                  content: "''",
+                  display: "block",
+                  backgroundColor: "secondary.main",
+                  width: "100%",
+                },
+              }}
+            />
+          </Tabs>
         </DivLoginType>
         {loginType === "guest" ? <GuestLoginForm /> : <AdminLoginForm />}
-        asdf
       </DivLoginBox>
     </DivLoginContainer>
   );
@@ -87,21 +66,27 @@ const Login = () => {
 export default Login;
 
 const DivLoginContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: url(${mainImg}) no-repeat;
+  background-size: cover;
 `;
 
 const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 700px;
-  height: 100%;
-  background-color: #a7bcff;
+  width: 550px;
+  background-color: white;
+  border-radius: 30px;
 `;
 const DivLoginType = styled.div`
   width: 100%;

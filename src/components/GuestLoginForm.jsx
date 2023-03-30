@@ -5,27 +5,39 @@ import { useMutation } from "react-query";
 import { loginguest } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../api/cookies";
+import { makeStyles } from "@mui/styles";
+import arrow from "../utils/img/arrow_icon.png";
+//mui custom css
+const useStyles = makeStyles({
+  root: {
+    borderRadius: 10,
+  },
+  button: {
+    background: "#636FD7",
+    borderRadius: 30,
+    "&:hover": {
+      background: "#636FD7",
+    },
+  },
+});
 
 export default function GuestLoginForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const classes = useStyles();
   const mutation = useMutation(loginguest, {
     onSuccess: (data) => {
       console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem(
-        "REFRESH_TOKEN",
-        data.headers.refresh_token.split(" ")[1]
-      );
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
 
       alert("로그인 성공");
       navigate("/guest/main");
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
-      localStorage.setItem("name", data.data.name);
+      localStorage.setItem("name", data.data.data.name);
     },
     onError: (error) => {
       alert("로그인 실패");
@@ -56,6 +68,7 @@ export default function GuestLoginForm() {
           required
           autoFocus
           fullWidth
+          className={classes.root}
         />
         <TextField
           margin="normal"
@@ -68,9 +81,19 @@ export default function GuestLoginForm() {
           required
           fullWidth
         />
-        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, mb: 2 }} size="large">
-          게스트 로그인
-        </Button>
+        <StLoginBtn>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{ mt: 2, mb: 2 }}
+            size="large"
+          >
+            LOG IN
+          </Button>
+          <StloginImg src={arrow} alt="로그인버튼" />
+        </StLoginBtn>
       </form>
 
       <Grid container>
@@ -106,5 +129,14 @@ const DivLoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   animation: ${fadeIn} 1s linear;
+
   /* gap: 10px; */
+`;
+const StLoginBtn = styled.div`
+  position: relative;
+`;
+const StloginImg = styled.img`
+  position: absolute;
+  top: 40%;
+  right: 20%;
 `;
