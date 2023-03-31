@@ -37,9 +37,11 @@ export default function AdminLoginForm() {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
+
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
       localStorage.setItem("name", data.data.name);
+
       navigate("/admin/main");
     },
     onError: (error) => {
@@ -91,12 +93,6 @@ export default function AdminLoginForm() {
                 },
               },
             }}
-            helperText="Please enter a valid input"
-            FormHelperTextProps={{
-              sx: {
-                color: "red",
-              },
-            }}
           />
           <TextField
             margin="normal"
@@ -123,12 +119,6 @@ export default function AdminLoginForm() {
                 ":&focus": {
                   color: "#49CDB5",
                 },
-              },
-            }}
-            helperText="Please enter a valid input"
-            FormHelperTextProps={{
-              sx: {
-                color: "red",
               },
             }}
           />

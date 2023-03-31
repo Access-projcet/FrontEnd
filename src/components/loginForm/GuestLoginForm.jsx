@@ -93,12 +93,6 @@ export default function GuestLoginForm() {
                 },
               },
             }}
-            helperText="Please enter a valid input"
-            FormHelperTextProps={{
-              sx: {
-                color: "red",
-              },
-            }}
           />
           <TextField
             margin="normal"
@@ -126,12 +120,6 @@ export default function GuestLoginForm() {
                 "&.focused": {
                   color: "red",
                 },
-              },
-            }}
-            helperText="Please enter a valid input"
-            FormHelperTextProps={{
-              sx: {
-                color: "red",
               },
             }}
           />
