@@ -259,7 +259,6 @@ export default ConfirmForm;
 
 const Header = styled.div`
   background: grey;
-
   position: relative;
   left: 0;
   top: 25px;

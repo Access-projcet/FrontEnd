@@ -25,6 +25,8 @@ const Lobby = () => {
         </Link>
         {showModal === true ? (
           <LobbyModal
+            Check-in={"Check-in"}
+            Check-out={"Check-out"}
             onClose={() => {
               setShowModal(false);
             }}

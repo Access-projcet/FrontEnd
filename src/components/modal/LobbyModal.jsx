@@ -43,7 +43,7 @@ const LobbyModal = ({ onClose }) => {
       <ModalOverlay>
         <ModalWrapper>
           <ModalInner>
-            <Header>Check-in</Header>
+            <Header>출입 확인</Header>
             <Input1>
               이름
               <input
@@ -109,6 +109,7 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border-radius: 11px;
 `;
 
 const ModalInner = styled.div`
@@ -140,9 +141,10 @@ const Header = styled.div`
   display: flex;
   color: white;
   padding: 20px;
-  border-radius: 4px;
   font-size: larger;
   font-weight: bold;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const Input1 = styled.div`
