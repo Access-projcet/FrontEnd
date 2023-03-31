@@ -4,7 +4,6 @@ import { submitconfirmform } from "../api/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
-import dayjs from "dayjs";
 
 const ConfirmForm = () => {
   const [location, setLocation] = useState("");

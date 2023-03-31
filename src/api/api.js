@@ -40,6 +40,7 @@ const getMap = async () => {
   return response.data;
 };
 
+
 const submitconfirmform = async (user) => {
   return await instance.post("/visit", user);
 };
@@ -48,6 +49,12 @@ const submitlobbycheckin = async (user) =>  {
   return await instance.post("access-in", user)
 }
 
+
+
+const getConfirmList = async () => {
+  const response = await instance.get(`/visit/access-status`);
+  return response.data;
+};
 
 export {
   loginguest,
@@ -59,4 +66,5 @@ export {
   adminVisit,
   adminModify,
   getMap,
+  getConfirmList,
 };
