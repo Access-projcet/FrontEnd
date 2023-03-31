@@ -31,7 +31,7 @@ const ConfirmForm = () => {
       queryClient.invalidateQueries("user");
     },
     onError: (error) => {
-      alert(error);
+      alert(error.response.data.message);
     },
   });
 
@@ -173,8 +173,8 @@ const ConfirmForm = () => {
           ></input>
           <Msg>
             <p>
-              * 시간은 24시간 기준으로 입력해주세요. 예시2023/03/30, 13:40,
-              2023/03/31, 14:00
+              * 시간은 24시간 기준으로 입력해주세요. 예시2023-03-30, 13:40,
+              2023-03-31, 14:00
             </p>
           </Msg>
         </TimeTable>
@@ -209,7 +209,9 @@ export default ConfirmForm;
 
 const Header = styled.div`
   background: grey;
-  width: 100;
+  position: relative;
+  top: 0;
+  width: 97%;
   display: flex;
   color: white;
   padding: 20px;
