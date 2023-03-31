@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { submitlobbycheckin } from "../../api/api";
 import styled from "styled-components";
 
-const LobbyModal = () => {
+const LobbyModal = ({ onClose }) => {
+  const [visitor, setVisitor] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
   const queryClient = useQueryClient();
   const mutation = useMutation(submitlobbycheckin, {
     onSuccess: (response) => {
@@ -17,13 +24,18 @@ const LobbyModal = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const checkin = {
-      // 현재시간,
+    const check = {
+      visitor,
+      phoneNum,
+      // 현재시간
+      time: `${hours}:${minutes}`,
     };
     console.log({
-      // 현재시간,
+      visitor,
+      phoneNum,
+      time: `${hours}:${minutes}`,
     });
-    mutation.mutate(checkin);
+    mutation.mutate(check);
   };
 
   return (
@@ -31,12 +43,41 @@ const LobbyModal = () => {
       <ModalOverlay>
         <ModalWrapper>
           <ModalInner>
-            이름
-            <input />
-            전화번호
-            <input />
-            <ButtonClose>x</ButtonClose>
+            <Header>Check-in</Header>
+            <Input1>
+              이름
+              <input
+                value={visitor}
+                onChange={(e) => {
+                  setVisitor(e.target.value);
+                }}
+                style={{
+                  marginLeft: "90px",
+                  width: "200px",
+                  height: "30px",
+                  fontSize: "20px",
+                }}
+              />
+            </Input1>
+            <Input2>
+              전화번호
+              <input
+                value={phoneNum}
+                onChange={(e) => {
+                  setPhoneNum(e.target.value);
+                }}
+                style={{
+                  marginLeft: "50px",
+                  width: "200px",
+                  height: "30px",
+                  fontSize: "20px",
+                }}
+              />
+            </Input2>
+            <ButtonClose onClick={onClose}>x</ButtonClose>
           </ModalInner>
+          <CancelBtn onClick={onClose}>취소</CancelBtn>
+          <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
         </ModalWrapper>
       </ModalOverlay>
     </>
@@ -89,4 +130,76 @@ const ButtonClose = styled.button`
   background-color: transparent;
   font-size: 35px;
   cursor: pointer;
+`;
+
+const Header = styled.div`
+  background: grey;
+  position: absolute;
+  top: 0;
+  width: 92%;
+  display: flex;
+  color: white;
+  padding: 20px;
+  border-radius: 4px;
+  font-size: larger;
+  font-weight: bold;
+`;
+
+const Input1 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: row;
+  margin: 50px;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const Input2 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: row;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const CancelBtn = styled.div`
+  border-radius: 35px;
+  cursor: pointer;
+
+  color: white;
+  background: #656565;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+  position: relative;
+  left: -80px;
+  top: 20px;
+  height: 25px;
+  width: 100px;
+`;
+
+const SubmitBtn = styled.div`
+  border-radius: 35px;
+  cursor: pointer;
+
+  color: white;
+  background: #636fd7;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+  position: relative;
+  left: 80px;
+  top: -35px;
+  height: 25px;
+  width: 100px;
 `;
