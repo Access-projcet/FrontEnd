@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "./cookies"
+import { getCookie } from "./cookies";
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -12,7 +12,7 @@ instance.interceptors.request.use(
   //요청을 보내기 전 수행
   function (config) {
     // // 토큰을 요청이 시작될 때 가져옴
-    const accessToken = getCookie("ACCESS_TOKEN");
+    const accessToken = getCookie("Authorization");
     // // 요청 config headers에 토큰을 넣어 줌
     config.headers["Authorization"] = accessToken;
     // // config.headers["RT_Authorization"] = accessToken;
@@ -38,7 +38,6 @@ instance.interceptors.response.use(
   },
 
   function (error) {
-    
     // if (error.response.statusCode === 400) {
     //   alert("데이터 수신중에 오류가 났어요!!!");
     // }

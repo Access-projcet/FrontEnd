@@ -9,6 +9,7 @@
     "@mui/joy": "^5.0.0-alpha.72",
     "@mui/material": "^5.11.14",
     "@mui/styled-engine-sc": "^5.11.11",
+    "@mui/styles": "^5.11.13",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -18,6 +19,7 @@
     "material-react-table": "^1.9.2",
     "mui-tel-input": "^3.1.1",
     "react": "^18.2.0",
+    "react-charts": "^3.0.0-beta.54",
     "react-cookie": "^4.1.1",
     "react-datepicker": "^4.10.0",
     "react-dom": "^18.2.0",
@@ -26,6 +28,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "recharts": "^2.5.0",
     "redux": "^4.2.1",
     "styled-components": "^5.3.9",
     "web-vitals": "^2.1.0"
