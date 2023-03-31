@@ -84,33 +84,38 @@ export default function AdminApproveList() {
         accessorKey: "place",
         header: "방문장소",
         size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Place" },
       },
       {
         accessorKey: "target",
         header: "찾아갈분",
         size: 50,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "target" },
       },
       {
         accessorKey: "purpose",
         header: "목적",
         size: 300,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
         accessorKey: "startDate",
         header: "방문일자",
-        size: 50,
+        size: 200,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
-      {
-        accessorKey: "startTime",
-        header: "방문시간",
-        size: 20,
-      },
+      // {
+      //   accessorKey: "startTime",
+      //   header: "방문시간",
+      //   size: 20,
+      // },
       {
         accessorKey: "status",
         header: "상태",
         size: 50,
         filterVariant: "select",
         filterSelectOptions: ["1", "2", "3", "4"],
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
     []
@@ -118,11 +123,22 @@ export default function AdminApproveList() {
 
   return (
     <DivApprove>
-      방문이력
       <DivTable>
         <MaterialReactTable
           columns={columns}
-          data={data?.data.data ?? []} //data is undefined on first render
+          data={
+            data?.data.data.map((item) => ({
+              ...item,
+              startDate:
+                item.startDate +
+                " " +
+                item.startTime +
+                " - " +
+                item.endDate +
+                " " +
+                item.endTime,
+            })) ?? []
+          } //data is undefined on first render
           initialState={{
             showColumnFilters: false,
           }}
@@ -206,11 +222,12 @@ const DivApprove = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 150px;
+  justify-content: center;
+  width: 100%;
   height: 100vh;
 `;
 
 const DivTable = styled.div`
-  width: 90%;
+  width: 70%;
   height: 100vh;
 `;
