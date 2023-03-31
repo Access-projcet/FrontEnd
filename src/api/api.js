@@ -7,7 +7,7 @@ const loginguest = async (user) => {
 const loginbusiness = async (user) => {
   return await instance.post("/login/business", user);
 };
- 
+
 const guestSignUpUser = async (user) => {
   return await instance.post(`/signup/guest`, user);
 };
@@ -24,7 +24,7 @@ const guestVisit = async () => {
   return await instance.get(`/visit/guest`);
 };
 
-const adminVisit = async () => {
+const adminVisit = async (payload) => {
   return await instance.get(`/visit/admin`);
 };
 
@@ -44,14 +44,15 @@ const submitconfirmform = async (user) => {
   return await instance.post("/visit", user);
 };
 
-const submitlobbycheckin = async (user) =>  {
-  return await instance.post("access-in", user)
-}
-
+const submitlobbycheckin = async (user) => {
+  return await instance.post("access-in", user);
+};
 
 export {
   loginguest,
-  loginbusiness, submitconfirmform, submitlobbycheckin,
+  loginbusiness,
+  submitconfirmform,
+  submitlobbycheckin,
   guestSignUpUser,
   adminSignUpUser,
   guestdeleteVisit,

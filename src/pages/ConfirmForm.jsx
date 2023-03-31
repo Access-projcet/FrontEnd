@@ -208,7 +208,7 @@ export default ConfirmForm;
 
 const Header = styled.div`
   background: grey;
-  width: 100;
+  width: 100%;
   display: flex;
   color: white;
   padding: 20px;
