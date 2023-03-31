@@ -5,20 +5,15 @@ import mainImg from "../utils/img/background.png";
 import AdminSignUp from "../components/signupForm/AdminSignUp";
 import GuestSignUp from "../components/signupForm/GuestSignUp";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
-import Modal from "../components/modal/Modal";
-import SignUpCheckModal from "../components/modal/SignUpCheckModal";
 
 const SignUp = () => {
   //로그인 타입 지정
   const [loginType, setLoginType] = useState("guest");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const HandleChangeTab = (e, newValue) => {
     console.log(newValue);
     setLoginType(newValue);
   };
-  const HandlerModalOn = () => {
-    setIsModalOpen(true);
-  };
+
   return (
     <>
       <StLogo src={mainLogo} alt="VISITUS 로고" />
@@ -104,14 +99,6 @@ const SignUp = () => {
           {loginType === "guest" ? <GuestSignUp /> : <AdminSignUp />}
         </DivLoginBox>
       </DivLoginContainer>
-      {isModalOpen && (
-        <Modal
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-          children={<SignUpCheckModal />}
-        />
-      )}
     </>
   );
 };
@@ -156,7 +143,7 @@ const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 550px;
+  width: 20vw;
   background-color: white;
   border-radius: 30px;
   overflow: hidden;

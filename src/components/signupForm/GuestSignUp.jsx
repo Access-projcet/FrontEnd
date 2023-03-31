@@ -36,6 +36,7 @@ export default function SignUp() {
   const mutation = useMutation(guestSignUp, {
     onSuccess: (response) => {
       queryClient.invalidateQueries("guest");
+      setIsModalOpen(true);
     },
     onError: (response) => {
       alert(response.response.data.message);
@@ -56,10 +57,7 @@ export default function SignUp() {
   const gotoLogin = () => {
     navigate("/");
   };
-  const HandlerModalOn = () => {
-    setIsModalOpen(true);
-    navigate("/");
-  };
+
   return (
     <>
       <DivLoginContainer>
@@ -235,7 +233,6 @@ export default function SignUp() {
                 },
               }}
               size="large"
-              onClick={HandlerModalOn}
             >
               회원가입 하기
             </Button>
