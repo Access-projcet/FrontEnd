@@ -40,6 +40,11 @@ const getMap = async () => {
   return response.data;
 };
 
+const getConfirmList = async () => {
+  const response = await instance.get(`/visit/access-status`);
+  return response.data;
+};
+
 export {
   loginguest,
   loginbusiness,
@@ -50,4 +55,5 @@ export {
   adminVisit,
   adminModify,
   getMap,
+  getConfirmList,
 };

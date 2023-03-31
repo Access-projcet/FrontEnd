@@ -10,42 +10,70 @@ import markon from "../../utils/img/즐겨찾기_on_icon.png";
 import markoff from "../../utils/img/즐겨찾기_off_icon.png";
 import search from "../../utils/img/_search_icon.png";
 import CloseIcon from "@mui/icons-material/Close";
-
+import markerIcon from "../../utils/img/즐겨찾기_on_icon@3x.png";
 const { kakao } = window;
 export default function MapContainer5() {
+  //filter 기능
+  const [filteredMarkers, setFilteredMarkers] = useState([]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
-
   const [target, setTarget] = useState("");
   const HandlerTargetChange = (e) => {
     setTarget(e.target.value);
   };
 
   const { data } = useQuery("map", getMap);
-
-  console.log(data);
+  //filter List
+  const [searchResults, setSearchResults] = useState(null);
+  const handleSearch = async () => {
+    if (!data) {
+      return;
+    }
+    const filteredResults = data.data.filter((e) => {
+      const companyName = e.companyName || "";
+      const companyAddress = e.companyAddress || "";
+      const companyPhoneNum = e.companyPhoneNum || "";
+      return companyName.includes(target) || companyAddress.includes(target) || companyPhoneNum.includes(target);
+    });
+    setSearchResults(filteredResults);
+  };
+  ///
 
   useEffect(() => {
     if (data) {
-      data.data.map((e) =>
-        setMarkers((prev) => [
-          ...prev,
-          {
-            lat: e.x,
-            lng: e.y,
-            id: e.id,
-            companyName: e.companyName,
-            companyAddress: e.companyAddress,
-            companyPhoneNum: e.companyPhoneNum,
-          },
-        ]),
+      setSearchResults(data.data);
+      setMarkers(
+        data.data.map((e) => ({
+          lat: e.x,
+          lng: e.y,
+          id: e.id,
+          companyName: e.companyName,
+          companyAddress: e.companyAddress,
+          companyPhoneNum: e.companyPhoneNum,
+        })),
       );
     }
   }, [data]);
 
-  const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
-  const imageSize = new kakao.maps.Size(35, 40);
+  useEffect(() => {
+    let newVisibleMarkers = [];
+
+    if (searchResults) {
+      newVisibleMarkers = markers.filter((marker) => {
+        return searchResults.some((result) => result.id === marker.id);
+      });
+    } else {
+      newVisibleMarkers = markers;
+    }
+
+    setFilteredMarkers(newVisibleMarkers);
+  }, [searchResults, markers]);
+
+  // const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+  const imageSrc = markerIcon;
+  const imageSize = new kakao.maps.Size(25, 32);
   const imageOption = {
     offset: new kakao.maps.Point(20, 40),
   };
@@ -65,15 +93,20 @@ export default function MapContainer5() {
       <DivTemp />
       <DivCompanyList>
         <DivInput>
-          <InputText value={target} onChange={HandlerTargetChange} placeholder="검색어를 입력하세요." />
-          <StImgSearch src={search} alt="" />
+          <InputText
+            value={target}
+            onChange={HandlerTargetChange}
+            onKeyDown={(e) => e.keyCode === 13 && handleSearch()}
+            placeholder="검색어를 입력하세요."
+          />
+          <StImgSearch src={search} alt="" onClick={handleSearch} />
         </DivInput>
 
-        {data?.data.map((e) => (
+        {searchResults?.map((e) => (
           <DivListBox>
             <div></div>
 
-            <DivListContent>
+            <DivListContent key={e.id}>
               <DivCompanyName>
                 <StImg src={markon} alt={markoff} />
                 {e.companyName}
@@ -102,7 +135,7 @@ export default function MapContainer5() {
           }}
           level={3} // 지도의 확대 레벨
         >
-          {markers?.map((marker, index) => (
+          {filteredMarkers?.map((marker, index) => (
             <MapMarker
               key={index}
               position={{ lat: marker.lat, lng: marker.lng }}

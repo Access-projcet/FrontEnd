@@ -109,7 +109,7 @@ const StLogo = styled.img`
   position: absolute;
   left: 50%;
   top: 10%;
-  z-index: 99;
+  z-index: 0;
   transform: translate(-50%, -50%);
 `;
 
@@ -143,7 +143,8 @@ const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20vw;
+  min-width: 550px;
+  width: 25vw;
   background-color: white;
   border-radius: 30px;
   overflow: hidden;
