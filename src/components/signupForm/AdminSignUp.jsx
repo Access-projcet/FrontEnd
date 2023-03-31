@@ -9,6 +9,7 @@ import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Modal from "../modal/Modal";
 import SignUpCheckModal from "../modal/SignUpCheckModal";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -35,9 +36,10 @@ const AdminSignUp = () => {
   const mutation = useMutation(adminSignUpUser, {
     onSuccess: (response) => {
       queryClient.invalidateQueries("admin");
+      setIsModalOpen(true);
     },
-    onError: (error) => {
-      alert(error);
+    onError: (response) => {
+      alert(response.response.data.message);
     },
   });
 
@@ -68,10 +70,7 @@ const AdminSignUp = () => {
   const gotoLogin = () => {
     navigate("/");
   };
-  const HandlerModalOn = () => {
-    setIsModalOpen(true);
-    navigate("/");
-  };
+
   return (
     <>
       <DivLoginContainer>
@@ -294,7 +293,10 @@ const AdminSignUp = () => {
               },
             }}
           />
-
+          <FormControlLabel
+            control={<Checkbox value="allowExtraEmails" color="primary" required />}
+            label="개인정보 제공에 동의합니다"
+          />
           <StLoginBtn>
             <Button
               className={classes.button}
@@ -312,7 +314,6 @@ const AdminSignUp = () => {
                 },
               }}
               size="large"
-              onClick={HandlerModalOn}
             >
               Sign Up
             </Button>

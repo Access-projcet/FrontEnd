@@ -42,6 +42,11 @@ const GlobalStyle = createGlobalStyle`
         outline: 0;
         border:0;
         margin:0;
+        box-sizing:border-box;
+    }
+    body{
+        min-width:700px;
+        min-height: 550px;
     }
 `;
 

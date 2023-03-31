@@ -7,7 +7,7 @@ const loginguest = async (user) => {
 const loginbusiness = async (user) => {
   return await instance.post("/login/business", user);
 };
-
+ 
 const guestSignUpUser = async (user) => {
   return await instance.post(`/signup/guest`, user);
 };
@@ -40,9 +40,18 @@ const getMap = async () => {
   return response.data;
 };
 
+const submitconfirmform = async (user) => {
+  return await instance.post("/visit", user);
+};
+
+const submitlobbycheckin = async (user) =>  {
+  return await instance.post("access-in", user)
+}
+
+
 export {
   loginguest,
-  loginbusiness,
+  loginbusiness, submitconfirmform, submitlobbycheckin,
   guestSignUpUser,
   adminSignUpUser,
   guestdeleteVisit,
