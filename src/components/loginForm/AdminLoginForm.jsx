@@ -200,6 +200,8 @@ const fadeIn = keyframes`
 `;
 
 const DivLoginContainer = styled.div`
+  width: 500px;
+  height: 500px;
   margin-top: 40px;
   display: flex;
   flex-direction: column;
