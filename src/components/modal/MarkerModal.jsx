@@ -49,9 +49,9 @@ const ModalOverlay = styled.div`
 
 const ModalWrapper = styled.div`
   background-color: white;
-  width: 70%;
+  width: 40%;
   height: 700px;
-  border-radius: 4px;
+  /* border-radius: 20px; */
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
   display: flex;
   justify-content: center;
@@ -60,21 +60,23 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalInner = styled.div`
-  position: relative;
-  /* display: flex;
+  /* position: relative;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
-  flex-direction: column; */
-  width: 100%;
-  height: 100%;
+  flex-direction: column;
+  /* width: 100%;
+  height: 100%; */
 `;
 
 const ButtonClose = styled.button`
   width: 40px;
   height: 20px;
-  position: absolute;
-  top: 0;
-  right: 0;
+  position: relative;
+  /* top: 85px;
+  left: 1285px; */
+  top: -785px;
+  left: 725px;
   background-color: transparent;
   font-size: 35px;
   cursor: pointer;
