@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { removeCookie } from "./../../apis/cookies";
 const Navbar = () => {
   const logoutBtn = () => {
-    removeCookie("ACCESS_TOKEN");
+    removeCookie("ACCESS_TOKEN", { path: "/" });
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
   };
