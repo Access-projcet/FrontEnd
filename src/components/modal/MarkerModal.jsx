@@ -6,7 +6,7 @@ const MarkerModal = ({ children, onClose }) => {
   useEffect(() => {
     //현재위치에 고정
     document.body.style.cssText = `
-            position: fixed; 
+            position: fixed;
             top: -${window.scrollY}px;
             overflow-y: scroll;
             width: 100%;
@@ -24,7 +24,7 @@ const MarkerModal = ({ children, onClose }) => {
         <ModalWrapper>
           <ModalInner>
             {children}
-            <ButtonClose onClick={onClose}>X</ButtonClose>
+            <ButtonClose onClick={onClose}>x</ButtonClose>
           </ModalInner>
         </ModalWrapper>
       </ModalOverlay>
@@ -61,20 +61,21 @@ const ModalWrapper = styled.div`
 
 const ModalInner = styled.div`
   position: relative;
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column; */
   width: 100%;
   height: 100%;
 `;
 
 const ButtonClose = styled.button`
-  width: 20px;
+  width: 40px;
   height: 20px;
   position: absolute;
   top: 0;
   right: 0;
   background-color: transparent;
+  font-size: 35px;
   cursor: pointer;
 `;
