@@ -7,6 +7,9 @@ import mainImg from "../utils/img/background.png";
 import AdminSignUp from "../components/signupForm/AdminSignUp";
 import GuestSignUp from "../components/signupForm/GuestSignUp";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
+
+
+
 import Modal from "../components/modal/Modal";
 import SignUpCheckModal from "../components/modal/SignUpCheckModal";
 import { setMenu } from "../redux/store/LoginMenuSlice";
@@ -21,9 +24,7 @@ const SignUp = () => {
   const HandleChangeTab = (e, newValue) => {
     dispatch(setMenu(newValue));
   };
-  const HandlerModalOn = () => {
-    setIsModalOpen(true);
-  };
+
   return (
     <>
       <StLogo src={mainLogo} alt="VISITUS 로고" />
@@ -109,14 +110,6 @@ const SignUp = () => {
           {menu === "guest" ? <GuestSignUp /> : <AdminSignUp />}
         </DivLoginBox>
       </DivLoginContainer>
-      {isModalOpen && (
-        <Modal
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-          children={<SignUpCheckModal />}
-        />
-      )}
     </>
   );
 };
@@ -161,7 +154,7 @@ const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 550px;
+  width: 20vw;
   background-color: white;
   border-radius: 30px;
   overflow: hidden;

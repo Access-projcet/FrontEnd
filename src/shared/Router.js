@@ -9,7 +9,9 @@ import Company from "../pages/Company";
 import GuestMyPage from "../pages/GuestMyPage";
 
 import AdminMain from "../pages/AdminMain";
-import SignUp from "../pages/SignUp";
+import Lobby from "../pages/Lobby";
+import LobbyCheckIn from "../components/LobbyCheckIn";
+import LobbyCheckOut from "../components/LobbyCheckOut";
 
 const Router = () => {
   return (
@@ -24,6 +26,9 @@ const Router = () => {
         <Route path="/guest/confirmform" element={<ConfirmForm />} />
         <Route path="/guest/mypage" element={<GuestMyPage />} />
         <Route path="/admin/main" element={<AdminMain />} />
+        <Route path="/Lobby" element={<Lobby />} />
+        <Route path="/Lobby/checkin" element={<LobbyCheckIn />} />
+        <Route path="/Lobby/checkout" element={<LobbyCheckOut/>} />
       </Routes>
     </BrowserRouter>
   );
