@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../api/cookies";
 import { makeStyles } from "@mui/styles";
 import arrow from "../../utils/img/arrow_icon.png";
-import Modal from "../modal/Modal";
-import SignUpCheckModal from "../modal/SignUpCheckModal";
 
 //mui custom css
 
@@ -29,8 +27,6 @@ const useStyles = makeStyles({
 });
 
 export default function GuestLoginForm() {
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,6 +41,8 @@ export default function GuestLoginForm() {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
+
+      navigate("/guest/main");
     },
     onError: (error) => {
       console.log(error.response);
@@ -63,10 +61,7 @@ export default function GuestLoginForm() {
     mutation.mutate(user);
     console.log("로그인");
   };
-  const HandlerModalOn = () => {
-    setIsModalOpen(true);
-    navigate("/guest/main");
-  };
+
   return (
     <>
       <DivLoginContainer>
@@ -157,7 +152,6 @@ export default function GuestLoginForm() {
                 },
               }}
               size="large"
-              onClick={HandlerModalOn}
             >
               LOG IN
             </Button>

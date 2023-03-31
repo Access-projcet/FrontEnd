@@ -108,8 +108,8 @@ export default Login;
 const StLogo = styled.img`
   position: absolute;
   left: 50%;
-  top: 10%;
-  z-index: 99;
+  top: 5vw;
+  z-index: 0;
   transform: translate(-50%, -50%);
 `;
 const StMainBackground = styled.img`
@@ -141,7 +141,8 @@ const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 550px;
+  min-width: 500px;
+  width: 20vw;
   background-color: white;
   border-radius: 30px;
   overflow: hidden;

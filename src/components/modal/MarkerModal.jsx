@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Portal from "./Portal";
 
-const Modal = ({ children, onClose }) => {
+const MarkerModal = ({ children, onClose }) => {
+  useEffect(() => {
+    //현재위치에 고정
+    document.body.style.cssText = `
+            position: fixed; 
+            top: -${window.scrollY}px;
+            overflow-y: scroll;
+            width: 100%;
+            `;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
   return (
     <Portal>
       <ModalOverlay>
@@ -17,7 +32,7 @@ const Modal = ({ children, onClose }) => {
   );
 };
 
-export default Modal;
+export default MarkerModal;
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -26,7 +41,7 @@ const ModalOverlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,10 +49,8 @@ const ModalOverlay = styled.div`
 
 const ModalWrapper = styled.div`
   background-color: white;
-  width: 360px;
-  height: 218px;
-  background: #ffffff;
-  border-radius: 10px;
+  width: 70%;
+  height: 700px;
   border-radius: 4px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
   display: flex;
@@ -57,7 +70,7 @@ const ModalInner = styled.div`
 `;
 
 const ButtonClose = styled.button`
-  width: 40px;
+  width: 20px;
   height: 20px;
   position: absolute;
   top: 0;

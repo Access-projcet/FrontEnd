@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { getMap } from "../../api/api";
 import ConfirmForm from "../../pages/ConfirmForm";
-import Modal from "../modal/Modal";
+import MarkerModal from "../modal/MarkerModal";
 import markon from "../../utils/img/즐겨찾기_on_icon.png";
 import markoff from "../../utils/img/즐겨찾기_off_icon.png";
 import search from "../../utils/img/_search_icon.png";
@@ -39,13 +39,12 @@ export default function MapContainer5() {
             companyAddress: e.companyAddress,
             companyPhoneNum: e.companyPhoneNum,
           },
-        ])
+        ]),
       );
     }
   }, [data]);
 
-  const imageSrc =
-    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+  const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
   const imageSize = new kakao.maps.Size(35, 40);
   const imageOption = {
     offset: new kakao.maps.Point(20, 40),
@@ -66,11 +65,7 @@ export default function MapContainer5() {
       <DivTemp />
       <DivCompanyList>
         <DivInput>
-          <InputText
-            value={target}
-            onChange={HandlerTargetChange}
-            placeholder="검색어를 입력하세요."
-          />
+          <InputText value={target} onChange={HandlerTargetChange} placeholder="검색어를 입력하세요." />
           <StImgSearch src={search} alt="" />
         </DivInput>
 
@@ -87,9 +82,7 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
-              <ButtonVisitForm onClick={HandlerModalOn}>
-                방문 신청
-              </ButtonVisitForm>
+              <ButtonVisitForm onClick={HandlerModalOn}>방문 신청</ButtonVisitForm>
             </StBtnDiv>
           </DivListBox>
         ))}
@@ -132,25 +125,16 @@ export default function MapContainer5() {
                 <DivMapInfo className="info">
                   <DivMapTitle>
                     {selectedMarker.companyName}
-                    <BtnClose
-                      onClick={() => setSelectedMarker(null)}
-                      title="닫기"
-                    />
+                    <BtnClose onClick={() => setSelectedMarker(null)} title="닫기" />
                   </DivMapTitle>
 
                   <div className="body">
                     <StMapBody>
-                      <div className="ellipsis">
-                        {selectedMarker.companyAddress}
-                      </div>
-                      <div className="jibun ellipsis">
-                        {selectedMarker.companyPhoneNum}
-                      </div>
+                      <div className="ellipsis">{selectedMarker.companyAddress}</div>
+                      <div className="jibun ellipsis">{selectedMarker.companyPhoneNum}</div>
                     </StMapBody>
                     <DivMapButton>
-                      <BtnMapButton onClick={HandlerModalOn}>
-                        방문 신청
-                      </BtnMapButton>
+                      <BtnMapButton onClick={HandlerModalOn}>방문 신청</BtnMapButton>
                     </DivMapButton>
                   </div>
                 </DivMapInfo>
@@ -162,7 +146,7 @@ export default function MapContainer5() {
       </DivMapContainer>
 
       {isModalOpen && (
-        <Modal
+        <MarkerModal
           onClose={() => {
             setIsModalOpen(false);
           }}
