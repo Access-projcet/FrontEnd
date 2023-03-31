@@ -3,7 +3,7 @@ import MaterialReactTable from "material-react-table";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { useQuery } from "react-query";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, RoomTwoTone } from "@mui/icons-material";
 import { useMutation } from "react-query";
 import { guestdeleteVisit, guestVisit } from "../api/api";
 import { color } from "../utils/styles/color";
@@ -49,13 +49,13 @@ export default function GuestMyPageTable() {
     },
   });
 
-  const HandlerDeleteVisit = (id) => {
-    console.log(id);
-    deletemutaion.mutate(id);
+  const HandlerDeleteVisit = (row) => {
+    console.log("row", row.original.id);
+    deletemutaion.mutate(row.original.id);
   };
 
-  const HandlerEditVisit = (id) => {
-    console.log("edit;", id);
+  const HandlerEditVisit = (row) => {
+    console.log("edit;", row.original.id);
     // deletemutaion.mutate(id);
   };
 
@@ -135,14 +135,11 @@ export default function GuestMyPageTable() {
           fontSize: "15px",
           backgroundColor: `${color.tableHeader}`,
           color: `${color.textWhite}`,
-          textAlign: "center",
         },
       }}
       muiTableBodyCellProps={{
         //simple styling with the `sx` prop, works just like a style prop in this example
-        sx: {
-          textAlign: "center",
-        },
+        sx: {},
       }}
       manualFiltering
       manualPagination
@@ -173,7 +170,7 @@ export default function GuestMyPageTable() {
           <Tooltip arrow placement="left" title="Edit">
             <IconButton
               onClick={(e) => {
-                HandlerEditVisit(row.id);
+                HandlerEditVisit(row);
               }}
             >
               <Edit />
@@ -182,8 +179,8 @@ export default function GuestMyPageTable() {
           <Tooltip arrow placement="right" title="Delete">
             <IconButton
               color="error"
-              onClick={() => {
-                HandlerDeleteVisit(row.id);
+              onClick={(e) => {
+                HandlerDeleteVisit(row);
                 console.log("del");
               }}
             >

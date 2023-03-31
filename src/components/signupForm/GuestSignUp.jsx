@@ -9,6 +9,7 @@ import { makeStyles } from "@mui/styles";
 import arrow from "../../utils/img/arrow_icon.png";
 import Modal from "../modal/Modal";
 import SignUpCheckModal from "../modal/SignUpCheckModal";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -29,6 +30,12 @@ const useStyles = makeStyles({
 
 export default function SignUp() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  //validation 용
+  const [name, setName] = React.useState("");
+  const [userId, setUserId] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [passwordCheck, setPasswordCheck] = React.useState("");
+  const [phoneNum, setPhoneNum] = React.useState("");
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -69,6 +76,8 @@ export default function SignUp() {
             id="name"
             label="이름"
             autoFocus
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -86,7 +95,7 @@ export default function SignUp() {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            helperText={name.trim() === "" ? "이름을 입력해주세요" : " "}
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -100,6 +109,8 @@ export default function SignUp() {
             label="아이디"
             name="userId"
             className={classes.root}
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
             sx={{
               "& label": {
                 "&.Mui-focused": {
@@ -116,7 +127,12 @@ export default function SignUp() {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)}
+            helperText={
+              userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)
+                ? "아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요"
+                : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -131,6 +147,8 @@ export default function SignUp() {
             type="password"
             id="password"
             className={classes.root}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             sx={{
               "& label": {
                 "&.Mui-focused": {
@@ -147,7 +165,12 @@ export default function SignUp() {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(password)}
+            helperText={
+              password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(password)
+                ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
+                : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -161,6 +184,8 @@ export default function SignUp() {
             label="비밀번호 확인"
             type="password"
             id="passwordCheck"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -178,7 +203,10 @@ export default function SignUp() {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={passwordCheck.trim() !== "" && password !== passwordCheck}
+            helperText={
+              passwordCheck.trim() !== "" && password !== passwordCheck ? "비밀번호가 일치하지 않습니다." : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -192,6 +220,8 @@ export default function SignUp() {
             id="phoneNum"
             label="전화번호"
             name="phoneNum"
+            value={phoneNum}
+            onChange={(e) => setPhoneNum(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -209,12 +239,21 @@ export default function SignUp() {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)}
+            helperText={
+              phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
+                ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
+                : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
               },
             }}
+          />
+          <FormControlLabel
+            control={<Checkbox value="allowExtraEmails" color="primary" required />}
+            label="개인정보 제공에 동의합니다"
           />
           <StLoginBtn>
             <Button
@@ -270,7 +309,12 @@ const DivLoginContainer = styled.div`
   animation: ${fadeIn} 1s linear;
   justify-content: space-around;
 `;
-const StForm = styled.form``;
+const StForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 500px;
+`;
 const StLoginBtn = styled.div`
   position: relative;
 `;
