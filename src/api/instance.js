@@ -26,7 +26,7 @@ instance.interceptors.request.use(
   (error) => {
     console.log("데이터 보내는중 오류!");
     return Promise.reject(error);
-  },
+  }
 );
 
 instance.interceptors.response.use(
@@ -62,7 +62,7 @@ instance.interceptors.response.use(
 
         //리프레쉬토큰을 받아와서 헤더에 추가
         const refresh_token = localStorage.getItem("REFRESH_TOKEN");
-        originalRequest.headers["Refresh_Token"] = `Bearer ${refresh_token}`;
+        originalRequest.headers["RefreshToken"] = `Bearer ${refresh_token}`;
         //재요청
         console.log("재요청합니다", originalRequest);
         return instance(originalRequest);
@@ -80,6 +80,6 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 export default instance;
