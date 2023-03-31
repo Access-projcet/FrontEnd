@@ -30,6 +30,14 @@ const useStyles = makeStyles({
 
 const AdminSignUp = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  //validation 용
+  const [userId, setUserId] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [businessNum, setBusinessNum] = useState("");
+  const [companyToken, setCompanyToken] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -80,6 +88,8 @@ const AdminSignUp = () => {
             required
             fullWidth
             id="companyName"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
             label="회사 이름"
             autoFocus
             className={classes.root}
@@ -99,7 +109,8 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={companyName.trim() === ""}
+            helperText={companyName.trim() === "" ? "회사이름을 입력해주세요" : " "}
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -113,6 +124,8 @@ const AdminSignUp = () => {
             id="businessNum"
             label="사업자 등록번호"
             name="businessNum"
+            value={businessNum}
+            onChange={(e) => setBusinessNum(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -130,7 +143,12 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={businessNum.trim() !== "" && !/^\d{3}-\d{3}-\d{4}$/.test(businessNum)}
+            helperText={
+              businessNum.trim() !== "" && !/^\d{3}-\d{3}-\d{4}$/.test(businessNum)
+                ? "사업자 등록번호는 XXX-XXX-XXXX 형식의 숫자만 입력 가능합니다"
+                : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -144,6 +162,8 @@ const AdminSignUp = () => {
             id="companyToken"
             label="회사 코드"
             name="companyToken"
+            value={companyToken}
+            onChange={(e) => setCompanyToken(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -161,7 +181,7 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            helperText={companyToken.trim() === "" ? "회사코드를 입력해주세요" : " "}
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -175,6 +195,8 @@ const AdminSignUp = () => {
             id="userId"
             label="ID"
             name="userId"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -192,7 +214,12 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)}
+            helperText={
+              userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)
+                ? "아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요"
+                : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -207,6 +234,8 @@ const AdminSignUp = () => {
             label="Password"
             type="password"
             id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -224,7 +253,12 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(password)}
+            helperText={
+              password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(password)
+                ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
+                : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -238,6 +272,8 @@ const AdminSignUp = () => {
             fullWidth
             id="name"
             label="이름"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -255,7 +291,7 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            helperText={name.trim() === "" ? "이름을 입력해주세요" : " "}
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -269,6 +305,8 @@ const AdminSignUp = () => {
             id="phoneNum"
             label="전화번호"
             name="phoneNum"
+            value={phoneNum}
+            onChange={(e) => setPhoneNum(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -286,7 +324,12 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText="Please enter a valid input"
+            error={phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)}
+            helperText={
+              phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
+                ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
+                : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -354,7 +397,12 @@ const DivLoginContainer = styled.div`
   animation: ${fadeIn} 1s linear;
   justify-content: space-around;
 `;
-const StForm = styled.form``;
+const StForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 500px;
+`;
 const StLoginBtn = styled.div`
   position: relative;
 `;

@@ -46,7 +46,7 @@ export default function AdminApproveList() {
 
   const adminModifyMutation = useMutation(adminModify, {
     onSuccess: (data) => {
-      console.log(data);
+      console.log("succecc", data);
       alert("방문기록 수정 성공");
       refetch();
     },
@@ -56,17 +56,17 @@ export default function AdminApproveList() {
     },
   });
 
-  const HandlerApprove = (id) => {
-    console.log("승인 누름", id);
+  const HandlerApprove = (row) => {
+    console.log("승인 누름", row.original.id);
     adminModifyMutation.mutate({
-      id,
+      id: row.original.id,
       status: "2",
     });
   };
-  const HandlerReject = (id) => {
-    console.log("거절 누름", id);
+  const HandlerReject = (row) => {
+    console.log("거절 누름", row.original.id);
     adminModifyMutation.mutate({
-      id,
+      id: row.original.id,
       status: "3",
     });
   };
@@ -95,13 +95,13 @@ export default function AdminApproveList() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 300,
+        size: 250,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
         accessorKey: "startDate",
         header: "방문일자",
-        size: 200,
+        size: 300,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
       // {
@@ -181,7 +181,7 @@ export default function AdminApproveList() {
                 <IconButton
                   color="success"
                   onClick={() => {
-                    HandlerApprove(row.id);
+                    HandlerApprove(row);
                   }}
                 >
                   <TaskAltIcon />
@@ -191,7 +191,7 @@ export default function AdminApproveList() {
                 <IconButton
                   color="error"
                   onClick={() => {
-                    HandlerReject(row.id);
+                    HandlerReject(row);
                   }}
                 >
                   <NotInterestedIcon />
