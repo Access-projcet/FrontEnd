@@ -2,16 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Map, CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+
 import { getMap } from "../../api/api";
 import ConfirmForm from "../../pages/ConfirmForm";
-import CreateForm from "../modal/CreateForm";
-import Modal from "../modal/Modal";
+import MarkerModal from "../modal/MarkerModal";
+import markon from "../../utils/img/즐겨찾기_on_icon.png";
+import markoff from "../../utils/img/즐겨찾기_off_icon.png";
+import search from "../../utils/img/_search_icon.png";
+import CloseIcon from "@mui/icons-material/Close";
 
 const { kakao } = window;
 export default function MapContainer5() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
+
+  const [target, setTarget] = useState("");
+  const HandlerTargetChange = (e) => {
+    setTarget(e.target.value);
+  };
 
   const { data } = useQuery("map", getMap);
 
@@ -27,6 +36,8 @@ export default function MapContainer5() {
             lng: e.y,
             id: e.id,
             companyName: e.companyName,
+            companyAddress: e.companyAddress,
+            companyPhoneNum: e.companyPhoneNum,
           },
         ]),
       );
@@ -38,7 +49,6 @@ export default function MapContainer5() {
   const imageOption = {
     offset: new kakao.maps.Point(20, 40),
   };
-  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
   const handleMarkerClick = (marker) => {
     setSelectedMarker(marker);
@@ -52,14 +62,29 @@ export default function MapContainer5() {
 
   return (
     <DivMap>
+      <DivTemp />
       <DivCompanyList>
+        <DivInput>
+          <InputText value={target} onChange={HandlerTargetChange} placeholder="검색어를 입력하세요." />
+          <StImgSearch src={search} alt="" />
+        </DivInput>
+
         {data?.data.map((e) => (
-          <div>
-            <h3>{e.companyName}</h3>
-            <p>{e.businessNum}</p>
-            <p>{e.businessCode}</p>
-            <button>방문하기 {e.id}</button>
-          </div>
+          <DivListBox>
+            <div></div>
+
+            <DivListContent>
+              <DivCompanyName>
+                <StImg src={markon} alt={markoff} />
+                {e.companyName}
+              </DivCompanyName>
+              <DivCompanycontent>{e.companyAddress}</DivCompanycontent>
+              <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
+            </DivListContent>
+            <StBtnDiv>
+              <ButtonVisitForm onClick={HandlerModalOn}>방문 신청</ButtonVisitForm>
+            </StBtnDiv>
+          </DivListBox>
         ))}
       </DivCompanyList>
       <DivMapContainer>
@@ -90,22 +115,30 @@ export default function MapContainer5() {
             />
           ))}
           {selectedMarker && (
-            <CustomOverlayMap position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}>
-              <div className="wrap">
-                <div className="info">
-                  <div className="title">
+            <CustomOverlayMap
+              position={{
+                lat: selectedMarker.lat,
+                lng: selectedMarker.lng,
+              }}
+            >
+              <DivMapWrapper>
+                <DivMapInfo className="info">
+                  <DivMapTitle>
                     {selectedMarker.companyName}
-                    <div className="close" onClick={() => setSelectedMarker(null)} title="닫기"></div>
-                  </div>
+                    <BtnClose onClick={() => setSelectedMarker(null)} title="닫기" />
+                  </DivMapTitle>
+
                   <div className="body">
-                    <div className="desc">
-                      <div className="ellipsis">이클1</div>
-                      <div className="jibun ellipsis">이클2</div>
-                      <button onClick={HandlerModalOn}>모달 on</button>
-                    </div>
+                    <StMapBody>
+                      <div className="ellipsis">{selectedMarker.companyAddress}</div>
+                      <div className="jibun ellipsis">{selectedMarker.companyPhoneNum}</div>
+                    </StMapBody>
+                    <DivMapButton>
+                      <BtnMapButton onClick={HandlerModalOn}>방문 신청</BtnMapButton>
+                    </DivMapButton>
                   </div>
-                </div>
-              </div>
+                </DivMapInfo>
+              </DivMapWrapper>
               ;
             </CustomOverlayMap>
           )}
@@ -113,7 +146,7 @@ export default function MapContainer5() {
       </DivMapContainer>
 
       {isModalOpen && (
-        <Modal
+        <MarkerModal
           onClose={() => {
             setIsModalOpen(false);
           }}
@@ -126,10 +159,9 @@ export default function MapContainer5() {
 
 const DivMap = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 93vh;
   display: flex;
   flex-direction: row;
-  background-color: #f8f8f8;
 `;
 const DivMapContainer = styled.div`
   width: 100%;
@@ -137,8 +169,8 @@ const DivMapContainer = styled.div`
   display: flex;
 `;
 const DivCompanyList = styled.div`
-  margin-left: 360px;
   width: 480px;
+  min-width: 480px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -150,4 +182,154 @@ const DivCompanyList = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 2px;
   }
+`;
+
+const DivInput = styled.div`
+  position: relative;
+  width: 100%;
+  height: 52px;
+  background-color: #ffffff;
+  border-radius: 32px;
+  margin-top: 10px;
+`;
+const InputText = styled.input`
+  width: 90%;
+  height: 52px;
+  border: none;
+  outline: none;
+  background-color: #ffffff;
+  padding: 0 20px;
+  font-size: 16px;
+  border: 2px solid #636fd7;
+  border-radius: 32px;
+  &::placeholder {
+    color: #a0a6d8; // 변경하고자 하는 색상으로 바꿔주세요
+  }
+`;
+const StImgSearch = styled.img`
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+`;
+
+const DivTemp = styled.div`
+  width: 360px;
+  background-color: #f8f8f8;
+`;
+
+const DivListBox = styled.div`
+  display: grid;
+  grid-template-columns: 49px 1fr 135px;
+  grid-template-rows: 1fr;
+  grid-template-areas: "img content button";
+  width: 100%;
+  height: 133px;
+  margin-top: 10px;
+  background-color: #ffffff;
+`;
+const DivListContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 5px;
+  & > * {
+    margin: 8px 0;
+  }
+`;
+
+const StBtnDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+`;
+const ButtonVisitForm = styled.button`
+  width: 126px;
+  height: 52px;
+  background-color: #636fd7;
+  border-radius: 32px;
+  color: #ffffff;
+  margin-right: 8px;
+  cursor: pointer;
+`;
+
+const DivCompanyName = styled.div`
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+`;
+const DivCompanycontent = styled.div`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+`;
+
+const StImg = styled.img`
+  margin-right: 8px;
+`;
+
+const DivMapWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 318px;
+  height: 201px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+`;
+
+const DivMapInfo = styled.div`
+  width: 90%;
+  height: 85%;
+  & > * {
+    margin: 5px 0;
+  }
+`;
+
+const DivMapTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+`;
+
+const BtnClose = styled(CloseIcon)`
+  cursor: pointer;
+`;
+
+const StMapBody = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  & > * {
+    margin: 8px 0;
+  }
+`;
+
+const DivMapButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 80px;
+`;
+const BtnMapButton = styled.button`
+  width: 126px;
+  height: 52px;
+  background-color: #636fd7;
+  border-radius: 32px;
+  border: 2px solid #636fd7;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
 `;

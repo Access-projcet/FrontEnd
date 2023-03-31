@@ -5,10 +5,7 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -22,68 +19,6 @@
     <title>React App</title>
   </head>
   <body>
-    <script>
-      var mapContainer = document.getElementById("map"),
-        mapOption = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667),
-          level: 3,
-        };
-
-      var map = new kakao.maps.Map(mapContainer, mapOption);
-
-      var positions = [
-        {
-          content: "<div>place1</div>",
-          latlng: new kakao.maps.LatLng(33.450705, 126.570677),
-        },
-        {
-          content: "<div>place2</div>",
-          latlng: new kakao.maps.LatLng(33.450936, 126.569477),
-        },
-        {
-          content: "<div>place3</div>",
-          latlng: new kakao.maps.LatLng(33.450879, 126.56994),
-        },
-        {
-          content: "<div>place4</div>",
-          latlng: new kakao.maps.LatLng(33.451393, 126.570738),
-        },
-      ];
-
-      for (var i = 0; i < positions.length; i++) {
-        var marker = new kakao.maps.Marker({
-          map: map,
-          position: positions[i].latlng, // 마커의 위치
-        });
-
-        var infowindow = new kakao.maps.InfoWindow({
-          content: positions[i].content,
-        });
-
-        kakao.maps.event.addListener(
-          marker,
-          "mouseover",
-          makeOverListener(map, marker, infowindow)
-        );
-        kakao.maps.event.addListener(
-          marker,
-          "mouseout",
-          makeOutListener(infowindow)
-        );
-      }
-
-      function makeOverListener(map, marker, infowindow) {
-        return function () {
-          infowindow.open(map, marker);
-        };
-      }
-
-      function makeOutListener(infowindow) {
-        return function () {
-          infowindow.close();
-        };
-      }
-    </script>
     <div id="root"></div>
     <div id="modal"></div>
   </body>

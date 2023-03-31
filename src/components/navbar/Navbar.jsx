@@ -21,7 +21,11 @@ const Navbar = () => {
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
-                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
+                <StLogOutImg
+                  src={logout}
+                  alt="logoutImg"
+                  onClick={logoutBtn}
+                ></StLogOutImg>
               </Link>
             </StLogOutContainer>
           </StUser>

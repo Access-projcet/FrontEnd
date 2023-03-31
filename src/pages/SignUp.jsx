@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Tab, Tabs } from "@mui/material";
-import GuestLoginForm from "../components/loginForm/GuestLoginForm";
-import AdminLoginForm from "../components/loginForm/AdminLoginForm";
-
 import mainImg from "../utils/img/background.png";
+import AdminSignUp from "../components/signupForm/AdminSignUp";
+import GuestSignUp from "../components/signupForm/GuestSignUp";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
 
-const Login = () => {
+const SignUp = () => {
   //로그인 타입 지정
   const [loginType, setLoginType] = useState("guest");
   const HandleChangeTab = (e, newValue) => {
@@ -19,6 +18,7 @@ const Login = () => {
     <>
       <StLogo src={mainLogo} alt="VISITUS 로고" />
       <StMainBackground src={mainImg} alt="VISITUS 메인" />
+
       <DivLoginContainer>
         <DivLoginBox>
           <DivLoginType>
@@ -29,7 +29,7 @@ const Login = () => {
               TabIndicatorProps={{ sx: { bgcolor: "white", width: "500" } }}
             >
               <Tab
-                label="게스트로그인"
+                label="게스트 회원가입"
                 value="guest"
                 sx={{
                   backgroundColor: "lightgray",
@@ -62,7 +62,7 @@ const Login = () => {
                 }}
               />
               <Tab
-                label="협력사로그인"
+                label="협력사 회원가입"
                 value="admin"
                 sx={{
                   backgroundColor: "lightgray",
@@ -96,22 +96,23 @@ const Login = () => {
               />
             </Tabs>
           </DivLoginType>
-          {loginType === "guest" ? <GuestLoginForm /> : <AdminLoginForm />}
+          {loginType === "guest" ? <GuestSignUp /> : <AdminSignUp />}
         </DivLoginBox>
       </DivLoginContainer>
     </>
   );
 };
 
-export default Login;
+export default SignUp;
 
 const StLogo = styled.img`
   position: absolute;
   left: 50%;
-  top: 5vw;
-  z-index: 0;
+  top: 10%;
+  z-index: 99;
   transform: translate(-50%, -50%);
 `;
+
 const StMainBackground = styled.img`
   position: absolute;
   z-index: -1;
@@ -121,6 +122,7 @@ const StMainBackground = styled.img`
   height: 100vh;
   transform: translate(-50%, -50%);
 `;
+
 const DivLoginContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -141,7 +143,6 @@ const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 500px;
   width: 20vw;
   background-color: white;
   border-radius: 30px;
