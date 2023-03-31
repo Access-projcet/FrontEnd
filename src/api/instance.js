@@ -33,7 +33,7 @@ instance.interceptors.response.use(
   //서버로부터 정상 응답을 받는 경우
   (response) => {
     console.log("response", response);
-    //request에 토큰 두개 담아서 보냈으니? access가 만료되었으면 알아서 access를 재발급해준다고 하였음.
+      //request에 토큰 두개 담아서 보냈으니? access가 만료되었으면 알아서 access를 재발급해준다고 하였음.
     // 그럼 우선적으로 access_token을 받아와 기존 Cookie에 저장되어있는 값이랑 비교해서 다르면 교체?
     // 그럼 refresh까지 만료되었다면? 어떤 메시지를 줄것인가?
     // console.log("intercepter response", response);
@@ -62,7 +62,7 @@ instance.interceptors.response.use(
 
         //리프레쉬토큰을 받아와서 헤더에 추가
         const refresh_token = localStorage.getItem("REFRESH_TOKEN");
-        originalRequest.headers["Refresh_Token"] = `Bearer ${refresh_token}`;
+        originalRequest.headers["RefreshToken"] = `Bearer ${refresh_token}`;
         //재요청
         console.log("재요청합니다", originalRequest);
         return instance(originalRequest);
