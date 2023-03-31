@@ -12,6 +12,8 @@ import AdminMain from "../pages/AdminMain";
 import Lobby from "../pages/Lobby";
 import LobbyCheckIn from "../components/LobbyCheckIn";
 import LobbyCheckOut from "../components/LobbyCheckOut";
+import SignUp from "../pages/SignUp"
+
 
 const Router = () => {
   return (
