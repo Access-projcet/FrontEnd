@@ -10,8 +10,6 @@ import GuestMyPage from "../pages/GuestMyPage";
 
 import AdminMain from "../pages/AdminMain";
 import Lobby from "../pages/Lobby";
-import LobbyCheckIn from "../components/LobbyCheckIn";
-import LobbyCheckOut from "../components/LobbyCheckOut";
 import SignUp from "../pages/SignUp"
 
 
@@ -28,6 +26,8 @@ const Router = () => {
         <Route path="/guest/confirmform" element={<ConfirmForm />} />
         <Route path="/guest/mypage" element={<GuestMyPage />} />
         <Route path="/admin/main" element={<AdminMain />} />
+        <Route path="/lobby" element={<Lobby />} />
+
       </Routes>
     </BrowserRouter>
   );
