@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { adminSignUpUser } from "../../apis/api";
+import { adminSignUpUser } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";

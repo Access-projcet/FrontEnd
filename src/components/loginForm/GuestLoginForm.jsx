@@ -35,11 +35,7 @@ export default function GuestLoginForm() {
     onSuccess: (data) => {
       console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
-      localStorage.setItem("name", data.data.data.name);
-
-      setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem("REFRESH_TOKEN", data.headers.refresh_token.split(" ")[1]);
+      localStorage.setItem("REFRESHTOKEN", data.headers.RefreshToken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
 
       navigate("/guest/main");
