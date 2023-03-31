@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Tab, Tabs } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+
 import mainImg from "../utils/img/background.png";
 import AdminSignUp from "../components/signupForm/AdminSignUp";
 import GuestSignUp from "../components/signupForm/GuestSignUp";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
 import Modal from "../components/modal/Modal";
 import SignUpCheckModal from "../components/modal/SignUpCheckModal";
+import { setMenu } from "../redux/store/LoginMenuSlice";
 
 const SignUp = () => {
   //로그인 타입 지정
-  const [loginType, setLoginType] = useState("guest");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { menu } = useSelector((state) => state.LoginMenuSlice);
+  const dispatch = useDispatch();
+
   const HandleChangeTab = (e, newValue) => {
-    console.log(newValue);
-    setLoginType(newValue);
+    dispatch(setMenu(newValue));
   };
   const HandlerModalOn = () => {
     setIsModalOpen(true);
@@ -28,7 +33,7 @@ const SignUp = () => {
         <DivLoginBox>
           <DivLoginType>
             <Tabs
-              value={loginType}
+              value={menu}
               onChange={HandleChangeTab}
               variant="fullWidth"
               TabIndicatorProps={{ sx: { bgcolor: "white", width: "500" } }}
@@ -101,7 +106,7 @@ const SignUp = () => {
               />
             </Tabs>
           </DivLoginType>
-          {loginType === "guest" ? <GuestSignUp /> : <AdminSignUp />}
+          {menu === "guest" ? <GuestSignUp /> : <AdminSignUp />}
         </DivLoginBox>
       </DivLoginContainer>
       {isModalOpen && (
