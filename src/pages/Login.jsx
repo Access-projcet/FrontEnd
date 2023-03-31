@@ -141,8 +141,8 @@ const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 500px;
-  width: 20vw;
+  min-width: 550px;
+  width: 25vw;
   background-color: white;
   border-radius: 30px;
   overflow: hidden;
