@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
-const ConfirmForm = () => {
+const ConfirmForm = ({ onClose }) => {
   const [location, setLocation] = useState("");
   const [place, setPlace] = useState("");
   const [target, setTarget] = useState("");
@@ -172,7 +172,7 @@ const ConfirmForm = () => {
           ></input>
           <Msg>
             <p>
-              * 시간은 24시간 기준으로 입력해주세요. 예시2023-03-30, 13:40,
+              * 시간은 24시간 기준으로 입력해주세요. 예시 2023-03-30, 13:40,
               2023-03-31, 14:00
             </p>
           </Msg>
@@ -198,6 +198,7 @@ const ConfirmForm = () => {
             }}
           />
         </Visitor>
+        <CancelBtn onClick={onClose}>취소</CancelBtn>
         <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
       </MainWrapper>
     </>
@@ -210,16 +211,17 @@ const Header = styled.div`
   background: grey;
   position: relative;
   top: 0;
-  width: 97%;
+  width: 100;
   display: flex;
   color: white;
   padding: 20px;
   border-radius: 4px;
-  font-size: large;
+  font-size: larger;
+  font-weight: bold;
 `;
 
 const MainWrapper = styled.div`
-  /* background: grey; */
+  background: white;
   /* display: flex;
   flex-direction: column;
   justify-content: center;
@@ -267,17 +269,36 @@ const SubmitBtn = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 15px;
 
   position: relative;
-  left: 600px;
-  top: 50px;
-  height: 30px;
+  left: 670px;
+  top: 0;
+  height: 25px;
+  width: 100px;
+`;
+
+const CancelBtn = styled.div`
+  border-radius: 35px;
+  cursor: pointer;
+
+  color: white;
+  background: #656565;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+  position: relative;
+  left: 530px;
+  top: 55px;
+  height: 25px;
   width: 100px;
 `;
 
 const Msg = styled.div`
-  /* background: grey; */
   display: flex;
   flex-direction: column;
   justify-content: center;
