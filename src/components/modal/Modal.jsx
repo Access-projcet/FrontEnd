@@ -48,10 +48,10 @@ const ModalWrapper = styled.div`
 
 const ModalInner = styled.div`
   position: relative;
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column; */
   width: 100%;
   height: 100%;
 `;
@@ -63,5 +63,6 @@ const ButtonClose = styled.button`
   top: 0;
   right: 0;
   background-color: transparent;
+  font-size: xx-large;
   cursor: pointer;
 `;
