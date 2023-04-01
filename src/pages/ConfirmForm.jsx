@@ -5,9 +5,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
-const ConfirmForm = ({ onClose }) => {
-  const [location, setLocation] = useState("");
-  const [place, setPlace] = useState("");
+const ConfirmForm = ({ onClose, company }) => {
+  const [location, setLocation] = useState(company.companyName);
+  const [place, setPlace] = useState(company.companyAddress);
   const [target, setTarget] = useState("");
   const [purpose, setPurpose] = useState("");
   const [startDate, setStartDate] = useState("");

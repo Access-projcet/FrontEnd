@@ -1,20 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
 import { Link } from "react-router-dom";
 import { removeCookie } from "./../../apis/cookies";
+
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { menu } = useSelector((state) => state.LoginMenuSlice);
+
   const logoutBtn = () => {
     removeCookie("ACCESS_TOKEN", { path: "/" });
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
+    localStorage.removeItem("usertype");
+  };
+
+  const HandlerMain = () => {
+    menu === "guest" ? navigate("/guest/main") : navigate("/admin/main");
   };
   return (
     <>
       <StNavBar>
         <StNavbarContainer>
-          <StLogo src={logo} alt="visitus.logo" />
+          <StLogo src={logo} alt="visitus.logo" onClick={HandlerMain} />
           <StUser>
             <StName>{localStorage.getItem("name")}님 반갑습니다</StName>
             <StLogOutContainer>
@@ -50,7 +62,9 @@ const StNavbarContainer = styled.div`
   margin: 0 auto;
 `;
 
-const StLogo = styled.img``;
+const StLogo = styled.img`
+  cursor: pointer;
+`;
 
 const StUser = styled.div`
   display: flex;

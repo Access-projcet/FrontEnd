@@ -20,11 +20,16 @@ export default function MapContainer5() {
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [target, setTarget] = useState("");
+  const [company, setCompany] = useState({});
+
   const HandlerTargetChange = (e) => {
     setTarget(e.target.value);
   };
 
-  const { data } = useQuery("map", getMap);
+  const { data } = useQuery("map", getMap, {
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
   //filter List
   const [searchResults, setSearchResults] = useState(null);
   const handleSearch = async () => {
@@ -86,9 +91,8 @@ export default function MapContainer5() {
     setSelectedMarker(marker);
   };
 
-  console.log(markers);
-
-  const HandlerModalOn = () => {
+  const HandlerModalOn = (e) => {
+    setCompany(e);
     setIsModalOpen(true);
   };
 
@@ -119,7 +123,9 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
-              <ButtonVisitForm onClick={HandlerModalOn}>
+
+              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>
+
                 방문 신청
               </ButtonVisitForm>
             </StBtnDiv>
@@ -180,7 +186,11 @@ export default function MapContainer5() {
                       </div>
                     </StMapBody>
                     <DivMapButton>
-                      <BtnMapButton onClick={HandlerModalOn}>
+
+                      <BtnMapButton
+                        onClick={() => HandlerModalOn(selectedMarker)}
+                      >
+
                         방문 신청
                       </BtnMapButton>
                     </DivMapButton>
@@ -203,6 +213,9 @@ export default function MapContainer5() {
               onClose={() => {
                 setIsModalOpen(false);
               }}
+
+              company={company}
+
             />
           }
         />

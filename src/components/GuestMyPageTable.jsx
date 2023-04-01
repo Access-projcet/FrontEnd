@@ -37,7 +37,11 @@ export default function GuestMyPageTable() {
       return guestVisit(queryParams);
     },
     {
+      //query key가 변경되어도 새 데이터가 요청되는 동안 마지막 성공fetch data로 유지
+      //이후 query 요청이 성공시에 새로운값으로 변경.
       keepPreviousData: true,
+      //캐싱타임을 0으로 줘서 필터링시에 쓸데없는 캐싱을 하지않고 새로운 데이터를 요청하게함.
+      cacheTime: 0,
     }
   );
 
