@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Tab, Tabs } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import GuestLoginForm from "../components/loginForm/GuestLoginForm";
 import AdminLoginForm from "../components/loginForm/AdminLoginForm";
 import mainImg from "../utils/img/background.png";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
 import { setMenu } from "../redux/store/LoginMenuSlice";
+import { getCookie } from "../api/cookies";
 
 const Login = () => {
   //로그인 타입 지정
-  const [loginType, setLoginType] = useState("guest");
   const { menu } = useSelector((state) => state.LoginMenuSlice);
   const dispatch = useDispatch();
+
+  //로그인되어있을시 로그인페이지 이동 막고 메인으로 이동 => acc 토큰 여부로 확인
+  const navigate = useNavigate();
+  const isToken = getCookie("ACCESS_TOKEN");
+
+  useEffect(() => {
+    if (isToken) {
+      console.log("여기요;;");
+      const usertype = localStorage.getItem("usertype");
+      usertype === "guest" ? navigate("/guest/main") : navigate("/admin/main");
+    }
+  }, [isToken, navigate]);
+
   const HandleChangeTab = (e, newValue) => {
     console.log(newValue);
     dispatch(setMenu(newValue));
