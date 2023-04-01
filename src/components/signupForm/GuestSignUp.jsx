@@ -167,15 +167,11 @@ export default function SignUp() {
             }}
             error={
               password.trim() !== "" &&
-              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(
-                password
-              )
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
             }
             helperText={
               password.trim() !== "" &&
-              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(
-                password
-              )
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
                 ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                 : " "
             }
@@ -340,10 +336,10 @@ const StloginImg = styled.img`
   right: 10%;
 `;
 
-const StFindBtn = styled.div`
-  color: black;
-  margin-top: 30px;
-`;
+// const StFindBtn = styled.div`
+//   color: black;
+//   margin-top: 30px;
+// `;
 
 const StAlready = styled.button`
   color: gray;
