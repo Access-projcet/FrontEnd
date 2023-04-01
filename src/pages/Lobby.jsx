@@ -24,11 +24,19 @@ const Lobby = () => {
           </StMainMenu>
         </Link>
         {showModal === true ? (
-          <LobbyModal>
-            <Header>Check-in</Header>
-          </LobbyModal>
+          <LobbyModal
+            Check-in={"Check-in"}
+            Check-out={"Check-out"}
+            onClose={() => {
+              setShowModal(false);
+            }}
+          />
         ) : null}
-        <Link to={"/lobby/checkout"}>
+        <Link
+          onClick={() => {
+            setShowModal(!showModal);
+          }}
+        >
           <StMainMenu color="#57D4D4;">
             <StMainDiv>check-out</StMainDiv>
             <StMainImg src={btn2} alt="Check-out"></StMainImg>
@@ -67,28 +75,3 @@ const StMainDiv = styled.div`
 `;
 
 const StMainImg = styled.img``;
-
-// const Modal_style = styled.div`
-//   /* position: absolute;
-//     top: 300%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
-//     border-radius: 10px;
-//     height: 500px;
-//     background-color: gray; */
-//   /* z-index: 1050; */
-// `;
-
-const Header = styled.div`
-  background: grey;
-  position: relative;
-  top: 0;
-  width: 0;
-  display: flex;
-  color: white;
-  padding: 20px;
-  border-radius: 4px;
-  font-size: larger;
-  font-weight: bold;
-`;

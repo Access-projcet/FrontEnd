@@ -13,7 +13,7 @@ const Navbar = () => {
   const { menu } = useSelector((state) => state.LoginMenuSlice);
 
   const logoutBtn = () => {
-    removeCookie("ACCESS_TOKEN");
+    removeCookie("ACCESS_TOKEN", { path: "/" });
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
     localStorage.removeItem("usertype");

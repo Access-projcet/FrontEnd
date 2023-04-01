@@ -123,7 +123,9 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
+
               <ButtonVisitForm onClick={() => HandlerModalOn(e)}>
+
                 방문 신청
               </ButtonVisitForm>
             </StBtnDiv>
@@ -184,9 +186,11 @@ export default function MapContainer5() {
                       </div>
                     </StMapBody>
                     <DivMapButton>
+
                       <BtnMapButton
                         onClick={() => HandlerModalOn(selectedMarker)}
                       >
+
                         방문 신청
                       </BtnMapButton>
                     </DivMapButton>
@@ -209,7 +213,9 @@ export default function MapContainer5() {
               onClose={() => {
                 setIsModalOpen(false);
               }}
+
               company={company}
+
             />
           }
         />
