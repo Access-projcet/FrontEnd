@@ -258,13 +258,13 @@ const ConfirmForm = ({ onClose }) => {
 export default ConfirmForm;
 
 const Header = styled.div`
-  background: grey;
+  background: white;
   position: relative;
   left: 0;
   top: 25px;
   width: 730px;
   display: flex;
-  color: white;
+  /* color: white; */
   padding: 20px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -273,7 +273,7 @@ const Header = styled.div`
 `;
 
 const MainWrapper = styled.div`
-  background: white;
+  background: #f2f2f2;
   /* display: flex;
   flex-direction: column;
   justify-content: center;
