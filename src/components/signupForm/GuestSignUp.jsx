@@ -130,7 +130,7 @@ export default function SignUp() {
             error={userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)}
             helperText={
               userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)
-                ? "아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요"
+                ? "아이디는 4~10자의 영문 대소문자와 숫자로만 입력하세요"
                 : " "
             }
             FormHelperTextProps={{
@@ -165,9 +165,17 @@ export default function SignUp() {
                 },
               },
             }}
-            error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(password)}
+            error={
+              password.trim() !== "" &&
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(
+                password
+              )
+            }
             helperText={
-              password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(password)
+              password.trim() !== "" &&
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?\/]){8,15}$/.test(
+                password
+              )
                 ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                 : " "
             }
@@ -205,7 +213,9 @@ export default function SignUp() {
             }}
             error={passwordCheck.trim() !== "" && password !== passwordCheck}
             helperText={
-              passwordCheck.trim() !== "" && password !== passwordCheck ? "비밀번호가 일치하지 않습니다." : " "
+              passwordCheck.trim() !== "" && password !== passwordCheck
+                ? "비밀번호가 일치하지 않습니다."
+                : " "
             }
             FormHelperTextProps={{
               sx: {
@@ -239,7 +249,9 @@ export default function SignUp() {
                 },
               },
             }}
-            error={phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)}
+            error={
+              phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
+            }
             helperText={
               phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
                 ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
@@ -252,7 +264,9 @@ export default function SignUp() {
             }}
           />
           <FormControlLabel
-            control={<Checkbox value="allowExtraEmails" color="primary" required />}
+            control={
+              <Checkbox value="allowExtraEmails" color="primary" required />
+            }
             label="개인정보 제공에 동의합니다"
           />
           <StLoginBtn>
@@ -278,7 +292,9 @@ export default function SignUp() {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
-        <StAlready onClick={gotoLogin}>이미 회원이신가요? 로그인 하러 가기</StAlready>
+        <StAlready onClick={gotoLogin}>
+          이미 회원이신가요? 로그인 하러 가기
+        </StAlready>
       </DivLoginContainer>
       {isModalOpen && (
         <Modal
