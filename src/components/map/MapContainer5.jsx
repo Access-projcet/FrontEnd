@@ -354,6 +354,7 @@ const DivMapTitle = styled.div`
 `;
 
 const BtnClose = styled(CloseIcon)`
+  color: #b1b1b1;
   cursor: pointer;
 `;
 
