@@ -9,7 +9,7 @@ const Modal = ({ children, onClose }) => {
         <ModalWrapper>
           <ModalInner>
             {children}
-            <ButtonClose onClick={onClose}>X</ButtonClose>
+            {/* <ButtonClose onClick={onClose}>X</ButtonClose> */}
           </ModalInner>
         </ModalWrapper>
       </ModalOverlay>
@@ -38,7 +38,6 @@ const ModalWrapper = styled.div`
   height: 218px;
   background: #ffffff;
   border-radius: 10px;
-  border-radius: 4px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
   display: flex;
   justify-content: center;
@@ -48,10 +47,10 @@ const ModalWrapper = styled.div`
 
 const ModalInner = styled.div`
   position: relative;
-  /* display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; */
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `;

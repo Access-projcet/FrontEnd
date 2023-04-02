@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { submitlobbycheckin } from "../../api/api";
 import styled from "styled-components";
+import CloseIcon from "@mui/icons-material/Close";
 
 const LobbyModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
@@ -43,7 +44,7 @@ const LobbyModal = ({ onClose }) => {
       <ModalOverlay>
         <ModalWrapper>
           <ModalInner>
-            <Header>출입 확인</Header>
+            <Header>Check-in & out</Header>
             <Input1>
               이름
               <input
@@ -74,7 +75,17 @@ const LobbyModal = ({ onClose }) => {
                 }}
               />
             </Input2>
-            <ButtonClose onClick={onClose}>x</ButtonClose>
+            <CloseIcon
+              onClick={onClose}
+              style={{
+                fontSize: "xx-large",
+                color: "#B1B1B1",
+                cursor: "pointer",
+                position: "absolute",
+                top: "5px",
+                right: "5px",
+              }}
+            ></CloseIcon>
           </ModalInner>
           <CancelBtn onClick={onClose}>취소</CancelBtn>
           <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
@@ -100,7 +111,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  background-color: white;
+  background-color: #f2f2f2;
   width: 500px;
   height: 500px;
   border-radius: 4px;
@@ -123,28 +134,32 @@ const ModalInner = styled.div`
 `;
 
 const ButtonClose = styled.button`
-  width: 40px;
+  /* width: 40px;
   height: 20px;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -10px;
+  right: 5px;
   background-color: transparent;
-  font-size: 35px;
-  cursor: pointer;
+  font-size: large;
+  color: grey;
+  cursor: pointer; */
 `;
 
 const Header = styled.div`
-  background: grey;
+  background: white;
   position: absolute;
   top: 0;
   width: 92%;
   display: flex;
-  color: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  font-size: larger;
-  font-weight: bold;
+  font-size: x-large;
+  font-weight: bolder;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  padding: 50px 20px;
 `;
 
 const Input1 = styled.div`
@@ -152,7 +167,8 @@ const Input1 = styled.div`
   justify-content: center;
   align-items: start;
   flex-direction: row;
-  margin: 50px;
+  padding: 40px;
+  margin-top: 100px;
   font-size: 20px;
   font-weight: bold;
 `;
@@ -164,6 +180,7 @@ const Input2 = styled.div`
   flex-direction: row;
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: -20px;
 `;
 
 const CancelBtn = styled.div`
@@ -181,7 +198,6 @@ const CancelBtn = styled.div`
 
   position: relative;
   left: -80px;
-  top: 20px;
   height: 25px;
   width: 100px;
 `;
@@ -201,7 +217,7 @@ const SubmitBtn = styled.div`
 
   position: relative;
   left: 80px;
-  top: -35px;
+  top: -55px;
   height: 25px;
   width: 100px;
 `;

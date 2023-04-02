@@ -130,7 +130,7 @@ export default function SignUp() {
             error={userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)}
             helperText={
               userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)
-                ? "아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요"
+                ? "아이디는 4~10자의 영문 대소문자와 숫자로만 입력하세요"
                 : " "
             }
             FormHelperTextProps={{
@@ -167,6 +167,7 @@ export default function SignUp() {
             }}
             error={
               password.trim() !== "" &&
+
               !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
             }
             helperText={

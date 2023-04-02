@@ -11,7 +11,7 @@ const LoginCheckModal = () => {
     <>
       <StBox>
         <StTxtContainer>
-          <div>환영합니다</div>
+          <div>환영합니다!</div>
           <div>협력사는 관리자 승인 후 로그인 가능합니다.</div>
         </StTxtContainer>
         <StCheckBtn onClick={gotoLogin}>확인</StCheckBtn>

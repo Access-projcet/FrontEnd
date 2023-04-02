@@ -12,7 +12,7 @@ const SignUpCheckModal = () => {
     <>
       <StBox>
         <StTxtContainer>
-          <div>환영합니다</div>
+          <div>환영합니다!</div>
           <div>로그인페이지로 이동합니다.</div>
         </StTxtContainer>
         <StCheckBtn onClick={gotoLogin}>확인</StCheckBtn>
@@ -48,4 +48,5 @@ const StCheckBtn = styled.button`
   color: white;
   font-size: 16px;
   font-weight: 700;
+  cursor: pointer;
 `;

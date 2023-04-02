@@ -8,7 +8,7 @@ import arrow from "../../utils/img/arrow_icon.png";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Modal from "../modal/Modal";
-import SignUpCheckModal from "../modal/SignUpCheckModal";
+import LoginCheckModal from "../modal/LoginCheckModal";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 //mui custom css
@@ -225,7 +225,7 @@ const AdminSignUp = () => {
             error={userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)}
             helperText={
               userId.trim() !== "" && !/^[a-zA-Z0-9]{4,10}$/.test(userId)
-                ? "아이디는 4~12자의 영문 대소문자와 숫자로만 입력하세요"
+                ? "아이디는 4~10자의 영문 대소문자와 숫자로만 입력하세요"
                 : " "
             }
             FormHelperTextProps={{
@@ -263,6 +263,7 @@ const AdminSignUp = () => {
             }}
             error={
               password.trim() !== "" &&
+
               !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
             }
             helperText={
@@ -388,7 +389,7 @@ const AdminSignUp = () => {
           onClose={() => {
             setIsModalOpen(false);
           }}
-          children={<SignUpCheckModal />}
+          children={<LoginCheckModal />}
         />
       )}
     </>
