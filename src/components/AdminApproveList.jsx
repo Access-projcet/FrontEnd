@@ -41,6 +41,7 @@ export default function AdminApproveList() {
     },
     {
       keepPreviousData: true,
+      cacheTime: 0,
     }
   );
 
@@ -57,14 +58,12 @@ export default function AdminApproveList() {
   });
 
   const HandlerApprove = (row) => {
-    console.log("승인 누름", row.original.id);
     adminModifyMutation.mutate({
       id: row.original.id,
       status: "2",
     });
   };
   const HandlerReject = (row) => {
-    console.log("거절 누름", row.original.id);
     adminModifyMutation.mutate({
       id: row.original.id,
       status: "3",
