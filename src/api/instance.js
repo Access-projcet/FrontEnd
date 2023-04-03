@@ -64,7 +64,7 @@ instance.interceptors.response.use(
         const refresh_token = localStorage.getItem("REFRESH_TOKEN");
         originalRequest.headers["RefreshToken"] = `Bearer ${refresh_token}`;
         //재요청
-        console.log("재요청ㄹ합니다", originalRequest);
+        console.log("재요청합니다", originalRequest);
         return instance(originalRequest);
       } catch (error) {
         //refresh_token이 만료

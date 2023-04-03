@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Tab, Tabs } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+
 import GuestLoginForm from "../components/loginForm/GuestLoginForm";
 import AdminLoginForm from "../components/loginForm/AdminLoginForm";
-
 import mainImg from "../utils/img/background.png";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
+import { setMenu } from "../redux/store/LoginMenuSlice";
 
 const Login = () => {
   //로그인 타입 지정
   const [loginType, setLoginType] = useState("guest");
+  const { menu } = useSelector((state) => state.LoginMenuSlice);
+  const dispatch = useDispatch();
   const HandleChangeTab = (e, newValue) => {
     console.log(newValue);
-    setLoginType(newValue);
+    dispatch(setMenu(newValue));
   };
 
   return (
@@ -23,7 +27,7 @@ const Login = () => {
         <DivLoginBox>
           <DivLoginType>
             <Tabs
-              value={loginType}
+              value={menu}
               onChange={HandleChangeTab}
               variant="fullWidth"
               TabIndicatorProps={{ sx: { bgcolor: "white", width: "500" } }}
@@ -96,7 +100,7 @@ const Login = () => {
               />
             </Tabs>
           </DivLoginType>
-          {loginType === "guest" ? <GuestLoginForm /> : <AdminLoginForm />}
+          {menu === "guest" ? <GuestLoginForm /> : <AdminLoginForm />}
         </DivLoginBox>
       </DivLoginContainer>
     </>

@@ -1,23 +1,49 @@
 import React from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { submitlobbycheckin } from "../../api/api";
 import styled from "styled-components";
-import Portal from "./Portal";
 
-const Modal = ({ children, onClose }) => {
+const LobbyModal = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(submitlobbycheckin, {
+    onSuccess: (response) => {
+      console.log(response);
+      queryClient.invalidateQueries("user");
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    const checkin = {
+      // 현재시간,
+    };
+    console.log({
+      // 현재시간,
+    });
+    mutation.mutate(checkin);
+  };
+
   return (
-    <Portal>
+    <>
       <ModalOverlay>
         <ModalWrapper>
           <ModalInner>
-            {children}
-            <ButtonClose onClick={onClose}>X</ButtonClose>
+            이름
+            <input />
+            전화번호
+            <input />
+            <ButtonClose>x</ButtonClose>
           </ModalInner>
         </ModalWrapper>
       </ModalOverlay>
-    </Portal>
+    </>
   );
 };
 
-export default Modal;
+export default LobbyModal;
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -26,7 +52,7 @@ const ModalOverlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,10 +60,8 @@ const ModalOverlay = styled.div`
 
 const ModalWrapper = styled.div`
   background-color: white;
-  width: 360px;
-  height: 218px;
-  background: #ffffff;
-  border-radius: 10px;
+  width: 500px;
+  height: 500px;
   border-radius: 4px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
   display: flex;
@@ -48,10 +72,10 @@ const ModalWrapper = styled.div`
 
 const ModalInner = styled.div`
   position: relative;
-  /* display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; */
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `;
@@ -63,6 +87,6 @@ const ButtonClose = styled.button`
   top: 0;
   right: 0;
   background-color: transparent;
-  font-size: xx-large;
+  font-size: 35px;
   cursor: pointer;
 `;

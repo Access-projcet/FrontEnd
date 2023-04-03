@@ -24,7 +24,7 @@ const guestVisit = async () => {
   return await instance.get(`/visit/guest`);
 };
 
-const adminVisit = async () => {
+const adminVisit = async (payload) => {
   return await instance.get(`/visit/admin`);
 };
 
@@ -40,6 +40,16 @@ const getMap = async () => {
   return response.data;
 };
 
+
+const submitconfirmform = async (user) => {
+  return await instance.post("/visit", user);
+};
+
+const submitlobbycheckin = async (user) => {
+  return await instance.post("access-in", user);
+};
+
+
 const getConfirmList = async () => {
   const response = await instance.get(`/visit/access-status`);
   return response.data;
@@ -48,6 +58,8 @@ const getConfirmList = async () => {
 export {
   loginguest,
   loginbusiness,
+  submitconfirmform,
+  submitlobbycheckin,
   guestSignUpUser,
   adminSignUpUser,
   guestdeleteVisit,
