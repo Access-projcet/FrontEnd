@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import Portal from "./Portal";
+import CloseIcon from "@mui/icons-material/Close";
 
 const MarkerModal = ({ children, onClose }) => {
   useEffect(() => {
@@ -24,7 +25,17 @@ const MarkerModal = ({ children, onClose }) => {
         <ModalWrapper>
           <ModalInner>
             {children}
-            <ButtonClose onClick={onClose}>x</ButtonClose>
+            <CloseIcon
+              onClick={onClose}
+              style={{
+                fontSize: "xx-large",
+                color: "#B1B1B1",
+                cursor: "pointer",
+                position: "absolute",
+                top: "45px",
+                right: "15px",
+              }}
+            ></CloseIcon>
           </ModalInner>
         </ModalWrapper>
       </ModalOverlay>
@@ -48,34 +59,34 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  background-color: white;
-  width: 70%;
+  /* background-color: white;
+  width: 40%;
   height: 700px;
-  border-radius: 4px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column; */
 `;
 
 const ModalInner = styled.div`
   position: relative;
-  /* display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; */
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `;
 
 const ButtonClose = styled.button`
-  width: 40px;
+  /* width: 40px;
   height: 20px;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 20px;
+  right: 10px;
   background-color: transparent;
-  font-size: 35px;
-  cursor: pointer;
+  font-size: 40px;
+  color: grey;
+  cursor: pointer; */
 `;

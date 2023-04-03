@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../api/cookies";
 import { makeStyles } from "@mui/styles";
 import arrow from "../../utils/img/arrow_icon.png";
+import { useSelector } from "react-redux";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 
 export default function AdminLoginForm() {
   const navigate = useNavigate();
+  const { menu } = useSelector((state) => state.LoginMenuSlice);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
@@ -36,6 +38,7 @@ export default function AdminLoginForm() {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
+      localStorage.setItem("usertype", menu);
 
       navigate("/admin/main");
     },

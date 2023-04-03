@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TextField, Button, Link, Grid } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 import { useMutation } from "react-query";
+import { useSelector } from "react-redux";
+
 import { loginguest } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../api/cookies";
@@ -28,6 +30,7 @@ const useStyles = makeStyles({
 
 export default function GuestLoginForm() {
   const navigate = useNavigate();
+  const { menu } = useSelector((state) => state.LoginMenuSlice);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
@@ -37,7 +40,7 @@ export default function GuestLoginForm() {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
-
+      localStorage.setItem("usertype", menu);
       navigate("/guest/main");
     },
     onError: (error) => {
