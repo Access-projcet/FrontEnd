@@ -36,10 +36,7 @@ export default function AdminLoginForm() {
   const mutation = useMutation(loginbusiness, {
     onSuccess: (data) => {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem(
-        "REFRESH_TOKEN",
-        data.headers.refreshtoken.split(" ")[1]
-      );
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
       localStorage.setItem("usertype", menu);
 

@@ -36,15 +36,11 @@ export default function GuestLoginForm() {
   const classes = useStyles();
   const mutation = useMutation(loginguest, {
     onSuccess: (data) => {
+      console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem(
-        "REFRESH_TOKEN",
-        data.headers.refreshtoken.split(" ")[1]
-      );
-      console.log(data.data.data.name);
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
       localStorage.setItem("usertype", menu);
-      alert("로그인 성공");
       navigate("/guest/main");
     },
     onError: (error) => {

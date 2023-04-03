@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
 import { Link } from "react-router-dom";
-import { removeCookie } from "./../../apis/cookies";
+
+import { removeCookie } from "./../../api/cookies";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -33,11 +34,7 @@ const Navbar = () => {
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
-                <StLogOutImg
-                  src={logout}
-                  alt="logoutImg"
-                  onClick={logoutBtn}
-                ></StLogOutImg>
+                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
               </Link>
             </StLogOutContainer>
           </StUser>
