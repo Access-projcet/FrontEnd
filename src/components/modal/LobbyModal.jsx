@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { submitlobbycheckin } from "../../api/api";
+import { submitLobbyCheckIn } from "../../api/api";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -8,12 +8,12 @@ const LobbyModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
 
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
+  // const now = new Date();
+  // const hours = now.getHours();
+  // const minutes = now.getMinutes();
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(submitlobbycheckin, {
+  const mutation = useMutation(submitLobbyCheckIn, {
     onSuccess: (response) => {
       console.log(response);
       queryClient.invalidateQueries("user");
@@ -26,16 +26,10 @@ const LobbyModal = ({ onClose }) => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     const check = {
-      visitor,
+      name: visitor,
       phoneNum,
       // 현재시간
-      time: `${hours}:${minutes}`,
     };
-    console.log({
-      visitor,
-      phoneNum,
-      time: `${hours}:${minutes}`,
-    });
     mutation.mutate(check);
   };
 
@@ -131,18 +125,6 @@ const ModalInner = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-`;
-
-const ButtonClose = styled.button`
-  /* width: 40px;
-  height: 20px;
-  position: absolute;
-  top: -10px;
-  right: 5px;
-  background-color: transparent;
-  font-size: large;
-  color: grey;
-  cursor: pointer; */
 `;
 
 const Header = styled.div`

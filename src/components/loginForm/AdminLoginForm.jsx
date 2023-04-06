@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Link, Grid } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 import { useMutation } from "react-query";
-import { loginbusiness } from "../../api/api";
+import { loginBusiness } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../api/cookies";
 import { makeStyles } from "@mui/styles";
@@ -33,7 +33,7 @@ export default function AdminLoginForm() {
   const [password, setPassword] = useState("");
   const classes = useStyles();
 
-  const mutation = useMutation(loginbusiness, {
+  const mutation = useMutation(loginBusiness, {
     onSuccess: (data) => {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import GuestMyPageTable from "../components/GuestMyPageTable";
+import GuestMyPageTable from "../components/guest/GuestMyPageTable";
 import Navbar from "../components/navbar/Navbar";
 
 const GuestMyPage = () => {
@@ -26,9 +26,6 @@ const DivMyPageContainer = styled.div`
   flex-direction: column;
 `;
 
-// const DivLogo = styled.div`
-//   width: 100%;
-// `;
 const DivMyPageTable = styled.div`
   width: 80%;
   height: 80vh;

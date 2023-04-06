@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { submitconfirmform } from "../api/api";
+import { submitConfirmForm } from "../api/api";
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
@@ -24,7 +24,7 @@ const ConfirmForm = ({ onClose, company }) => {
   // const dateFormat = dayjs().format("YYYY-MM-DD");
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(submitconfirmform, {
+  const mutation = useMutation(submitConfirmForm, {
     onSuccess: (response) => {
       console.log(response);
       queryClient.invalidateQueries("user");
@@ -36,17 +36,17 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const confirmform = {
+    const dateTimeStart = `${startDate}T${startTime}:00`;
+    const dateTimeEnd = `${endDate}T${endTime}:00`;
+    const confirmForm = {
       location,
       place,
       target,
       purpose,
       startDate,
-      startTime,
+      startTime: dateTimeStart,
       endDate,
-      endTime,
-      visitor,
-      phoneNum,
+      endTime: dateTimeEnd,
       status: "1",
     };
     console.log({
@@ -57,11 +57,13 @@ const ConfirmForm = ({ onClose, company }) => {
       startTime,
       endDate,
       endTime,
+      dateTimeStart,
+      dateTimeEnd,
       visitor,
       phoneNum,
       status: "1",
     });
-    mutation.mutate(confirmform);
+    mutation.mutate(confirmForm);
   };
 
   return (
@@ -209,10 +211,7 @@ const ConfirmForm = ({ onClose, company }) => {
           ></input>
         </TimeTable2>
         <Msg>
-          <p>
-            * 시간은 24시간 기준으로 입력해주세요. 예시 2023-03-30, 13:40,
-            2023-03-31, 14:00
-          </p>
+          <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023-03-30, 13:40, 2023-03-31, 14:00</p>
         </Msg>
 
         <hr />

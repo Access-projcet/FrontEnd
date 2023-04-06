@@ -5,14 +5,18 @@ import Navbar from "../components/navbar/Navbar";
 import btn1 from "../utils/img/방문_icon@2x.png";
 import btn2 from "../utils/img/퇴장_icon@2x.png";
 import LobbyModal from "../components/modal/LobbyModal";
+import QrReaderModal from "../components/modal/QrReaderModal";
+import Modal from "../components/modal/Modal";
 
 const Lobby = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showQrModal, setShowQrModal] = useState(false);
 
   return (
     <>
       <Navbar />
       <StMain>
+        {/* check-in */}
         <Link
           onClick={() => {
             setShowModal(!showModal);
@@ -32,6 +36,31 @@ const Lobby = () => {
             }}
           />
         ) : null}
+
+        {/* check-in-qr */}
+        <Link
+          onClick={() => {
+            setShowQrModal(!showQrModal);
+          }}
+        >
+          <StMainMenu color="#829cf6;">
+            <StMainDiv>Qr-Check-in</StMainDiv>
+            <StMainImg src={btn1} alt="Check-in"></StMainImg>
+          </StMainMenu>
+        </Link>
+        {showQrModal === true ? (
+          <Modal
+            children={
+              <ModalOverlay>
+                <ModalWrapper>
+                  <QrReaderModal />
+                </ModalWrapper>
+              </ModalOverlay>
+            }
+          />
+        ) : null}
+
+        {/* check-out */}
         <Link
           onClick={() => {
             setShowModal(!showModal);
@@ -39,6 +68,17 @@ const Lobby = () => {
         >
           <StMainMenu color="#57D4D4;">
             <StMainDiv>check-out</StMainDiv>
+            <StMainImg src={btn2} alt="Check-out"></StMainImg>
+          </StMainMenu>
+        </Link>
+        {/* check-out-qr */}
+        <Link
+          onClick={() => {
+            setShowQrModal(!showQrModal);
+          }}
+        >
+          <StMainMenu color="#57D4D4;">
+            <StMainDiv>Qr-Check-out</StMainDiv>
             <StMainImg src={btn2} alt="Check-out"></StMainImg>
           </StMainMenu>
         </Link>
@@ -75,3 +115,28 @@ const StMainDiv = styled.div`
 `;
 
 const StMainImg = styled.img``;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  background-color: #f2f2f2;
+  width: 500px;
+  height: 500px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.125);
+  border: 10px dashed #829cf6;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 11px;
+`;

@@ -3,10 +3,10 @@ import MaterialReactTable from "material-react-table";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { useQuery } from "react-query";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { Delete, Edit, RoomTwoTone } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { useMutation } from "react-query";
-import { guestdeleteVisit, guestVisit } from "../api/api";
-import { color } from "../utils/styles/color";
+import { guestDeleteVisit, guestVisit } from "../../api/api";
+import { color } from "../../utils/styles/color";
 
 export default function GuestMyPageTable() {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -42,10 +42,10 @@ export default function GuestMyPageTable() {
       keepPreviousData: true,
       //캐싱타임을 0으로 줘서 필터링시에 쓸데없는 캐싱을 하지않고 새로운 데이터를 요청하게함.
       cacheTime: 0,
-    }
+    },
   );
 
-  const deletemutaion = useMutation(guestdeleteVisit, {
+  const deleteMutaion = useMutation(guestDeleteVisit, {
     onSuccess: (data) => {
       console.log(data);
       alert("방문기록 삭제 성공");
@@ -55,12 +55,11 @@ export default function GuestMyPageTable() {
 
   const HandlerDeleteVisit = (row) => {
     console.log("row", row.original.id);
-    deletemutaion.mutate(row.original.id);
+    deleteMutaion.mutate(row.original.id);
   };
 
   const HandlerEditVisit = (row) => {
     console.log("edit;", row.original.id);
-    // deletemutaion.mutate(id);
   };
 
   const columns = useMemo(
@@ -110,7 +109,7 @@ export default function GuestMyPageTable() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -119,14 +118,7 @@ export default function GuestMyPageTable() {
       data={
         data?.data.data.map((item) => ({
           ...item,
-          startDate:
-            item.startDate +
-            " " +
-            item.startTime +
-            " - " +
-            item.endDate +
-            " " +
-            item.endTime,
+          startDate: item.startDate + " " + item.startTime + " - " + item.endDate + " " + item.endTime,
         })) ?? []
       } //data is undefined on first render
       initialState={{
