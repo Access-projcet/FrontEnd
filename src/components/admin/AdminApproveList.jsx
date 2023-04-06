@@ -7,8 +7,8 @@ import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
 
-import { adminVisit, adminModify } from "../api/api";
-import { color } from "../utils/styles/color";
+import { adminVisit, adminModify } from "../../api/api";
+import { color } from "../../utils/styles/color";
 
 export default function AdminApproveList() {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -42,7 +42,7 @@ export default function AdminApproveList() {
     {
       keepPreviousData: true,
       cacheTime: 0,
-    }
+    },
   );
 
   const adminModifyMutation = useMutation(adminModify, {
@@ -117,7 +117,7 @@ export default function AdminApproveList() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -128,14 +128,7 @@ export default function AdminApproveList() {
           data={
             data?.data.data.map((item) => ({
               ...item,
-              startDate:
-                item.startDate +
-                " " +
-                item.startTime +
-                " - " +
-                item.endDate +
-                " " +
-                item.endTime,
+              startDate: item.startDate + " " + item.startTime + " - " + item.endDate + " " + item.endTime,
             })) ?? []
           } //data is undefined on first render
           initialState={{

@@ -2,25 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Tab, Tabs } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-
 import mainImg from "../utils/img/background.png";
 import AdminSignUp from "../components/signupForm/AdminSignUp";
 import GuestSignUp from "../components/signupForm/GuestSignUp";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
-
-
-
-import Modal from "../components/modal/Modal";
-import SignUpCheckModal from "../components/modal/SignUpCheckModal";
 import { setMenu } from "../redux/store/LoginMenuSlice";
 
 const SignUp = () => {
-  //로그인 타입 지정
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const { menu } = useSelector((state) => state.LoginMenuSlice);
   const dispatch = useDispatch();
-
   const HandleChangeTab = (e, newValue) => {
     dispatch(setMenu(newValue));
   };

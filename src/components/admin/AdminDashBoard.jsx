@@ -12,7 +12,7 @@ import {
   Bar,
 } from "recharts";
 import { useQuery } from "react-query";
-import { getConfirmList } from "../api/api";
+import { getConfirmList } from "../../api/api";
 
 const data2 = [
   { date: "3월 29일", uv: 4000, pv: 2400, amt: 2400 },

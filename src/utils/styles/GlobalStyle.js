@@ -44,10 +44,7 @@ const GlobalStyle = createGlobalStyle`
         margin:0;
         box-sizing:border-box;
     }
-    body{
-        min-width:700px;
-        min-height: 550px;
-    }
+
 `;
 
 export default GlobalStyle;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { setMenu } from "../redux/store/AdminMenuSlice";
+import { setMenu } from "../../redux/store/AdminMenuSlice";
 
 export default function AdminMenuBar({ menu }) {
   const dispatch = useDispatch();
@@ -11,16 +11,10 @@ export default function AdminMenuBar({ menu }) {
 
   return (
     <DivMenubar>
-      <MenuButton
-        onClick={() => HandlerChangeMenu("dashboard")}
-        selected={menu === "dashboard"}
-      >
+      <MenuButton onClick={() => HandlerChangeMenu("dashboard")} selected={menu === "dashboard"}>
         출입 현황
       </MenuButton>
-      <MenuButton
-        onClick={() => HandlerChangeMenu("approve")}
-        selected={menu === "approve"}
-      >
+      <MenuButton onClick={() => HandlerChangeMenu("approve")} selected={menu === "approve"}>
         승인 현황
       </MenuButton>
     </DivMenubar>
