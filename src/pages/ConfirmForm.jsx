@@ -14,7 +14,7 @@ const ConfirmForm = ({ onClose, company }) => {
   const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [visitor, setVisitor] = useState("");
+  const [visitor, setVisitor] = useState(localStorage.getItem("name"));
   const [phoneNum, setPhoneNum] = useState("");
 
   //datepicker 사용
@@ -30,6 +30,7 @@ const ConfirmForm = ({ onClose, company }) => {
       queryClient.invalidateQueries("user");
     },
     onError: (error) => {
+      console.log(error.response);
       alert(error.response.data.message);
     },
   });
@@ -153,6 +154,7 @@ const ConfirmForm = ({ onClose, company }) => {
 
           <label htmlFor="방문시간">방문 시간 </label>
           <input
+            type="datetime-local"
             style={{
               marginLeft: "10px",
               width: "200px",
@@ -160,10 +162,10 @@ const ConfirmForm = ({ onClose, company }) => {
               fontSize: "20px",
             }}
             id="startTime"
-            value={startTime}
+            // value={startTime}
             placeholder="00:00"
             onChange={(e) => {
-              setStartTime(e.target.value);
+              setStartTime(e.target.value + ":00");
             }}
           ></input>
         </TimeTable1>
@@ -194,6 +196,7 @@ const ConfirmForm = ({ onClose, company }) => {
 
           <label htmlFor="endTime">종료 시간 </label>
           <input
+            type="datetime-local"
             style={{
               marginLeft: "10px",
               width: "200px",
@@ -201,10 +204,11 @@ const ConfirmForm = ({ onClose, company }) => {
               fontSize: "20px",
             }}
             id="endTime"
-            value={endTime}
+            // value={endTime}
             placeholder="00:00"
             onChange={(e) => {
-              setEndTime(e.target.value);
+              console.log(e.target.value + ":00");
+              setEndTime(e.target.value + ":00");
             }}
           ></input>
         </TimeTable2>

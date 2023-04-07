@@ -25,7 +25,16 @@ const guestVisit = async () => {
 };
 
 const adminVisit = async (payload) => {
+  console.log(payload);
   return await instance.get(`/visit/admin`);
+};
+
+const adminVisitSort = async (payload) => {
+  return await instance.get(`/visit-forms/sort`, {
+    params: {
+      orderby: payload.orderby,
+    },
+  });
 };
 
 const adminModify = async (payload) => {
@@ -40,7 +49,6 @@ const getMap = async () => {
   return response.data;
 };
 
-
 const submitconfirmform = async (user) => {
   return await instance.post("/visit", user);
 };
@@ -48,7 +56,6 @@ const submitconfirmform = async (user) => {
 const submitlobbycheckin = async (user) => {
   return await instance.post("access-in", user);
 };
-
 
 const getConfirmList = async () => {
   const response = await instance.get(`/visit/access-status`);
@@ -68,4 +75,5 @@ export {
   adminModify,
   getMap,
   getConfirmList,
+  adminVisitSort,
 };

@@ -26,21 +26,22 @@ instance.interceptors.request.use(
   (error) => {
     console.log("데이터 보내는중 오류!");
     return Promise.reject(error);
-  },
+  }
 );
 
 instance.interceptors.response.use(
   //서버로부터 정상 응답을 받는 경우
   (response) => {
     console.log("response", response);
-      //request에 토큰 두개 담아서 보냈으니? access가 만료되었으면 알아서 access를 재발급해준다고 하였음.
+    //request에 토큰 두개 담아서 보냈으니? access가 만료되었으면 알아서 access를 재발급해준다고 하였음.
     // 그럼 우선적으로 access_token을 받아와 기존 Cookie에 저장되어있는 값이랑 비교해서 다르면 교체?
     // 그럼 refresh까지 만료되었다면? 어떤 메시지를 줄것인가?
     // console.log("intercepter response", response);
     // const access_token = getCookie("ACCESS_TOKEN");
     if (response.headers.authorization) {
       console.log("토큰 받앗다?");
-      const re_access_token = response.headers.authorization.split("")[1];
+      const re_access_token = response.headers.authorization.split(" ")[1];
+      removeCookie("ACCESS_TOKEN");
       setCookie("ACCESS_TOKEN", re_access_token);
     } else {
     }
@@ -80,6 +81,6 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 export default instance;

@@ -7,7 +7,7 @@ import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
 
-import { adminVisit, adminModify } from "../api/api";
+import { adminVisit, adminModify, adminVisitSort } from "../api/api";
 import { color } from "../utils/styles/color";
 
 export default function AdminApproveList() {
@@ -29,15 +29,21 @@ export default function AdminApproveList() {
       columnFilters,
     ],
     () => {
+      // const queryParams = {
+      //   start: pagination.pageIndex * pagination.pageSize,
+      //   size: pagination.pageSize,
+      //   filters: JSON.stringify(columnFilters ?? []),
+      //   globalFilter: globalFilter ?? "",
+      //   sorting: JSON.stringify(sorting ?? []),
+      // };
       const queryParams = {
-        start: pagination.pageIndex * pagination.pageSize,
-        size: pagination.pageSize,
-        filters: JSON.stringify(columnFilters ?? []),
-        globalFilter: globalFilter ?? "",
-        sorting: JSON.stringify(sorting ?? []),
+        orderby: "status",
       };
 
-      return adminVisit(queryParams);
+      // return adminVisit(queryParams);
+      ///visit-forms/sort
+      // visit/admin
+      return adminVisitSort(queryParams);
     },
     {
       keepPreviousData: true,

@@ -21,6 +21,12 @@ export default function MapContainer5() {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [target, setTarget] = useState("");
   const [company, setCompany] = useState({});
+  const [mapstate, setMapstate] = useState({
+    // 지도의 중심좌표
+    center: { lat: 37.50073199, lng: 127.03675448 },
+    isPanto: false,
+  });
+
 
   const HandlerTargetChange = (e) => {
     setTarget(e.target.value);
@@ -92,8 +98,17 @@ export default function MapContainer5() {
   };
 
   const HandlerModalOn = (e) => {
+    console.log("eeeeeee", e);
     setCompany(e);
     setIsModalOpen(true);
+  };
+
+  const HandlerFocusMap = (e) => {
+    console.log("focus", e);
+    setMapstate({
+      center: { lat: e.x, lng: e.y },
+      isPanto: true,
+    });
   };
 
   return (
@@ -111,9 +126,8 @@ export default function MapContainer5() {
         </DivInput>
 
         {searchResults?.map((e) => (
-          <DivListBox>
+          <DivListBox onClick={() => HandlerFocusMap(e)}>
             <div></div>
-
             <DivListContent key={e.id}>
               <DivCompanyName>
                 <StImg src={markon} alt={markoff} />
@@ -123,9 +137,7 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
-
               <ButtonVisitForm onClick={() => HandlerModalOn(e)}>
-
                 방문 신청
               </ButtonVisitForm>
             </StBtnDiv>
@@ -135,11 +147,8 @@ export default function MapContainer5() {
       <DivMapContainer>
         <Map // 지도를 표시할 Container
           id={`map`}
-          center={{
-            // 지도의 중심좌표
-            lat: 37.50073199,
-            lng: 127.03675448,
-          }}
+          center={mapstate.center}
+          isPanto={mapstate.isPanto}
           style={{
             // 지도의 크기
             width: "100%",
@@ -157,7 +166,9 @@ export default function MapContainer5() {
                 size: imageSize,
                 option: imageOption,
               }}
-            />
+            >
+              <div>{marker.companyName}</div>
+            </MapMarker>
           ))}
           {selectedMarker && (
             <CustomOverlayMap
@@ -186,11 +197,9 @@ export default function MapContainer5() {
                       </div>
                     </StMapBody>
                     <DivMapButton>
-
                       <BtnMapButton
                         onClick={() => HandlerModalOn(selectedMarker)}
                       >
-
                         방문 신청
                       </BtnMapButton>
                     </DivMapButton>
@@ -213,9 +222,7 @@ export default function MapContainer5() {
               onClose={() => {
                 setIsModalOpen(false);
               }}
-
               company={company}
-
             />
           }
         />
@@ -294,6 +301,10 @@ const DivListBox = styled.div`
   height: 133px;
   margin-top: 10px;
   background-color: #ffffff;
+  &:hover {
+    opacity: 0.8;
+    background-color: #f8f8f8;
+  }
 `;
 const DivListContent = styled.div`
   display: flex;
@@ -378,6 +389,7 @@ const StMapBody = styled.div`
   line-height: 19px;
   & > * {
     margin: 8px 0;
+    white-space: pre-wrap;
   }
 `;
 

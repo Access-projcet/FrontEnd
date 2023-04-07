@@ -36,7 +36,9 @@ export default function GuestLoginForm() {
 
       localStorage.setItem("name", data.data.data.name);
 
-      alert("로그인 성공");
+      
+
+      // alert("로그인 성공");
       navigate("/guest/main");
     },
     onError: (error) => {
