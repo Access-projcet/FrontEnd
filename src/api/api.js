@@ -1,19 +1,19 @@
 import instance from "./instance";
 
 const loginguest = async (user) => {
-  return await instance.post("/login/guest", user);
+  return await instance.post("/guest/login", user);
 };
 
 const loginbusiness = async (user) => {
-  return await instance.post("/login/business", user);
+  return await instance.post("/admin/login", user);
 };
 
 const guestSignUpUser = async (user) => {
-  return await instance.post(`/signup/guest`, user);
+  return await instance.post(`/guest/signup`, user);
 };
 
 const adminSignUpUser = async (admin) => {
-  return await instance.post(`/signup/business`, admin);
+  return await instance.post(`/admin/signup`, admin);
 };
 
 const guestdeleteVisit = async (id) => {
@@ -51,8 +51,20 @@ const submitlobbycheckin = async (user) => {
 
 
 const getConfirmList = async () => {
-  const response = await instance.get(`/visit/access-status`);
+  const response = await instance.get(`/access-status`);
   return response.data;
+};
+
+const SearchAdminPW = async (user) => {
+  return await instance.post("/admin/password", user);
+};
+
+const ChangeAdminPW = async (user) => {
+  return await instance.put("/admin/password", user);
+};
+
+const SearchEmail = async (user) => {
+  return await instance.post("/email/authcode", user);
 };
 
 export {
@@ -68,4 +80,7 @@ export {
   adminModify,
   getMap,
   getConfirmList,
+  SearchAdminPW,
+  ChangeAdminPW,
+  SearchEmail,
 };
