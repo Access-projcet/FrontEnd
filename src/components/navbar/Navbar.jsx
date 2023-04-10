@@ -42,44 +42,49 @@ const Navbar = () => {
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(
-      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      }
-    );
 
-    eventSource.onopen = () => {
-      console.log("최초 오픈!");
-      setIsConnection(true);
-      refetch();
-    };
-
-    eventSource.onmessage = (event) => {
-      const target = event.data.split(" ")[0];
-      console.log("여기 왜 안옴?", event.data.split(" "));
-      if (isConnection) {
-        if (target === "EventStream" || target === "event:") {
-          return;
+    if (menu === "admin") {
+      const eventSource = new EventSourcePolyfill(
+        `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          withCredentials: true,
         }
-        setMessage(event.data);
-        notify(message);
-      }
-      // refetch();
-      // queryClient.invalidateQueries("notification");
-    };
+      );
 
-    eventSource.onerror = (e) => {
-      // error log here
-      console.log("errorerorororo", e);
-      // eventSource.close();
-    };
-    return () => {
-      eventSource.close();
-    };
+      eventSource.onopen = () => {
+        console.log("최초 오픈!");
+        setIsConnection(true);
+        refetch();
+      };
+
+      eventSource.onmessage = (event) => {
+        const target = event.data.split(" ")[0];
+        console.log("여기 왜 안옴?", event.data.split(" "));
+        if (isConnection) {
+          if (target === "EventStream" || target === "event:") {
+            return;
+          }
+          setMessage(event.data);
+          notify(message);
+        }
+        // refetch();
+        // queryClient.invalidateQueries("notification");
+      };
+
+      eventSource.onerror = (e) => {
+        // error log here
+        console.log("errorerorororo", e);
+        // eventSource.close();
+      };
+      return () => {
+        eventSource.close();
+      };
+    } else {
+      return;
+    }
   }, [message, isConnection, refetch]);
 
   const logoutBtn = () => {

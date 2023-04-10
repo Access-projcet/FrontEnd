@@ -15,21 +15,7 @@ export default function AdminApproveList() {
     "guests", // 쿼리키
 
     () => {
-      // const queryParams = {
-      //   start: pagination.pageIndex * pagination.pageSize,
-      //   size: pagination.pageSize,
-      //   filters: JSON.stringify(columnFilters ?? []),
-      //   globalFilter: globalFilter ?? "",
-      //   sorting: JSON.stringify(sorting ?? []),
-      // };
-      // const queryParams = {
-      //   orderby: "status",
-      // };
-
       return adminVisit();
-      ///visit-forms/sort
-      // visit/admin
-      // return adminVisitSort(queryParams);
     },
     {
       keepPreviousData: true,
@@ -94,11 +80,7 @@ export default function AdminApproveList() {
         size: 300,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
-      // {
-      //   accessorKey: "startTime",
-      //   header: "방문시간",
-      //   size: 20,
-      // },
+
       {
         accessorKey: "status",
         header: "상태",
@@ -146,9 +128,6 @@ export default function AdminApproveList() {
               color: `${color.textWhite}`,
             },
           }}
-          // manualFiltering
-          // manualPagination
-          // manualSorting
           muiToolbarAlertBannerProps={
             isError
               ? {
@@ -157,10 +136,6 @@ export default function AdminApproveList() {
                 }
               : undefined
           }
-          // onColumnFiltersChange={setColumnFilters}
-          // onGlobalFilterChange={setGlobalFilter}
-          // onPaginationChange={setPagination}
-          // onSortingChange={setSorting}
           renderTopToolbarCustomActions={() => (
             <Tooltip arrow title="Refresh Data">
               <IconButton onClick={() => refetch()}>
@@ -200,9 +175,6 @@ export default function AdminApproveList() {
             showAlertBanner: isError,
             showProgressBars: isFetching,
           }}
-          // muiTablePaginationProps={{
-          //   rowsPerPageOptions: [5, 10, 15],
-          // }}
         />
       </DivTable>
     </DivApprove>
