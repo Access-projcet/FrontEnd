@@ -1,19 +1,19 @@
 import instance from "./instance";
 
 const loginGuest = async (user) => {
-  return await instance.post("/login/guest", user);
+  return await instance.post("/guest/login", user);
 };
 
 const loginBusiness = async (user) => {
-  return await instance.post("/login/business", user);
+  return await instance.post("/admin/login", user);
 };
 
 const guestSignUpUser = async (user) => {
-  return await instance.post(`/signup/guest`, user);
+  return await instance.post(`/guest/signup`, user);
 };
 
 const adminSignUpUser = async (admin) => {
-  return await instance.post(`/signup/business`, admin);
+  return await instance.post(`/admin/signup`, admin);
 };
 
 const guestDeleteVisit = async (id) => {
@@ -54,6 +54,9 @@ const submitLobbyCheckOut = async (user) => {
 const submitLobbyCheckInQr = async (qrUser) => {
   return await instance.post("access-in", qrUser);
 };
+const submitLobbyCheckOutQr = async (qrUser) => {
+  return await instance.put("/access-out", qrUser);
+};
 
 const getConfirmList = async () => {
   const response = await instance.get(`/access-status`);
@@ -79,5 +82,6 @@ export {
   getMap,
   getConfirmList,
   submitLobbyCheckInQr,
+  submitLobbyCheckOutQr,
   getUserInfoQr,
 };

@@ -22,6 +22,20 @@ const Navbar = () => {
     e.stopPropagation();
     menu === "guest" ? navigate("/guest/main") : navigate("/admin/main");
   };
+
+  // navigate 이동 함수
+  const navigateMap = () => {
+    navigate("/guest/company");
+  };
+  const navigateMyPage = () => {
+    navigate("/guest/mypage");
+  };
+  const navigateAdminPage = () => {
+    navigate("/admin/main");
+  };
+  const navigateLobby = () => {
+    navigate("/lobby");
+  };
   return (
     <>
       <StNavBar>
@@ -30,15 +44,15 @@ const Navbar = () => {
           {menu === "guest" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi>맵보러가기</StMenuLi>
-                <StMenuLi>내가 신청한 목록</StMenuLi>
+                <StMenuLi onClick={navigateMap}>맵보러가기</StMenuLi>
+                <StMenuLi onClick={navigateMyPage}>내가 신청한 목록</StMenuLi>
               </StMenuUl>
             </StMenuDiv>
           ) : (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi>로비 메뉴</StMenuLi>
-                <lStMenuLii>관리자 페이지</lStMenuLii>
+                <StMenuLi onClick={navigateLobby}>로비 메뉴</StMenuLi>
+                <StMenuLi onClick={navigateAdminPage}>관리자 페이지</StMenuLi>
               </StMenuUl>
             </StMenuDiv>
           )}

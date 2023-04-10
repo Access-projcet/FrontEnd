@@ -6,11 +6,13 @@ import btn1 from "../utils/img/방문_icon@2x.png";
 import btn2 from "../utils/img/퇴장_icon@2x.png";
 import LobbyModal from "../components/modal/LobbyModal";
 import QrReaderModal from "../components/modal/QrReaderModal";
+import QrReaderModal2 from "../components/modal/QrReaderModal2";
 import Modal from "../components/modal/Modal";
 
 const Lobby = () => {
   const [showModal, setShowModal] = useState(false);
-  const [showQrModal, setShowQrModal] = useState(false);
+  const [showQrModalCheckIn, setShowQrModalCheckIn] = useState(false);
+  const [showQrModalCheckOut, setShowQrModalCheckOut] = useState(false);
 
   return (
     <>
@@ -40,7 +42,7 @@ const Lobby = () => {
         {/* check-in-qr */}
         <Link
           onClick={() => {
-            setShowQrModal(!showQrModal);
+            setShowQrModalCheckIn(!showQrModalCheckIn);
           }}
         >
           <StMainMenu color="#829cf6;">
@@ -48,7 +50,7 @@ const Lobby = () => {
             <StMainImg src={btn1} alt="Check-in"></StMainImg>
           </StMainMenu>
         </Link>
-        {showQrModal === true ? (
+        {showQrModalCheckIn === true ? (
           <Modal
             children={
               <ModalOverlay>
@@ -74,7 +76,7 @@ const Lobby = () => {
         {/* check-out-qr */}
         <Link
           onClick={() => {
-            setShowQrModal(!showQrModal);
+            setShowQrModalCheckOut(!showQrModalCheckOut);
           }}
         >
           <StMainMenu color="#57D4D4;">
@@ -82,6 +84,17 @@ const Lobby = () => {
             <StMainImg src={btn2} alt="Check-out"></StMainImg>
           </StMainMenu>
         </Link>
+        {showQrModalCheckOut === true ? (
+          <Modal
+            children={
+              <ModalOverlay>
+                <ModalWrapper>
+                  <QrReaderModal2 />
+                </ModalWrapper>
+              </ModalOverlay>
+            }
+          />
+        ) : null}
       </StMain>
     </>
   );
