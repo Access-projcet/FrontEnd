@@ -19,7 +19,7 @@ function App() {
         <GlobalStyle />
         <Router />
       </Provider>
-      <ReactQueryDevtools initialIsOpen={true} />
+      {/* <ReactQueryDevtools initialIsOpen={true} /> */}
     </QueryClientProvider>
   );
 }
