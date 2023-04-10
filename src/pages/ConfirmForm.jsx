@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { submitconfirmform } from "../api/api";
 import DatePicker from "react-datepicker";
-import { ko } from "date-fns/esm/locale";
 import { submitConfirmForm } from "../api/api";
-// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
@@ -24,9 +21,6 @@ const ConfirmForm = ({ onClose, company }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const dateTimeStart = `${startDate}T${startTime}:00`;
-  const dateTimeEnd = `${endDate}T${endTime}:00`;
-
   const dateToString = (date) => {
     return (
       date.getFullYear() +
@@ -36,8 +30,6 @@ const ConfirmForm = ({ onClose, company }) => {
       date.getDate().toString().padStart(2, "0")
     );
   };
-
-  // const dateFormat = dayjs().format("YYYY-MM-DD");
 
   const queryClient = useQueryClient();
   const mutation = useMutation(submitConfirmForm, {
@@ -232,12 +224,7 @@ const ConfirmForm = ({ onClose, company }) => {
           ></input>
         </TimeTable2>
         <Msg>
-
-          <p>
-            * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
-            2023/03/31, 14:00
-          </p>
-
+          <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40, 2023/03/31, 14:00</p>
         </Msg>
 
         <hr />
