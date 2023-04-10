@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
 
-import { loginguest } from "../../api/api";
+import { loginGuest } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../api/cookies";
 import { makeStyles } from "@mui/styles";
@@ -34,17 +34,13 @@ export default function GuestLoginForm() {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
-  const mutation = useMutation(loginguest, {
+  const mutation = useMutation(loginGuest, {
     onSuccess: (data) => {
+      console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem(
-        "REFRESH_TOKEN",
-        data.headers.refreshtoken.split(" ")[1]
-      );
-      console.log(data.data.data.name);
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
       localStorage.setItem("usertype", menu);
-      alert("로그인 성공");
       navigate("/guest/main");
     },
     onError: (error) => {

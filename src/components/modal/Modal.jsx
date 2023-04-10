@@ -7,10 +7,7 @@ const Modal = ({ children, onClose }) => {
     <Portal>
       <ModalOverlay>
         <ModalWrapper>
-          <ModalInner>
-            {children}
-            {/* <ButtonClose onClick={onClose}>X</ButtonClose> */}
-          </ModalInner>
+          <ModalInner>{children}</ModalInner>
         </ModalWrapper>
       </ModalOverlay>
     </Portal>
@@ -53,15 +50,4 @@ const ModalInner = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-`;
-
-const ButtonClose = styled.button`
-  width: 40px;
-  height: 20px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: transparent;
-  font-size: xx-large;
-  cursor: pointer;
 `;

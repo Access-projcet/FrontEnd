@@ -110,9 +110,7 @@ const AdminSignUp = () => {
               },
             }}
             error={companyName.trim() === ""}
-            helperText={
-              companyName.trim() === "" ? "회사이름을 입력해주세요" : " "
-            }
+            helperText={companyName.trim() === "" ? "회사이름을 입력해주세요" : " "}
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -145,14 +143,10 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={
-              businessNum.trim() !== "" &&
-              !/^\d{3}-\d{3}-\d{4}$/.test(businessNum)
-            }
+            error={businessNum.trim() !== "" && !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)}
             helperText={
-              businessNum.trim() !== "" &&
-              !/^\d{3}-\d{3}-\d{4}$/.test(businessNum)
-                ? "사업자 등록번호는 XXX-XXX-XXXX 형식의 숫자만 입력 가능합니다"
+              businessNum.trim() !== "" && !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)
+                ? "사업자 등록번호는 XXX-XX-XXXXX 형식의 숫자만 입력 가능합니다"
                 : " "
             }
             FormHelperTextProps={{
@@ -187,9 +181,7 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText={
-              companyToken.trim() === "" ? "회사코드를 입력해주세요" : " "
-            }
+            helperText={companyToken.trim() === "" ? "회사코드를 입력해주세요" : " "}
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -261,13 +253,10 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={
-              password.trim() !== "" &&
-              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
-            }
+
+            error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)}
             helperText={
-              password.trim() !== "" &&
-              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
+              password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
                 ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                 : " "
             }
@@ -336,9 +325,7 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={
-              phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
-            }
+            error={phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)}
             helperText={
               phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
                 ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
@@ -351,9 +338,7 @@ const AdminSignUp = () => {
             }}
           />
           <FormControlLabel
-            control={
-              <Checkbox value="allowExtraEmails" color="primary" required />
-            }
+            control={<Checkbox value="allowExtraEmails" color="primary" required />}
             label="개인정보 제공에 동의합니다"
           />
           <StLoginBtn>
@@ -379,9 +364,7 @@ const AdminSignUp = () => {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
-        <StAlready onClick={gotoLogin}>
-          이미 회원이신가요? 로그인 하러 가기
-        </StAlready>
+        <StAlready onClick={gotoLogin}>이미 회원이신가요? 로그인 하러 가기</StAlready>
       </DivLoginContainer>
       {isModalOpen && (
         <Modal

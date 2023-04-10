@@ -1,10 +1,11 @@
 import instance from "./instance";
 
-const loginguest = async (user) => {
+const loginGuest = async (user) => {
   return await instance.post("/guest/login", user);
 };
 
-const loginbusiness = async (user) => {
+const loginBusiness = async (user) => {
+
   return await instance.post("/admin/login", user);
 };
 
@@ -16,7 +17,7 @@ const adminSignUpUser = async (admin) => {
   return await instance.post(`/admin/signup`, admin);
 };
 
-const guestdeleteVisit = async (id) => {
+const guestDeleteVisit = async (id) => {
   return await instance.delete(`/visit/${id}`);
 };
 
@@ -40,18 +41,31 @@ const getMap = async () => {
   return response.data;
 };
 
-
-const submitconfirmform = async (user) => {
+const submitConfirmForm = async (user) => {
   return await instance.post("/visit", user);
 };
 
-const submitlobbycheckin = async (user) => {
-  return await instance.post("access-in", user);
+const submitLobbyCheckIn = async (user) => {
+  return await instance.post("/access-in", user);
+};
+const submitLobbyCheckOut = async (user) => {
+  return await instance.put("/access-out", user);
 };
 
+const submitLobbyCheckInQr = async (qrUser) => {
+  return await instance.post("access-in", qrUser);
+};
+const submitLobbyCheckOutQr = async (qrUser) => {
+  return await instance.put("/access-out", qrUser);
+};
 
 const getConfirmList = async () => {
   const response = await instance.get(`/access-status`);
+  return response.data;
+};
+
+const getUserInfoQr = async () => {
+  const response = await instance.get(`/qrCode`);
   return response.data;
 };
 
@@ -68,13 +82,13 @@ const SearchEmail = async (user) => {
 };
 
 export {
-  loginguest,
-  loginbusiness,
-  submitconfirmform,
-  submitlobbycheckin,
+  loginGuest,
+  loginBusiness,
+  submitConfirmForm,
+  submitLobbyCheckIn,
   guestSignUpUser,
   adminSignUpUser,
-  guestdeleteVisit,
+  guestDeleteVisit,
   guestVisit,
   adminVisit,
   adminModify,
@@ -83,4 +97,8 @@ export {
   SearchAdminPW,
   ChangeAdminPW,
   SearchEmail,
+  submitLobbyCheckInQr,
+  submitLobbyCheckOutQr,
+  getUserInfoQr,
+
 };

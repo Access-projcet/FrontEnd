@@ -78,15 +78,3 @@ const ModalInner = styled.div`
   width: 100%;
   height: 100%;
 `;
-
-const ButtonClose = styled.button`
-  /* width: 40px;
-  height: 20px;
-  position: absolute;
-  top: 20px;
-  right: 10px;
-  background-color: transparent;
-  font-size: 40px;
-  color: grey;
-  cursor: pointer; */
-`;
