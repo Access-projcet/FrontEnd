@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 export default function GuestLoginForm() {
   const navigate = useNavigate();
   const { menu } = useSelector((state) => state.LoginMenuSlice);
-  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
   const mutation = useMutation(loginguest, {
@@ -58,7 +58,7 @@ export default function GuestLoginForm() {
   const HandlerGuestLogin = (e) => {
     e.preventDefault();
     const user = {
-      userId: email,
+      userId: userId,
       password: password,
     };
     mutation.mutate(user);
@@ -69,63 +69,64 @@ export default function GuestLoginForm() {
     <>
       <DivLoginContainer>
         <StForm onSubmit={HandlerGuestLogin}>
-          <TextField
-            margin="normal"
-            label="Email"
-            autoComplete="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoFocus
-            fullWidth
-            className={classes.root}
-            sx={{
-              "& label": {
-                "&.Mui-focused": {
-                  color: "#636FD7",
+          <InputForm>
+            <TextField
+              margin="normal"
+              label="아이디"
+              name="userId"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              required
+              autoFocus
+              fullWidth
+              className={classes.root}
+              sx={{
+                "& label": {
+                  "&.Mui-focused": {
+                    color: "#636FD7",
+                  },
                 },
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#636FD7",
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#636FD7",
 
-                ":&focus": {
-                  color: "#636FD7",
+                  ":&focus": {
+                    color: "#636FD7",
+                  },
                 },
-              },
-            }}
-          />
-          <TextField
-            margin="normal"
-            label="비밀번호"
-            type="password"
-            autoComplete="current-password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            fullWidth
-            color="primary"
-            className={classes.root}
-            sx={{
-              "& label": {
-                "&.Mui-focused": {
-                  color: "#636FD7",
+              }}
+            />
+            <TextField
+              margin="normal"
+              label="비밀번호"
+              type="password"
+              autoComplete="current-password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              fullWidth
+              color="primary"
+              className={classes.root}
+              sx={{
+                "& label": {
+                  "&.Mui-focused": {
+                    color: "#636FD7",
+                  },
                 },
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                color: "#636FD7",
+              }}
+              InputLabelProps={{
+                sx: {
+                  color: "#636FD7",
 
-                "&.focused": {
-                  color: "red",
+                  "&.focused": {
+                    color: "red",
+                  },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          </InputForm>
           <StLoginBtn>
             <Button
               className={classes.button}
@@ -148,6 +149,11 @@ export default function GuestLoginForm() {
             </Button>
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
+          <LoginFindForm>
+            <Link href="/search">
+              <StFindBtn>아이디 / 비밀번호 찾기</StFindBtn>
+            </Link>
+          </LoginFindForm>
           <hr />
           <StLoginBtn>
             <Button
@@ -173,12 +179,6 @@ export default function GuestLoginForm() {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
-
-        <Grid item xs>
-          <Link href="#">
-            <StFindBtn>아이디 / 비밀번호 찾기</StFindBtn>
-          </Link>
-        </Grid>
       </DivLoginContainer>
     </>
   );
@@ -213,7 +213,20 @@ const StloginImg = styled.img`
 `;
 const StForm = styled.form``;
 
+const InputForm = styled.div`
+  margin-top: -50px;
+`;
+
 const StFindBtn = styled.div`
   color: black;
   margin-top: 30px;
+`;
+
+const LoginFindForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -20px;
+  margin-bottom: 30px;
 `;

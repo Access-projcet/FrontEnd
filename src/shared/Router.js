@@ -7,11 +7,12 @@ import GuestMain from "./../pages/GuestMain";
 import ConfirmForm from "../pages/ConfirmForm";
 import Company from "../pages/Company";
 import GuestMyPage from "../pages/GuestMyPage";
-
 import AdminMain from "../pages/AdminMain";
 import Lobby from "../pages/Lobby";
 import SignUp from "../pages/SignUp"
-
+import NotFound from "../pages/NotFound";
+import Search_PW from "../components/modal/Search_PW";
+import Change_PW from "../components/modal/Change_PW";
 
 const Router = () => {
   return (
@@ -27,7 +28,9 @@ const Router = () => {
         <Route path="/guest/mypage" element={<GuestMyPage />} />
         <Route path="/admin/main" element={<AdminMain />} />
         <Route path="/lobby" element={<Lobby />} />
-
+        <Route path="/*" element={<NotFound />} />
+        <Route path="/search" element={<Search_PW/>} />
+        <Route path="/change" element={<Change_PW/>} />
       </Routes>
     </BrowserRouter>
   );

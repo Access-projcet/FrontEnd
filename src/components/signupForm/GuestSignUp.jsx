@@ -2,7 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useMutation, useQueryClient } from "react-query";
-import { guestSignUp } from "../../apis/api";
+import { guestSignUpUser } from "../../api/api";
 import { useNavigate } from "react-router";
 import styled, { keyframes } from "styled-components";
 import { makeStyles } from "@mui/styles";
@@ -40,7 +40,7 @@ export default function SignUp() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const classes = useStyles();
-  const mutation = useMutation(guestSignUp, {
+  const mutation = useMutation(guestSignUpUser, {
     onSuccess: (response) => {
       queryClient.invalidateQueries("guest");
       setIsModalOpen(true);
@@ -167,7 +167,6 @@ export default function SignUp() {
             }}
             error={
               password.trim() !== "" &&
-
               !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
             }
             helperText={

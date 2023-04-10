@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { adminSignUpUser } from "../../apis/api";
+import { adminSignUpUser } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -201,7 +201,7 @@ const AdminSignUp = () => {
             required
             fullWidth
             id="userId"
-            label="ID"
+            label="아이디"
             name="userId"
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
@@ -239,7 +239,7 @@ const AdminSignUp = () => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="비밀번호"
             type="password"
             id="password"
             value={password}
@@ -263,7 +263,6 @@ const AdminSignUp = () => {
             }}
             error={
               password.trim() !== "" &&
-
               !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
             }
             helperText={
