@@ -5,6 +5,7 @@ const loginGuest = async (user) => {
 };
 
 const loginBusiness = async (user) => {
+
   return await instance.post("/admin/login", user);
 };
 
@@ -68,6 +69,18 @@ const getUserInfoQr = async () => {
   return response.data;
 };
 
+const SearchAdminPW = async (user) => {
+  return await instance.post("/admin/password", user);
+};
+
+const ChangeAdminPW = async (user) => {
+  return await instance.put("/admin/password", user);
+};
+
+const SearchEmail = async (user) => {
+  return await instance.post("/email/authcode", user);
+};
+
 export {
   loginGuest,
   loginBusiness,
@@ -81,7 +94,11 @@ export {
   adminModify,
   getMap,
   getConfirmList,
+  SearchAdminPW,
+  ChangeAdminPW,
+  SearchEmail,
   submitLobbyCheckInQr,
   submitLobbyCheckOutQr,
   getUserInfoQr,
+
 };

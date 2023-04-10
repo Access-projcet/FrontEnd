@@ -167,7 +167,6 @@ export default function SignUp() {
             }}
             error={
               password.trim() !== "" &&
-
               !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
             }
             helperText={

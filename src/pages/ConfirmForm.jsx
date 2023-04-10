@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { submitconfirmform } from "../api/api";
+import DatePicker from "react-datepicker";
+import { ko } from "date-fns/esm/locale";
 import { submitConfirmForm } from "../api/api";
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -7,19 +10,32 @@ import styled from "styled-components";
 
 const ConfirmForm = ({ onClose, company }) => {
   const [location, setLocation] = useState(company.companyName);
-  const [place, setPlace] = useState(company.companyAddress);
+  const [place, setPlace] = useState("");
   const [target, setTarget] = useState("");
   const [purpose, setPurpose] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  // const [startDate, setStartDate] = useState("");
+  // const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
 
   //datepicker 사용
-  // const [startDate, setStartDate] = useState(new Date().getFullYear());
-  // const [endDate, setEndDate] = useState(new Date().getFullYear());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  const dateTimeStart = `${startDate}T${startTime}:00`;
+  const dateTimeEnd = `${endDate}T${endTime}:00`;
+
+  const dateToString = (date) => {
+    return (
+      date.getFullYear() +
+      "-" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      date.getDate().toString().padStart(2, "0")
+    );
+  };
 
   // const dateFormat = dayjs().format("YYYY-MM-DD");
 
@@ -48,22 +64,10 @@ const ConfirmForm = ({ onClose, company }) => {
       startTime: dateTimeStart,
       endDate,
       endTime: dateTimeEnd,
-      status: "1",
-    };
-    console.log({
-      place,
-      target,
-      purpose,
-      startDate,
-      startTime,
-      endDate,
-      endTime,
-      dateTimeStart,
-      dateTimeEnd,
       visitor,
       phoneNum,
       status: "1",
-    });
+    };
     mutation.mutate(confirmForm);
   };
 
@@ -137,6 +141,14 @@ const ConfirmForm = ({ onClose, company }) => {
         </Main2>
         <hr />
         <TimeTable1>
+          {/* <label htmlFor="startDate">방문 날짜 </label>
+          <DatePicker
+            locale={ko}
+            dateFormat="yyyy/MM/dd"
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            minDate={new Date()}
+          /> */}
           <label htmlFor="startDate">방문 날짜 </label>
           <input
             style={{
@@ -178,6 +190,14 @@ const ConfirmForm = ({ onClose, company }) => {
           ⁓
         </span>
         <TimeTable2>
+          {/* <label htmlFor="endDate">종료 날짜 </label>
+          <DatePicker
+            locale={ko}
+            dateFormat="yyyy/MM/dd"
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            minDate={new Date()}
+          /> */}
           <label htmlFor="endDate">종료 날짜 </label>
           <input
             style={{
@@ -212,7 +232,12 @@ const ConfirmForm = ({ onClose, company }) => {
           ></input>
         </TimeTable2>
         <Msg>
-          <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023-03-30, 13:40, 2023-03-31, 14:00</p>
+
+          <p>
+            * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
+            2023/03/31, 14:00
+          </p>
+
         </Msg>
 
         <hr />

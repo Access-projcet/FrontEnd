@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
 import { Link } from "react-router-dom";
-import { removeCookie } from "./../../api/cookies";
+import { removeCookie } from "../../api/cookies";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
