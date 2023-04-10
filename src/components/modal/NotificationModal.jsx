@@ -19,16 +19,21 @@ export const NotificationModal = ({ position, onClose, data }) => {
   return (
     <StContainer position={position}>
       <StNotificationList>
-        {data?.map((item) => {
-          return (
-            <StNotification>
-              {item.content}
-              <button onClick={() => handlerDeleteNotification(item.id)}>
-                읽음
-              </button>
-            </StNotification>
-          );
-        })}
+        {data
+          ?.filter((item) => !item.isRead)
+          .map((item) => {
+            return (
+              <StNotification>
+                {item.content}
+                <button onClick={() => handlerDeleteNotification(item.id)}>
+                  읽음
+                </button>
+              </StNotification>
+            );
+          })}
+        {data && data.filter((item) => !item.isRead).length === 0 && (
+          <p>안 읽은 알림이 없습니다.</p>
+        )}
       </StNotificationList>
       <ButtonClose onClick={onClose}>X</ButtonClose>
     </StContainer>
@@ -61,6 +66,10 @@ const ButtonClose = styled.button`
 `;
 
 const StNotificationList = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
   margin-top: 40px;
 `;
 const StNotification = styled.div`
@@ -68,4 +77,5 @@ const StNotification = styled.div`
   justify-content: space-between;
   border-bottom: 1px solid black;
   margin: 10px 0px;
+  width: 100%;
 `;

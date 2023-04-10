@@ -27,7 +27,6 @@ export default function MapContainer5() {
     isPanto: false,
   });
 
-
   const HandlerTargetChange = (e) => {
     setTarget(e.target.value);
   };
