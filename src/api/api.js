@@ -25,7 +25,6 @@ const guestVisit = async () => {
 };
 
 const adminVisit = async (payload) => {
-  console.log(payload);
   return await instance.get(`/visit/admin`);
 };
 
@@ -62,6 +61,15 @@ const getConfirmList = async () => {
   return response.data;
 };
 
+const getNotifications = async () => {
+  const response = await instance.get("/notifications");
+  return response.data;
+};
+const readNotification = async (id) => {
+  const response = await instance.put(`/notification/${id}`);
+  return response.data;
+};
+
 export {
   loginguest,
   loginbusiness,
@@ -76,4 +84,6 @@ export {
   getMap,
   getConfirmList,
   adminVisitSort,
+  getNotifications,
+  readNotification,
 };

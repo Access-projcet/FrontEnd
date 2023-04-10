@@ -7,27 +7,13 @@ import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
 
-import { adminVisit, adminModify, adminVisitSort } from "../api/api";
+import { adminVisit, adminModify } from "../api/api";
 import { color } from "../utils/styles/color";
 
 export default function AdminApproveList() {
-  const [columnFilters, setColumnFilters] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [sorting, setSorting] = useState([]);
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 15,
-  });
-
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
-    [
-      "guests", // 쿼리키
-      pagination.pageIndex,
-      pagination.pageSize,
-      sorting,
-      globalFilter,
-      columnFilters,
-    ],
+    "guests", // 쿼리키
+
     () => {
       // const queryParams = {
       //   start: pagination.pageIndex * pagination.pageSize,
@@ -36,14 +22,14 @@ export default function AdminApproveList() {
       //   globalFilter: globalFilter ?? "",
       //   sorting: JSON.stringify(sorting ?? []),
       // };
-      const queryParams = {
-        orderby: "status",
-      };
+      // const queryParams = {
+      //   orderby: "status",
+      // };
 
-      // return adminVisit(queryParams);
+      return adminVisit();
       ///visit-forms/sort
       // visit/admin
-      return adminVisitSort(queryParams);
+      // return adminVisitSort(queryParams);
     },
     {
       keepPreviousData: true,
@@ -76,7 +62,6 @@ export default function AdminApproveList() {
     });
   };
 
-  console.log(data?.data.data);
   const columns = useMemo(
     () => [
       {
@@ -147,6 +132,11 @@ export default function AdminApproveList() {
           initialState={{
             showColumnFilters: false,
           }}
+          filterFns={{
+            customFilterFn: (row, id, filterValue) => {
+              return row.getValue(id) === filterValue;
+            },
+          }}
           muiTableHeadCellProps={{
             //simple styling with the `sx` prop, works just like a style prop in this example
             sx: {
@@ -156,9 +146,9 @@ export default function AdminApproveList() {
               color: `${color.textWhite}`,
             },
           }}
-          manualFiltering
-          manualPagination
-          manualSorting
+          // manualFiltering
+          // manualPagination
+          // manualSorting
           muiToolbarAlertBannerProps={
             isError
               ? {
@@ -167,10 +157,10 @@ export default function AdminApproveList() {
                 }
               : undefined
           }
-          onColumnFiltersChange={setColumnFilters}
-          onGlobalFilterChange={setGlobalFilter}
-          onPaginationChange={setPagination}
-          onSortingChange={setSorting}
+          // onColumnFiltersChange={setColumnFilters}
+          // onGlobalFilterChange={setGlobalFilter}
+          // onPaginationChange={setPagination}
+          // onSortingChange={setSorting}
           renderTopToolbarCustomActions={() => (
             <Tooltip arrow title="Refresh Data">
               <IconButton onClick={() => refetch()}>
@@ -206,17 +196,13 @@ export default function AdminApproveList() {
           )}
           rowCount={data?.meta?.totalRowCount ?? 0}
           state={{
-            columnFilters,
-            globalFilter,
             isLoading,
-            pagination,
             showAlertBanner: isError,
             showProgressBars: isFetching,
-            sorting,
           }}
-          muiTablePaginationProps={{
-            rowsPerPageOptions: [15],
-          }}
+          // muiTablePaginationProps={{
+          //   rowsPerPageOptions: [5, 10, 15],
+          // }}
         />
       </DivTable>
     </DivApprove>
