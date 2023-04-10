@@ -28,6 +28,7 @@ const ConfirmForm = ({ onClose, company }) => {
     onSuccess: (response) => {
       console.log(response);
       queryClient.invalidateQueries("user");
+      onClose();
     },
     onError: (error) => {
       alert(error.response.data.message);

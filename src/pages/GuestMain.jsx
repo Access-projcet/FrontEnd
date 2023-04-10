@@ -16,16 +16,16 @@ const GuestMain = () => {
   const { data } = useQuery("userInfoQr", getUserInfoQr);
   console.log(data);
 
-  // const queryClient = useQuery();
-  // const mutation = useMutation(submitLobbyCheckInQr, {
-  //   onSuccess: (response) => {
-  //     console.log(response);
-  //     queryClient.invalidateQueries("qrUser");
-  //   },
-  //   onError: (error) => {
-  //     alert(error);
-  //   },
-  // });
+  const downloadQRCode = () => {
+    const canvas = document.getElementById("qr-code");
+    const dataURL = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.download = "qrcode.png";
+    link.href = dataURL;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleGenerateQrCode = () => {
     const makeUserQr = `name=${data.data.name}&phoneNum=${data.data.phoneNum}`;
@@ -51,7 +51,7 @@ const GuestMain = () => {
         </Link>
 
         <StMainMenu color="#28d4d4;">
-          <StQrBtn onClick={handleGenerateQrCode}>QR 코드 발급</StQrBtn>
+          <StQrBtn onClick={(handleGenerateQrCode, downloadQRCode)}>QR 코드 발급</StQrBtn>
           <StMainImg src={btn2} alt="내 방문 이력 보기"></StMainImg>
         </StMainMenu>
       </StMain>

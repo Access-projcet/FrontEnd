@@ -1,61 +1,57 @@
-import { useState } from "react";
-import { QrReader } from "react-qr-reader";
+import React, { useState } from "react";
+import QrReader from "react-qr-scanner";
+import successAudioFile from "../../utils/audio/성공음성.wav";
+import failAudioFile from "../../utils/audio/실패음성.wav";
+import { submitLobbyCheckOutQr } from "../../api/api";
+import { useMutation, useQueryClient } from "react-query";
 
-const App = () => {
-  const [selected, setSelected] = useState("environment");
-  const [startScan, setStartScan] = useState(false);
-  const [loadingScan, setLoadingScan] = useState(false);
-  const [data, setData] = useState("");
+const QrReaderModal = () => {
+  const [result, setResult] = useState("");
+  const [successAudio] = useState(new Audio(successAudioFile));
+  const [failAudio] = useState(new Audio(failAudioFile));
 
-  const handleScan = async (scanData) => {
-    setLoadingScan(true);
-    console.log(`loaded data data`, scanData);
-    if (scanData && scanData !== "") {
-      console.log(`loaded >>>`, scanData);
-      setData(scanData);
-      setStartScan(false);
-      setLoadingScan(false);
-      // setPrecScan(scanData);
+  const queryClient = useQueryClient();
+  const mutation = useMutation(submitLobbyCheckOutQr, {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries("qrUser");
+      successAudio.play();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+      setTimeout(() => {
+        setResult("");
+      }, 30000);
+    },
+    onError: (error) => {
+      failAudio.play();
+    },
+  });
+
+  const handleScan = async (data) => {
+    if (data) {
+      setResult(data);
+      const userData = {};
+      const values = data.text.split("&");
+      for (let i = 0; i < values.length; i++) {
+        const keyValuePair = values[i].split("=");
+        userData[keyValuePair[0]] = keyValuePair[1];
+      }
+      try {
+        mutation.mutate(userData);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
-  const handleError = (err) => {
-    console.error(err);
+
+  let handleError = (err) => {
+    // alert(err);
   };
   return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>
-        Last Scan:
-        {selected}
-      </h2>
-
-      <button
-        onClick={() => {
-          setStartScan(!startScan);
-        }}
-      >
-        {startScan ? "Stop Scan" : "Start Scan"}
-      </button>
-      {startScan && (
-        <>
-          <select onChange={(e) => setSelected(e.target.value)}>
-            <option value={"environment"}>Back Camera</option>
-            <option value={"user"}>Front Camera</option>
-          </select>
-          <QrReader
-            facingMode={selected}
-            delay={1000}
-            onError={handleError}
-            onScan={handleScan}
-            // chooseDeviceId={()=>selected}
-            style={{ width: "300px" }}
-          />
-        </>
-      )}
-      {loadingScan && <p>Loading</p>}
-      {data !== "" && <p>{data}</p>}
-    </div>
+    <>
+      <QrReader delay={10000} onError={handleError} onScan={handleScan} />
+    </>
   );
 };
 
-export default App;
+export default QrReaderModal;
