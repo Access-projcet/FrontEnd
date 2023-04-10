@@ -24,6 +24,7 @@ instance.interceptors.response.use(
   (response) => {
     if (response.headers.authorization) {
       const re_access_token = response.headers.authorization.split("")[1];
+      removeCookie("ACCESS_TOKEN");
       setCookie("ACCESS_TOKEN", re_access_token);
     } else {
     }
@@ -33,9 +34,12 @@ instance.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     if (error.response.status === 400) {
+      console.log("400에러");
     }
 
     if (error.response.status === 401 && !originalRequest._retry) {
+      console.log("401에러");
+
       try {
         originalRequest._retry = true;
 
