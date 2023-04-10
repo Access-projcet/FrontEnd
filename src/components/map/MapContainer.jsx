@@ -11,16 +11,22 @@ import markoff from "../../utils/img/즐겨찾기_off_icon.png";
 import search from "../../utils/img/_search_icon.png";
 import CloseIcon from "@mui/icons-material/Close";
 import markerIcon from "../../utils/img/즐겨찾기_on_icon@3x.png";
+
 const { kakao } = window;
 export default function MapContainer5() {
   //filter 기능
   const [filteredMarkers, setFilteredMarkers] = useState([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [target, setTarget] = useState("");
   const [company, setCompany] = useState({});
+
+  const [mapstate, setMapstate] = useState({
+    // 지도의 중심좌표
+    center: { lat: 37.50073199, lng: 127.03675448 },
+    isPanto: false,
+  });
 
   const HandlerTargetChange = (e) => {
     setTarget(e.target.value);
@@ -30,6 +36,7 @@ export default function MapContainer5() {
     staleTime: Infinity,
     cacheTime: Infinity,
   });
+
   //filter List
   const [searchResults, setSearchResults] = useState(null);
   const handleSearch = async () => {
@@ -91,6 +98,14 @@ export default function MapContainer5() {
     setIsModalOpen(true);
   };
 
+  const HandlerFocusMap = (e) => {
+    console.log("focus", e);
+    setMapstate({
+      center: { lat: e.x, lng: e.y },
+      isPanto: true,
+    });
+  };
+
   return (
     <DivMap>
       <DivTemp />
@@ -106,7 +121,7 @@ export default function MapContainer5() {
         </DivInput>
 
         {searchResults?.map((e) => (
-          <DivListBox>
+          <DivListBox onClick={() => HandlerFocusMap(e)}>
             <div></div>
 
             <DivListContent key={e.id}>
@@ -148,7 +163,9 @@ export default function MapContainer5() {
                 size: imageSize,
                 option: imageOption,
               }}
-            />
+            >
+              <div>{marker.companyName}</div>
+            </MapMarker>
           ))}
           {selectedMarker && (
             <CustomOverlayMap
