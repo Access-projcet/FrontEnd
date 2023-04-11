@@ -6,39 +6,30 @@ import { useQuery, useMutation } from "react-query";
 import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
-import { saveAs } from "file-saver";
 
-import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
+import { adminVisit, adminModify } from "../../api/api";
 import { color } from "../../utils/styles/color";
 
 export default function AdminApproveList() {
-  const [columnFilters, setColumnFilters] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [sorting, setSorting] = useState([]);
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 15,
-  });
-
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
-    [
-      "guests", // 쿼리키
-      pagination.pageIndex,
-      pagination.pageSize,
-      sorting,
-      globalFilter,
-      columnFilters,
-    ],
-    () => {
-      const queryParams = {
-        start: pagination.pageIndex * pagination.pageSize,
-        size: pagination.pageSize,
-        filters: JSON.stringify(columnFilters ?? []),
-        globalFilter: globalFilter ?? "",
-        sorting: JSON.stringify(sorting ?? []),
-      };
+    "guests", // 쿼리키
 
-      return adminVisit(queryParams);
+    () => {
+      // const queryParams = {
+      //   start: pagination.pageIndex * pagination.pageSize,
+      //   size: pagination.pageSize,
+      //   filters: JSON.stringify(columnFilters ?? []),
+      //   globalFilter: globalFilter ?? "",
+      //   sorting: JSON.stringify(sorting ?? []),
+      // };
+      // const queryParams = {
+      //   orderby: "status",
+      // };
+
+      return adminVisit();
+      ///visit-forms/sort
+      // visit/admin
+      // return adminVisitSort(queryParams);
     },
     {
       keepPreviousData: true,
@@ -71,7 +62,6 @@ export default function AdminApproveList() {
     });
   };
 
-  console.log(data?.data.data);
   const columns = useMemo(
     () => [
       {
@@ -95,13 +85,19 @@ export default function AdminApproveList() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 250,
+        size: 200,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
         accessorKey: "startDate",
         header: "방문일자",
-        size: 300,
+        size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
+      },
+      {
+        accessorKey: "endDate",
+        header: "방문종료",
+        size: 100,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
       // {
@@ -121,45 +117,26 @@ export default function AdminApproveList() {
     []
   );
 
-  const HandlerExcel = () => {
-    const date = new Date();
-    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}_${date
-      .getHours()
-      .toString()
-      .padStart(2, "0")}시${date.getMinutes().toString().padStart(2, "0")}분`;
-    DownLoadExcel()
-      .then((res) => {
-        const blob = new Blob([res.data], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        });
-        saveAs(blob, `${dateString}.xlsx`);
-      })
-      .catch((err) => console.log(err));
-  };
-
   return (
     <DivApprove>
-      <StBtnExcel onClick={HandlerExcel}>엑셀다운</StBtnExcel>
       <DivTable>
         <MaterialReactTable
           columns={columns}
           data={
             data?.data.data.map((item) => ({
               ...item,
-              startDate:
-                item.startDate +
-                " " +
-                item.startTime +
-                " - " +
-                item.endDate +
-                " " +
-                item.endTime,
+              startDate: item.startDate + " " + item.startTime.split("T")[1],
+              endDate: item.endDate + " " + item.endTime.split("T")[1],
             })) ?? []
           } //data is undefined on first render
           initialState={{
             showColumnFilters: false,
+          }}
+          isMultiSortEvent={() => true}
+          filterFns={{
+            customFilterFn: (row, id, filterValue) => {
+              return row.getValue(id) === filterValue;
+            },
           }}
           muiTableHeadCellProps={{
             //simple styling with the `sx` prop, works just like a style prop in this example
@@ -170,9 +147,6 @@ export default function AdminApproveList() {
               color: `${color.textWhite}`,
             },
           }}
-          manualFiltering
-          manualPagination
-          manualSorting
           muiToolbarAlertBannerProps={
             isError
               ? {
@@ -181,10 +155,6 @@ export default function AdminApproveList() {
                 }
               : undefined
           }
-          onColumnFiltersChange={setColumnFilters}
-          onGlobalFilterChange={setGlobalFilter}
-          onPaginationChange={setPagination}
-          onSortingChange={setSorting}
           renderTopToolbarCustomActions={() => (
             <Tooltip arrow title="Refresh Data">
               <IconButton onClick={() => refetch()}>
@@ -220,16 +190,9 @@ export default function AdminApproveList() {
           )}
           rowCount={data?.meta?.totalRowCount ?? 0}
           state={{
-            columnFilters,
-            globalFilter,
             isLoading,
-            pagination,
             showAlertBanner: isError,
             showProgressBars: isFetching,
-            sorting,
-          }}
-          muiTablePaginationProps={{
-            rowsPerPageOptions: [15],
           }}
         />
       </DivTable>
@@ -249,10 +212,4 @@ const DivApprove = styled.div`
 const DivTable = styled.div`
   width: 70%;
   height: 100vh;
-`;
-
-const StBtnExcel = styled.button`
-  flex-direction: row-reverse;
-  align-items: flex-end;
-  cursor: pointer;
 `;

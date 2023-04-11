@@ -27,6 +27,8 @@ const Navbar = () => {
 
   const notify = (msg) => toast(msg);
 
+  const queryClient = new QueryClient();
+
   const { data, isError, isLoading, refetch } = useQuery(
     "notification",
     getNotifications,
@@ -106,6 +108,7 @@ const Navbar = () => {
   const handleCloseNotification = () => {
     console.log("눌림!");
     setShowNotification(false);
+    queryClient.invalidateQueries("notification");
   };
 
   // navigate 이동 함수
@@ -146,7 +149,7 @@ const Navbar = () => {
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
                 {notificationCnt > 0 && (
-                  <StNotificationCnt>notificationCnt</StNotificationCnt>
+                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
                 )}
               </StNotification>
               {showNotification && (

@@ -7,9 +7,13 @@ import { Delete, Edit } from "@mui/icons-material";
 import { useMutation } from "react-query";
 import { guestDeleteVisit, guestVisit, guestModify } from "../../api/api";
 import { color } from "../../utils/styles/color";
+import MarkerModal from "../modal/MarkerModal";
+import ConfirmForm from "../../pages/ConfirmForm";
+import { ModifyForm } from "../modal/ModifyForm";
 
 export default function GuestMyPageTable() {
   const [isMofify, setIsModify] = useState(false);
+  const [target, setTarget] = useState(null);
 
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
     "guests", // 쿼리키
@@ -49,6 +53,8 @@ export default function GuestMyPageTable() {
 
   const HandlerEditVisit = (row) => {
     console.log("edit;", row.original.id);
+
+    setTarget(row.original);
     setIsModify(true);
   };
 
@@ -75,13 +81,19 @@ export default function GuestMyPageTable() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 300,
+        size: 200,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
         accessorKey: "startDate",
-        header: "방문일자",
-        size: 200,
+        header: "방문시작",
+        size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
+      },
+      {
+        accessorKey: "endDate",
+        header: "방문종료",
+        size: 100,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
       // {
@@ -103,85 +115,97 @@ export default function GuestMyPageTable() {
   );
 
   return (
-    <MaterialReactTable
-      columns={columns}
-      data={
-        data?.data.data.map((item) => ({
-          ...item,
-          startDate:
-            item.startDate +
-            " " +
-            item.startTime +
-            " - " +
-            item.endDate +
-            " " +
-            item.endTime,
-        })) ?? []
-      } //data is undefined on first render
-      initialState={{
-        showColumnFilters: false,
-      }}
-      filterFns={{
-        customFilterFn: (row, id, filterValue) => {
-          return row.getValue(id) === filterValue;
-        },
-      }}
-      muiTableHeadCellProps={{
-        //simple styling with the `sx` prop, works just like a style prop in this example
-        sx: {
-          fontWeight: "bold",
-          fontSize: "15px",
-          backgroundColor: `${color.tableHeader}`,
-          color: `${color.textWhite}`,
-        },
-      }}
-      muiToolbarAlertBannerProps={
-        isError
-          ? {
-              color: "error",
-              children: "Error loading data",
-            }
-          : undefined
-      }
-      renderTopToolbarCustomActions={() => (
-        <Tooltip arrow title="Refresh Data">
-          <IconButton onClick={() => refetch()}>
-            <RefreshIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-      enableRowActions
-      positionActionsColumn="last"
-      renderRowActions={({ row }) => (
-        <Box sx={{ display: "flex", gap: "1rem" }}>
-          <Tooltip arrow placement="left" title="Edit">
-            <IconButton
-              onClick={(e) => {
-                HandlerEditVisit(row);
-              }}
-            >
-              <Edit />
+    <>
+      <MaterialReactTable
+        columns={columns}
+        data={
+          data?.data.data.map((item) => ({
+            ...item,
+            startDate: item.startDate + " " + item.startTime.split("T")[1],
+            endDate: item.endDate + " " + item.endTime.split("T")[1],
+          })) ?? []
+        } //data is undefined on first render
+        initialState={{
+          showColumnFilters: false,
+        }}
+        isMultiSortEvent={() => true}
+        filterFns={{
+          customFilterFn: (row, id, filterValue) => {
+            return row.getValue(id) === filterValue;
+          },
+        }}
+        muiTableHeadCellProps={{
+          //simple styling with the `sx` prop, works just like a style prop in this example
+          sx: {
+            fontWeight: "bold",
+            fontSize: "15px",
+            backgroundColor: `${color.tableHeader}`,
+            color: `${color.textWhite}`,
+          },
+        }}
+        muiToolbarAlertBannerProps={
+          isError
+            ? {
+                color: "error",
+                children: "Error loading data",
+              }
+            : undefined
+        }
+        renderTopToolbarCustomActions={() => (
+          <Tooltip arrow title="Refresh Data">
+            <IconButton onClick={() => refetch()}>
+              <RefreshIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip arrow placement="right" title="Delete">
-            <IconButton
-              color="error"
-              onClick={(e) => {
-                HandlerDeleteVisit(row);
-                console.log("del");
+        )}
+        enableRowActions
+        positionActionsColumn="last"
+        renderRowActions={({ row }) => (
+          <Box sx={{ display: "flex", gap: "1rem" }}>
+            <Tooltip arrow placement="left" title="Edit">
+              <IconButton
+                onClick={(e) => {
+                  HandlerEditVisit(row);
+                }}
+              >
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip arrow placement="right" title="Delete">
+              <IconButton
+                color="error"
+                onClick={(e) => {
+                  HandlerDeleteVisit(row);
+                  console.log("del");
+                }}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        )}
+        rowCount={data?.meta?.totalRowCount ?? 0}
+        state={{
+          isLoading,
+          showAlertBanner: isError,
+          showProgressBars: isFetching,
+        }}
+      />
+      {isMofify && (
+        <MarkerModal
+          onClose={() => {
+            setIsModify(false);
+          }}
+          children={
+            <ModifyForm
+              data={target}
+              onClose={() => {
+                setIsModify(false);
               }}
-            >
-              <Delete />
-            </IconButton>
-          </Tooltip>
-        </Box>
+            />
+          }
+        />
       )}
-      rowCount={data?.meta?.totalRowCount ?? 0}
-      state={{
-        isLoading,
-        showAlertBanner: isError,
-        showProgressBars: isFetching,
-      }}
-    />
+    </>
   );
 }
