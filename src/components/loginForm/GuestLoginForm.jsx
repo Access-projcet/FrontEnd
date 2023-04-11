@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { TextField, Button, Link, Grid } from "@mui/material";
+import { TextField, Button, Link } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 import { useMutation } from "react-query";
 import { useSelector } from "react-redux";
-
 import { loginGuest } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../../api/cookies";
 import { makeStyles } from "@mui/styles";
+import SearchGuestId from "../modal/SearchGuestID";
+import SearchGuestPw from "../modal/SearchGuestPW";
 import arrow from "../../utils/img/arrow_icon.png";
 
 //mui custom css
@@ -33,18 +34,23 @@ export default function GuestLoginForm() {
   const { menu } = useSelector((state) => state.LoginMenuSlice);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [showIDModal, setShowIDModal] = useState(false);
+  const [showPWModal, setShowPWModal] = useState(false);
   const classes = useStyles();
   const mutation = useMutation(loginGuest, {
     onSuccess: (data) => {
       console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
+      localStorage.setItem(
+        "REFRESH_TOKEN",
+        data.headers.refreshtoken.split(" ")[1]
+      );
       localStorage.setItem("name", data.data.data.name);
       localStorage.setItem("usertype", menu);
       navigate("/guest/main");
     },
     onError: (error) => {
-      console.log(error.response);
+      alert(error.response.data.message);
     },
   });
   const guestSignUpBtn = () => {
@@ -146,8 +152,19 @@ export default function GuestLoginForm() {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
           <LoginFindForm>
-            <Link href="/search">
-              <StFindBtn>아이디 / 비밀번호 찾기</StFindBtn>
+            <Link
+              onClick={() => {
+                setShowIDModal(!showIDModal);
+              }}
+            >
+              <StFindBtn>아이디 찾기</StFindBtn>
+            </Link>
+            <Link
+              onClick={() => {
+                setShowPWModal(!showPWModal);
+              }}
+            >
+              <StFindBtn>비밀번호 찾기</StFindBtn>
             </Link>
           </LoginFindForm>
           <hr />
@@ -175,6 +192,20 @@ export default function GuestLoginForm() {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
+        {showIDModal === true ? (
+          <SearchGuestId
+            onClose={() => {
+              setShowIDModal(false);
+            }}
+          />
+        ) : null}
+        {showPWModal === true ? (
+          <SearchGuestPw
+            onClose={() => {
+              setShowPWModal(false);
+            }}
+          />
+        ) : null}
       </DivLoginContainer>
     </>
   );
@@ -216,13 +247,15 @@ const InputForm = styled.div`
 const StFindBtn = styled.div`
   color: black;
   margin-top: 30px;
+  cursor: pointer;
 `;
 
 const LoginFindForm = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: -20px;
   margin-bottom: 30px;
+  gap: 30px;
 `;

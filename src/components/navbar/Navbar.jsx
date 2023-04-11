@@ -27,22 +27,29 @@ const Navbar = () => {
 
   const notify = (msg) => toast(msg);
 
-  const { data, isError, isLoading, refetch } = useQuery("notification", getNotifications, {
-    onSuccess: (res) => {
-      console.log("알람 리스트 불러왔습니다.", res);
-      const temp = res.filter((item) => !item.isRead).length;
-      setNotificationCnt(temp);
-    },
-  });
+  const { data, isError, isLoading, refetch } = useQuery(
+    "notification",
+    getNotifications,
+    {
+      onSuccess: (res) => {
+        console.log("알람 리스트 불러왔습니다.", res);
+        const temp = res.filter((item) => !item.isRead).length;
+        setNotificationCnt(temp);
+      },
+    }
+  );
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(`${process.env.REACT_APP_SERVER_URL}/subscribe/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
+    const eventSource = new EventSourcePolyfill(
+      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     eventSource.onopen = () => {
       console.log("최초 오픈!");
@@ -136,18 +143,38 @@ const Navbar = () => {
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
-                {notificationCnt > 0 && <StNotificationCnt>notificationCnt</StNotificationCnt>}
+                {notificationCnt > 0 && (
+                  <StNotificationCnt>notificationCnt</StNotificationCnt>
+                )}
               </StNotification>
               {showNotification && (
-                <NotificationModal onClose={handleCloseNotification} position={modalPosition} data={data} />
+                <NotificationModal
+                  onClose={handleCloseNotification}
+                  position={modalPosition}
+                  data={data}
+                />
               )}
               {localStorage.getItem("name")}님 반갑습니다
             </StName>
             <StLogOutContainer>
+              {menu === "guest" ? (
+                <Link to={"/change_pw/guest"}>
+                  <StLogOut>비밀번호 변경</StLogOut>
+                </Link>
+              ) : (
+                <Link to={"/change_pw/admin"}>
+                  <StLogOut>비밀번호 변경</StLogOut>
+                </Link>
+              )}
+
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
-                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
+                <StLogOutImg
+                  src={logout}
+                  alt="logoutImg"
+                  onClick={logoutBtn}
+                ></StLogOutImg>
               </Link>
             </StLogOutContainer>
           </StUser>
@@ -209,6 +236,7 @@ const StMenuUl = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `;
 const StMenuLi = styled.li`
   color: white;
