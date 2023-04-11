@@ -93,6 +93,11 @@ const SearchEmail = async (user) => {
   return await instance.post("/email/authcode", user);
 };
 
+
+const getEnterPeople = async () => {
+  const response = await instance.get(`/access`);
+  return response.data;
+
 const DownLoadExcel = async () => {
   return await instance.get("/excel/access", {
     responseType: "arraybuffer",
@@ -121,6 +126,8 @@ export {
   getUserInfoQr,
   getNotifications,
   readNotification,
+  getEnterPeople,
   DownLoadExcel,
   guestModify,
+
 };
