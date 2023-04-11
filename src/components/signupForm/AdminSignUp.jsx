@@ -36,6 +36,7 @@ const AdminSignUp = () => {
   const [businessNum, setBusinessNum] = useState("");
   const [companyToken, setCompanyToken] = useState("");
   const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = React.useState("");
   const [name, setName] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const queryClient = useQueryClient();
@@ -57,21 +58,13 @@ const AdminSignUp = () => {
     const newAdmin = {
       userId: data.get("userId"),
       password: data.get("password"),
+      checkPassword: data.get("checkPassword"),
       name: data.get("name"),
       phoneNum: data.get("phoneNum"),
       businessNum: data.get("businessNum"),
       companyName: data.get("companyName"),
       companyToken: data.get("companyToken"),
     };
-    console.log({
-      userId: data.get("userId"),
-      password: data.get("password"),
-      name: data.get("name"),
-      phoneNum: data.get("phoneNum"),
-      businessNum: data.get("businessNum"),
-      companyName: data.get("companyName"),
-      companyToken: data.get("companyToken"),
-    });
     mutation.mutate(newAdmin);
   };
 
@@ -110,7 +103,9 @@ const AdminSignUp = () => {
               },
             }}
             error={companyName.trim() === ""}
-            helperText={companyName.trim() === "" ? "회사이름을 입력해주세요" : " "}
+            helperText={
+              companyName.trim() === "" ? "회사이름을 입력해주세요" : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -143,9 +138,13 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={businessNum.trim() !== "" && !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)}
+            error={
+              businessNum.trim() !== "" &&
+              !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)
+            }
             helperText={
-              businessNum.trim() !== "" && !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)
+              businessNum.trim() !== "" &&
+              !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)
                 ? "사업자 등록번호는 XXX-XX-XXXXX 형식의 숫자만 입력 가능합니다"
                 : " "
             }
@@ -181,7 +180,9 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText={companyToken.trim() === "" ? "회사코드를 입력해주세요" : " "}
+            helperText={
+              companyToken.trim() === "" ? "회사코드를 입력해주세요" : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -253,10 +254,13 @@ const AdminSignUp = () => {
                 },
               },
             }}
-
-            error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)}
+            error={
+              password.trim() !== "" &&
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
+            }
             helperText={
-              password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
+              password.trim() !== "" &&
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
                 ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                 : " "
             }
@@ -266,7 +270,44 @@ const AdminSignUp = () => {
               },
             }}
           />
+          <TextField
+            required
+            fullWidth
+            name="checkPassword"
+            label="비밀번호 확인"
+            type="password"
+            id="checkPassword"
+            value={checkPassword}
+            onChange={(e) => setCheckPassword(e.target.value)}
+            className={classes.root}
+            sx={{
+              "& label": {
+                "&.Mui-focused": {
+                  color: "#49CDB5",
+                },
+              },
+            }}
+            InputLabelProps={{
+              sx: {
+                color: "#49CDB5",
 
+                ":&focus": {
+                  color: "#49CDB5",
+                },
+              },
+            }}
+            error={checkPassword.trim() !== "" && password !== checkPassword}
+            helperText={
+              checkPassword.trim() !== "" && password !== checkPassword
+                ? "비밀번호가 일치하지 않습니다."
+                : " "
+            }
+            FormHelperTextProps={{
+              sx: {
+                color: "red",
+              },
+            }}
+          />
           <TextField
             name="name"
             required
@@ -325,7 +366,9 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)}
+            error={
+              phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
+            }
             helperText={
               phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
                 ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
@@ -338,7 +381,9 @@ const AdminSignUp = () => {
             }}
           />
           <FormControlLabel
-            control={<Checkbox value="allowExtraEmails" color="primary" required />}
+            control={
+              <Checkbox value="allowExtraEmails" color="primary" required />
+            }
             label="개인정보 제공에 동의합니다"
           />
           <StLoginBtn>
@@ -364,7 +409,9 @@ const AdminSignUp = () => {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
-        <StAlready onClick={gotoLogin}>이미 회원이신가요? 로그인 하러 가기</StAlready>
+        <StAlready onClick={gotoLogin}>
+          이미 회원이신가요? 로그인 하러 가기
+        </StAlready>
       </DivLoginContainer>
       {isModalOpen && (
         <Modal

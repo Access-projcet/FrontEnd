@@ -7,6 +7,7 @@ import NotificationImportantIcon from "@mui/icons-material/NotificationImportant
 import { useQuery, QueryClient } from "react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
@@ -85,7 +86,7 @@ const Navbar = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
     localStorage.removeItem("usertype");
-    removeCookie("ACCESS_TOKEN");
+    removeCookie("ACCESS_TOKEN", { path: "/" });
     navigate("/");
   };
 
@@ -157,16 +158,6 @@ const Navbar = () => {
               {localStorage.getItem("name")}님 반갑습니다
             </StName>
             <StLogOutContainer>
-              {menu === "guest" ? (
-                <Link to={"/change_pw/guest"}>
-                  <StLogOut>비밀번호 변경</StLogOut>
-                </Link>
-              ) : (
-                <Link to={"/change_pw/admin"}>
-                  <StLogOut>비밀번호 변경</StLogOut>
-                </Link>
-              )}
-
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
@@ -176,6 +167,19 @@ const Navbar = () => {
                   onClick={logoutBtn}
                 ></StLogOutImg>
               </Link>
+              {menu === "guest" ? (
+                <Link to={"/change_pw/guest"}>
+                  <StLogOut>
+                    <SettingsIcon />
+                  </StLogOut>
+                </Link>
+              ) : (
+                <Link to={"/change_pw/admin"}>
+                  <StLogOut>
+                    <SettingsIcon />
+                  </StLogOut>
+                </Link>
+              )}
             </StLogOutContainer>
           </StUser>
         </StNavbarContainer>
