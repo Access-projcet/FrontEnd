@@ -165,6 +165,7 @@ const DivLoginBox = styled.div`
   border-radius: 30px;
   overflow: hidden;
   padding-bottom: 20px;
+  position: relative;
 `;
 const DivLoginType = styled.div`
   width: 100%;
