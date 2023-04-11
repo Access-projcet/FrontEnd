@@ -110,11 +110,7 @@ const ConfirmForm = ({ onClose, company }) => {
             style={{
               marginLeft: "10px",
               width: "82%",
-              width: "82%",
               height: "45px",
-              fontSize: "14px",
-              borderRadius: "5px",
-              border: "1px solid #D2D2D2",
               fontSize: "14px",
               borderRadius: "5px",
               border: "1px solid #D2D2D2",
@@ -134,11 +130,7 @@ const ConfirmForm = ({ onClose, company }) => {
               marginLeft: "10px",
               marginRight: "90px",
               width: "82%",
-              width: "82%",
               height: "45px",
-              fontSize: "14px",
-              borderRadius: "5px",
-              border: "1px solid #D2D2D2",
               fontSize: "14px",
               borderRadius: "5px",
               border: "1px solid #D2D2D2",
@@ -156,11 +148,7 @@ const ConfirmForm = ({ onClose, company }) => {
             style={{
               marginLeft: "10px",
               width: "82%",
-              width: "82%",
               height: "45px",
-              fontSize: "14px",
-              borderRadius: "5px",
-              border: "1px solid #D2D2D2",
               fontSize: "14px",
               borderRadius: "5px",
               border: "1px solid #D2D2D2",
@@ -177,7 +165,6 @@ const ConfirmForm = ({ onClose, company }) => {
           <TimeTable1>
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
-
               <DatePicker
                 locale={ko}
                 dateFormat="yyyy/MM/dd"
@@ -199,25 +186,8 @@ const ConfirmForm = ({ onClose, company }) => {
                     }}
                   />
                 }
+                portalId="date-picker-portal"
               />
-              {/* <StInput
-
-                style={{
-                  marginLeft: "10px",
-                  marginRight: "30px",
-                  width: "116px",
-                  height: "45px",
-                  fontSize: "15px",
-                  border: "1px solid #D2D2D2",
-                  color: "#D2D2D2",
-                }}
-                id="startDate"
-                type="date"
-                value={startDate}
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                }}
-              ></StInput> */}
 
               <label htmlFor="방문시간">시간</label>
               <StInput
@@ -244,7 +214,7 @@ const ConfirmForm = ({ onClose, company }) => {
             >
               ⁓
             </span>
-            <div>
+            <div style={{ position: "relative" }}>
               <label htmlFor="endDate">종료 날짜 </label>
               <DatePicker
                 locale={ko}
@@ -262,29 +232,13 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-
+                      zIndex: "3",
                       color: "#D2D2D2",
                     }}
                   />
                 }
+                portalId="date-picker-portal"
               />
-              {/* <StInput
-                style={{
-                  marginLeft: "10px",
-                  marginRight: "30px",
-                  width: "116px",
-                  height: "45px",
-                  fontSize: "15px",
-                  border: "1px solid #D2D2D2",
-                  color: "#D2D2D2",
-                }}
-                id="endDate"
-                type="date"
-                value={endDate}
-                onChange={(e) => {
-                  setEndDate(e.target.value);
-                }}
-              ></StInput> */}
 
               <label htmlFor="endTime">시간 </label>
               <StInput
@@ -367,14 +321,8 @@ export default ConfirmForm;
 const Header = styled.div`
   display: flex;
   align-items: center;
-  display: flex;
-  align-items: center;
   background: white;
   width: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  /* color: white; */
   align-items: center;
   /* color: white; */
   border-top-left-radius: 10px;
@@ -386,8 +334,6 @@ const Header = styled.div`
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  display: flex;
-  flex-direction: column;
   background: #f2f2f2;
   /* display: flex;
   flex-direction: column;
@@ -397,16 +343,11 @@ const MainWrapper = styled.div`
   font-weight: 700;
   font-size: 16px;
   height: calc(100% - 106px);
-  height: calc(100% - 106px);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
 
 const Main1 = styled.div`
-  padding-top: 20px;
-  display: grid;
-  grid-template-columns: 5rem 1fr 5rem 1fr;
-  margin: 15px 30px;
   padding-top: 20px;
   display: grid;
   grid-template-columns: 5rem 1fr 5rem 1fr;
@@ -422,13 +363,9 @@ const Main2 = styled.div`
   display: grid;
   grid-template-columns: 5rem 1fr 5rem 1fr;
   margin: 15px 30px;
-  display: grid;
-  grid-template-columns: 5rem 1fr 5rem 1fr;
-  margin: 15px 30px;
+
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #cbcbcb;
-  padding-bottom: 20px;
   border-bottom: 1px solid #cbcbcb;
   padding-bottom: 20px;
 `;
@@ -436,15 +373,10 @@ const Main2 = styled.div`
 const TimeTable1 = styled.div`
   display: grid;
   grid-template-columns: 1fr 40px 1fr;
+
   /* display: flex; */
   flex-direction: column;
   justify-content: center;
-  display: grid;
-  grid-template-columns: 1fr 40px 1fr;
-  /* display: flex; */
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const TimeTable2 = styled.div`
@@ -455,11 +387,6 @@ const TimeTable2 = styled.div`
 `;
 
 const Visitor = styled.div`
-  /* display: flex; */
-  display: grid;
-  grid-template-columns: 5rem 1fr 5rem 1fr;
-  margin: 15px 30px;
-  /* display: flex; */
   display: grid;
   grid-template-columns: 5rem 1fr 5rem 1fr;
   margin: 15px 30px;
@@ -479,9 +406,6 @@ const SubmitBtn = styled.div`
   width: 120px;
   height: 48px;
   margin: 10px;
-  width: 120px;
-  height: 48px;
-  margin: 10px;
 `;
 
 const CancelBtn = styled.div`
@@ -493,9 +417,6 @@ const CancelBtn = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 120px;
-  height: 48px;
-  margin: 10px;
   width: 120px;
   height: 48px;
   margin: 10px;

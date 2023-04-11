@@ -1,6 +1,10 @@
 .react-datepicker-wrapper {
-    display: inline-block;
+  display: inline-block;
   padding: 0;
   border: 0;
   width: auto;
-    }; 
+}
+
+.date-picker-portal {
+  z-index: 3; /* 원하는 z-index 값 */
+}
