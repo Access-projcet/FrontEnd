@@ -5,36 +5,21 @@ import { useQuery } from "react-query";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Delete, Edit } from "@mui/icons-material";
 import { useMutation } from "react-query";
-import { guestDeleteVisit, guestVisit } from "../../api/api";
+import { guestDeleteVisit, guestVisit, guestModify } from "../../api/api";
 import { color } from "../../utils/styles/color";
+import MarkerModal from "../modal/MarkerModal";
+import ConfirmForm from "../../pages/ConfirmForm";
+import { ModifyForm } from "../modal/ModifyForm";
 
 export default function GuestMyPageTable() {
-  const [columnFilters, setColumnFilters] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [sorting, setSorting] = useState([]);
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 15,
-  });
+  const [isMofify, setIsModify] = useState(false);
+  const [target, setTarget] = useState(null);
 
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
-    [
-      "guests", // 쿼리키
-      pagination.pageIndex,
-      pagination.pageSize,
-      sorting,
-      globalFilter,
-      columnFilters,
-    ],
+    "guests", // 쿼리키
+
     () => {
-      const queryParams = {
-        start: pagination.pageIndex * pagination.pageSize,
-        size: pagination.pageSize,
-        filters: JSON.stringify(columnFilters ?? []),
-        globalFilter: globalFilter ?? "",
-        sorting: JSON.stringify(sorting ?? []),
-      };
-      return guestVisit(queryParams);
+      return guestVisit();
     },
     {
       //query key가 변경되어도 새 데이터가 요청되는 동안 마지막 성공fetch data로 유지
@@ -42,13 +27,21 @@ export default function GuestMyPageTable() {
       keepPreviousData: true,
       //캐싱타임을 0으로 줘서 필터링시에 쓸데없는 캐싱을 하지않고 새로운 데이터를 요청하게함.
       cacheTime: 0,
-    },
+    }
   );
 
   const deleteMutaion = useMutation(guestDeleteVisit, {
     onSuccess: (data) => {
       console.log(data);
       alert("방문기록 삭제 성공");
+      refetch();
+    },
+  });
+
+  const modifyMutation = useMutation(guestModify, {
+    onSuccess: (data) => {
+      console.log(data);
+      alert("방문기록 수정 성공");
       refetch();
     },
   });
@@ -60,6 +53,9 @@ export default function GuestMyPageTable() {
 
   const HandlerEditVisit = (row) => {
     console.log("edit;", row.original.id);
+
+    setTarget(row.original);
+    setIsModify(true);
   };
 
   const columns = useMemo(
@@ -85,13 +81,19 @@ export default function GuestMyPageTable() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 300,
+        size: 200,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
         accessorKey: "startDate",
-        header: "방문일자",
-        size: 200,
+        header: "방문시작",
+        size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
+      },
+      {
+        accessorKey: "endDate",
+        header: "방문종료",
+        size: 100,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
       // {
@@ -109,95 +111,101 @@ export default function GuestMyPageTable() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    [],
+    []
   );
 
   return (
-    <MaterialReactTable
-      columns={columns}
-      data={
-        data?.data.data.map((item) => ({
-          ...item,
-          startDate: item.startDate + " " + item.startTime + " - " + item.endDate + " " + item.endTime,
-        })) ?? []
-      } //data is undefined on first render
-      initialState={{
-        showColumnFilters: false,
-      }}
-      muiTableHeadCellProps={{
-        //simple styling with the `sx` prop, works just like a style prop in this example
-        sx: {
-          fontWeight: "bold",
-          fontSize: "15px",
-          backgroundColor: `${color.tableHeader}`,
-          color: `${color.textWhite}`,
-        },
-      }}
-      muiTableBodyCellProps={{
-        //simple styling with the `sx` prop, works just like a style prop in this example
-        sx: {},
-      }}
-      manualFiltering
-      manualPagination
-      manualSorting
-      muiToolbarAlertBannerProps={
-        isError
-          ? {
-              color: "error",
-              children: "Error loading data",
-            }
-          : undefined
-      }
-      onColumnFiltersChange={setColumnFilters}
-      onGlobalFilterChange={setGlobalFilter}
-      onPaginationChange={setPagination}
-      onSortingChange={setSorting}
-      renderTopToolbarCustomActions={() => (
-        <Tooltip arrow title="Refresh Data">
-          <IconButton onClick={() => refetch()}>
-            <RefreshIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-      enableRowActions
-      positionActionsColumn="last"
-      renderRowActions={({ row }) => (
-        <Box sx={{ display: "flex", gap: "1rem" }}>
-          <Tooltip arrow placement="left" title="Edit">
-            <IconButton
-              onClick={(e) => {
-                HandlerEditVisit(row);
-              }}
-            >
-              <Edit />
+    <>
+      <MaterialReactTable
+        columns={columns}
+        data={
+          data?.data.data.map((item) => ({
+            ...item,
+            startDate: item.startDate + " " + item.startTime.split("T")[1],
+            endDate: item.endDate + " " + item.endTime.split("T")[1],
+          })) ?? []
+        } //data is undefined on first render
+        initialState={{
+          showColumnFilters: false,
+        }}
+        isMultiSortEvent={() => true}
+        filterFns={{
+          customFilterFn: (row, id, filterValue) => {
+            return row.getValue(id) === filterValue;
+          },
+        }}
+        muiTableHeadCellProps={{
+          //simple styling with the `sx` prop, works just like a style prop in this example
+          sx: {
+            fontWeight: "bold",
+            fontSize: "15px",
+            backgroundColor: `${color.tableHeader}`,
+            color: `${color.textWhite}`,
+          },
+        }}
+        muiToolbarAlertBannerProps={
+          isError
+            ? {
+                color: "error",
+                children: "Error loading data",
+              }
+            : undefined
+        }
+        renderTopToolbarCustomActions={() => (
+          <Tooltip arrow title="Refresh Data">
+            <IconButton onClick={() => refetch()}>
+              <RefreshIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip arrow placement="right" title="Delete">
-            <IconButton
-              color="error"
-              onClick={(e) => {
-                HandlerDeleteVisit(row);
-                console.log("del");
+        )}
+        enableRowActions
+        positionActionsColumn="last"
+        renderRowActions={({ row }) => (
+          <Box sx={{ display: "flex", gap: "1rem" }}>
+            <Tooltip arrow placement="left" title="Edit">
+              <IconButton
+                onClick={(e) => {
+                  HandlerEditVisit(row);
+                }}
+              >
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip arrow placement="right" title="Delete">
+              <IconButton
+                color="error"
+                onClick={(e) => {
+                  HandlerDeleteVisit(row);
+                  console.log("del");
+                }}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        )}
+        rowCount={data?.meta?.totalRowCount ?? 0}
+        state={{
+          isLoading,
+          showAlertBanner: isError,
+          showProgressBars: isFetching,
+        }}
+      />
+      {isMofify && (
+        <MarkerModal
+          onClose={() => {
+            setIsModify(false);
+          }}
+          children={
+            <ModifyForm
+              data={target}
+              onClose={() => {
+                setIsModify(false);
               }}
-            >
-              <Delete />
-            </IconButton>
-          </Tooltip>
-        </Box>
+            />
+          }
+        />
       )}
-      rowCount={data?.meta?.totalRowCount ?? 0}
-      state={{
-        columnFilters,
-        globalFilter,
-        isLoading,
-        pagination,
-        showAlertBanner: isError,
-        showProgressBars: isFetching,
-        sorting,
-      }}
-      muiTablePaginationProps={{
-        rowsPerPageOptions: [15],
-      }}
-    />
+    </>
   );
 }
