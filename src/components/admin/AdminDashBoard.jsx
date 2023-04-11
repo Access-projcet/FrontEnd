@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -12,73 +12,110 @@ import {
   Bar,
 } from "recharts";
 import { useQuery } from "react-query";
-import { getConfirmList } from "../../api/api";
-
-const data2 = [
-  { date: "3월 29일", uv: 4000, pv: 2400, amt: 2400 },
-  { date: "3월 30일", uv: 3000, pv: 1398, amt: 2210 },
-  { date: "3월 31일", uv: 2000, pv: 9800, amt: 2290 },
-  { date: "4월 01일", uv: 2780, pv: 3908, amt: 2000 },
-  { date: "4월 02일", uv: 1890, pv: 4800, amt: 2181 },
-  { date: "4월 03일", uv: 2390, pv: 3800, amt: 2500 },
-  { date: "4월 04일", uv: 3490, pv: 4300, amt: 2100 },
-];
+import { getConfirmList, getEnterPeople } from "../../api/api";
+import styled from "styled-components";
 
 const SimpleLineChart = () => {
   const { data } = useQuery("confirmList", getConfirmList);
+  const { getEnteringPeopleData } = useQuery("EnterPeople", getEnterPeople);
+  const [dataToDisplay, setDataToDisplay] = useState(data?.data);
 
-  const dataList = data?.data;
+  const dataList = data?.data.map((item) => {
+    const date = new Date(item.date);
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return {
+      날짜: item.date,
+      "총 신청 수": item.applyNumber,
+      "총 승인 수": item.approveNumber,
+      "총 출입 수": item.sumNumber,
+    };
+  });
 
   console.log(dataList);
+  console.log(getEnteringPeopleData);
+  const transformDataToMonthly = (dataList) => {};
+  const transformDataToDaily = (dataList) => {};
+  const transformDataByTimeOfDay = (dataList) => {};
+  const handleClick = (chartType) => {
+    switch (chartType) {
+      case "monthly":
+        const monthlyData = transformDataToMonthly(dataList);
+        setDataToDisplay(monthlyData);
+        break;
+      case "daily":
+        const dailyData = transformDataToDaily(dataList);
+        setDataToDisplay(dailyData);
+        break;
+      case "byTimeOfDay":
+        const byTimeOfDayData = transformDataByTimeOfDay(dataList);
+        setDataToDisplay(byTimeOfDayData);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
-    <>
-      <ResponsiveContainer width="50%" height={300}>
-        <LineChart
-          width={500}
-          height={300}
-          data={dataList}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-          a
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="applyNumber" stroke="#8884d8" />
-          <Line type="monotone" dataKey="approveNumber" stroke="#82ca9d" />
-          <Line type="monotone" dataKey="sumNumber" stroke="#15c4fe" />
-        </LineChart>
-      </ResponsiveContainer>
-      <ResponsiveContainer width="50%" height={300}>
-        <ComposedChart
-          layout="vertical"
-          width={500}
-          height={400}
-          data={dataList}
-          margin={{
-            top: 20,
-            right: 20,
-            bottom: 20,
-            left: 20,
-          }}
-        >
-          <CartesianGrid stroke="#f5f5f5" />
-          <XAxis type="number" />
-          <YAxis dataKey="date" type="category" scale="band" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="applyNumber" barSize={20} fill="#413ea0" />
-        </ComposedChart>
-      </ResponsiveContainer>
-    </>
+    <StAdminMainDiv>
+      <StDashBoardGnb>
+        <StDashBoardTitleArea>
+          <h2>출입현황표</h2>
+          <p>월별, 일별, 시간대별 출입현황을 조회할 수 있습니다.</p>
+        </StDashBoardTitleArea>
+        <StDashBoardBtnArea>
+          <button onClick={() => handleClick("monthly")}>Monthly</button>
+          <button onClick={() => handleClick("daily")}>Daily</button>
+          <button onClick={() => handleClick("byTimeOfDay")}>By time of day</button>
+        </StDashBoardBtnArea>
+      </StDashBoardGnb>
+      <StContainer>
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart
+            width={500}
+            height={300}
+            data={dataList}
+            margin={{
+              top: 5,
+              right: 40,
+              left: 40,
+              bottom: 5,
+            }}
+            a
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="날짜" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" />
+            <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" />
+            <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" />
+          </LineChart>
+        </ResponsiveContainer>
+      </StContainer>
+    </StAdminMainDiv>
   );
 };
 
 export default SimpleLineChart;
+
+const StAdminMainDiv = styled.div``;
+const StDashBoardGnb = styled.div`
+  padding: 2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+`;
+const StDashBoardTitleArea = styled.div``;
+const StDashBoardBtnArea = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+const StContainer = styled.div`
+  display: flex;
+  padding: 2%;
+  margin: 0 auto;
+`;

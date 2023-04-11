@@ -89,6 +89,11 @@ const SearchEmail = async (user) => {
   return await instance.post("/email/authcode", user);
 };
 
+const getEnterPeople = async () => {
+  const response = await instance.get(`/access`);
+  return response.data;
+};
+
 export {
   loginGuest,
   loginBusiness,
@@ -111,4 +116,5 @@ export {
   getUserInfoQr,
   getNotifications,
   readNotification,
+  getEnterPeople,
 };
