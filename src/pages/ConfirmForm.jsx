@@ -5,6 +5,7 @@ import { submitConfirmForm } from "../api/api";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
+import "../App.css";
 
 const ConfirmForm = ({ onClose, company }) => {
   const [location, setLocation] = useState(company.companyName);
@@ -37,6 +38,7 @@ const ConfirmForm = ({ onClose, company }) => {
     onSuccess: (response) => {
       console.log(response);
       queryClient.invalidateQueries("user");
+      alert("방문신청이 완료되었습니다.");
       onClose();
     },
     onError: (error) => {
@@ -78,337 +80,282 @@ const ConfirmForm = ({ onClose, company }) => {
   };
 
   return (
-    <>
-      <Header>방문 양식</Header>
+    <MainContainer>
+      <Header>
+        <StTitle>방문 양식</StTitle>
+      </Header>
       <MainWrapper>
         <Main1>
           <label
             htmlFor="location"
             style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
+              fontSize: "16px",
             }}
           >
             방문지역
           </label>
           <div
             style={{
+              marginLeft: "10px",
+
               fontSize: "18px",
             }}
           >
             {company.companyName}
           </div>
-          {/* <input
+          <label htmlFor="place">방문장소</label>
+          <StInput
             style={{
               marginLeft: "10px",
-              marginRight: "75px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
-            }}
-            id="location"
-            value={location}
-            onChange={(e) => {
-              setLocation(e.target.value);
-            }}
-            readOnly
-          /> */}
-
-          <label
-            htmlFor="place"
-            style={{
-              paddingLeft: "100px",
-              marginRight: "20px",
-              fontSize: "18px",
-            }}
-          >
-            방문장소
-          </label>
-          <input
-            style={{
-              marginLeft: "10px",
-              width: "300px",
+              width: "82%",
               height: "45px",
-              fontSize: "18px",
+              fontSize: "14px",
+              borderRadius: "5px",
+              border: "1px solid #D2D2D2",
             }}
             id={place}
             value={place}
             onChange={(e) => {
               setPlace(e.target.value);
             }}
+            placeholder="방문장소를 입력해주세요."
           />
         </Main1>
         <Main2>
-          <label
-            htmlFor="target"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            찾아갈 분
-          </label>
-          <input
+          <label htmlFor="target">찾아갈분</label>
+          <StInput
             style={{
               marginLeft: "10px",
               marginRight: "90px",
-              width: "300px",
+              width: "82%",
               height: "45px",
-              fontSize: "18px",
+              fontSize: "14px",
+              borderRadius: "5px",
+              border: "1px solid #D2D2D2",
             }}
             id="target"
             value={target}
             onChange={(e) => {
               setTarget(e.target.value);
             }}
+            placeholder="찾아갈 분을 입력해주세요."
           />
 
-          <label
-            htmlFor="purpose"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            목적
-          </label>
-          <input
+          <label htmlFor="purpose">목적</label>
+          <StInput
             style={{
               marginLeft: "10px",
-              width: "300px",
+              width: "82%",
               height: "45px",
-              fontSize: "18px",
+              fontSize: "14px",
+              borderRadius: "5px",
+              border: "1px solid #D2D2D2",
             }}
             id="purpose"
             value={purpose}
             onChange={(e) => {
               setPurpose(e.target.value);
             }}
+            placeholder="방문 목적을 입력해주세요."
           />
         </Main2>
-        <hr />
-        <TimeTable1>
-          <label
-            htmlFor="startDate"
-            style={{
-              marginLeft: "130px",
-              paddingLeft: "0px",
-              marginRight: "30px",
-              fontSize: "18px",
-            }}
-          >
-            방문 날짜
-          </label>
-          <DatePicker
-            locale={ko}
-            dateFormat="yyyy/MM/dd"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            minDate={new Date()}
-            customInput={
-              <input
+        <StTimeWrapper>
+          <TimeTable1>
+            <div>
+              <label htmlFor="startDate">방문 날짜 </label>
+              <DatePicker
+                locale={ko}
+                dateFormat="yyyy/MM/dd"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                minDate={new Date()}
+                customInput={
+                  <input
+                    style={{
+                      paddingLeft: "10px",
+                      marginLeft: "10px",
+                      marginRight: "30px",
+                      width: "116px",
+                      height: "45px",
+                      fontSize: "15px",
+                      border: "1px solid #D2D2D2",
+
+                      color: "#D2D2D2",
+                    }}
+                  />
+                }
+              />
+              {/* <StInput
                 style={{
                   marginLeft: "10px",
-                  width: "150px",
+                  marginRight: "30px",
+                  width: "116px",
                   height: "45px",
-                  fontSize: "18px",
+                  fontSize: "15px",
+                  border: "1px solid #D2D2D2",
+                  color: "#D2D2D2",
                 }}
-              />
-            }
-          />
-          {/* <label
-            htmlFor="startDate"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            방문 날짜{" "}
-          </label>
-          <input
-            style={{
-              marginLeft: "10px",
-              marginRight: "50px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
-            }}
-            id="startDate"
-            type="date"
-            value={startDate}
-            onChange={(e) => {
-              setStartDate(e.target.value);
-            }}
-          ></input> */}
+                id="startDate"
+                type="date"
+                value={startDate}
+                onChange={(e) => {
+                  setStartDate(e.target.value);
+                }}
+              ></StInput> */}
 
-          <label
-            htmlFor="startTime"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            방문 시간
-          </label>
-          <input
-            style={{
-              marginLeft: "100px",
-              width: "80px",
-              height: "45px",
-              fontSize: "18px",
-            }}
-            id="startTime"
-            value={startTime}
-            placeholder="00:00"
-            onChange={(e) => {
-              setStartTime(e.target.value);
-            }}
-          ></input>
-        </TimeTable1>
-        <span
-          style={{
-            marginLeft: "370px",
-          }}
-        >
-          ⁓
-        </span>
-        <TimeTable2>
-          <label htmlFor="endDate">종료 날짜 </label>
-          <DatePicker
-            locale={ko}
-            dateFormat="yyyy/MM/dd"
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            minDate={new Date()}
-            customInput={
-              <input
+              <label htmlFor="방문시간">시간</label>
+              <StInput
                 style={{
                   marginLeft: "10px",
-                  width: "150px",
+                  marginRight: "30px",
+                  width: "67px",
                   height: "45px",
-                  fontSize: "18px",
+                  fontSize: "15px",
+                  border: "1px solid #D2D2D2",
                 }}
+                id="startTime"
+                value={startTime}
+                placeholder="00:00"
+                onChange={(e) => {
+                  setStartTime(e.target.value);
+                }}
+              ></StInput>
+            </div>
+            <span
+              style={{
+                marginRight: "30px",
+              }}
+            >
+              ⁓
+            </span>
+            <div>
+              <label htmlFor="endDate">종료 날짜 </label>
+              <DatePicker
+                locale={ko}
+                dateFormat="yyyy/MM/dd"
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                minDate={new Date()}
+                customInput={
+                  <input
+                    style={{
+                      paddingLeft: "10px",
+                      marginLeft: "10px",
+                      marginRight: "30px",
+                      width: "116px",
+                      height: "45px",
+                      fontSize: "15px",
+                      border: "1px solid #D2D2D2",
+
+                      color: "#D2D2D2",
+                    }}
+                  />
+                }
               />
-            }
-          />
-          {/* <label
-            htmlFor="endDate"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            종료 날짜
-          </label>
-          <input
-            style={{
-              marginLeft: "10px",
-              marginRight: "50px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
-            }}
-            id="endDate"
-            type="date"
-            value={endDate}
-            onChange={(e) => {
-              setEndDate(e.target.value);
-            }}
-          ></input> */}
+              {/* <StInput
+                style={{
+                  marginLeft: "10px",
+                  marginRight: "30px",
+                  width: "116px",
+                  height: "45px",
+                  fontSize: "15px",
+                  border: "1px solid #D2D2D2",
+                  color: "#D2D2D2",
+                }}
+                id="endDate"
+                type="date"
+                value={endDate}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                }}
+              ></StInput> */}
 
-          <label
-            htmlFor="endTime"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            종료 시간
-          </label>
-          <input
-            style={{
-              marginLeft: "10px",
-              width: "80px",
-              height: "45px",
-              fontSize: "18px",
-            }}
-            id="endTime"
-            value={endTime}
-            placeholder="00:00"
-            onChange={(e) => {
-              setEndTime(e.target.value);
-            }}
-          ></input>
-        </TimeTable2>
-        <Msg>
-          <p>
-            * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
-            2023/03/31, 14:00
-          </p>
-        </Msg>
+              <label htmlFor="endTime">시간 </label>
+              <StInput
+                style={{
+                  marginLeft: "10px",
+                  marginRight: "30px",
+                  width: "67px",
+                  height: "45px",
+                  fontSize: "15px",
+                  border: "1px solid #D2D2D2",
+                }}
+                id="endTime"
+                value={endTime}
+                placeholder="00:00"
+                onChange={(e) => {
+                  setEndTime(e.target.value);
+                }}
+              ></StInput>
+            </div>
+          </TimeTable1>
 
-        <hr />
-        <Visitor>
-          <label
-            htmlFor="visitor"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            이름
-          </label>
-          <div>{localStorage.getItem("name")}</div>
-          <label
-            htmlFor="phoneNum"
-            style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
-            }}
-          >
-            전화번호
-          </label>
-          <input
-            style={{
-              marginLeft: "10px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
-            }}
-            id="phoneNum"
-            value={phoneNum}
-            onChange={(e) => {
-              setPhoneNum(e.target.value);
-            }}
-          />
-        </Visitor>
-        <CancelBtn onClick={onClose}>취소</CancelBtn>
-        <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
+          <Msg>
+            <p>
+              * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
+              2023/03/31, 14:00
+            </p>
+          </Msg>
+        </StTimeWrapper>
+
+        <StVisitWrapper>
+          <Visitor>
+            <label htmlFor="visitor">이름 </label>
+            <StInput
+              style={{
+                marginLeft: "10px",
+                width: "82%",
+                height: "45px",
+                fontSize: "14px",
+                borderRadius: "5px",
+                border: "1px solid #D2D2D2",
+              }}
+              id="visitor"
+              value={visitor}
+              onChange={(e) => {
+                setVisitor(e.target.value);
+              }}
+              placeholder="이름을 입력하세요"
+            />
+
+            <label htmlFor="phoneNum">전화번호</label>
+            <StInput
+              style={{
+                marginLeft: "10px",
+                width: "82%",
+                height: "45px",
+                fontSize: "14px",
+                borderRadius: "5px",
+                border: "1px solid #D2D2D2",
+              }}
+              id="phoneNum"
+              value={phoneNum}
+              onChange={(e) => {
+                setPhoneNum(e.target.value);
+              }}
+              placeholder="전화번호를 입력하세요"
+            />
+          </Visitor>
+          <StBtnWrapper>
+            <CancelBtn onClick={onClose}>취소</CancelBtn>
+            <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
+          </StBtnWrapper>
+        </StVisitWrapper>
       </MainWrapper>
-    </>
+    </MainContainer>
   );
 };
 
 export default ConfirmForm;
 
 const Header = styled.div`
-  background: white;
-  position: relative;
-  top: 25px;
-  width: 916px;
-  height: 75px;
   display: flex;
-  padding-top: 30px;
-  padding-left: 40px;
+  align-items: center;
+  background: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* color: white; */
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   font-size: 22px;
@@ -416,6 +363,8 @@ const Header = styled.div`
 `;
 
 const MainWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   background: #f2f2f2;
   /* display: flex;
   flex-direction: column;
@@ -424,41 +373,40 @@ const MainWrapper = styled.div`
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
-  height: 630px;
-  width: 100%;
+  height: calc(100% - 106px);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
 
 const Main1 = styled.div`
-  position: relative;
-  left: -200px;
-  display: flex;
-  flex-direction: row;
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: 5rem 1fr 5rem 1fr;
+  margin: 15px 30px;
   justify-content: center;
   align-items: center;
-  padding-top: 50px;
-  margin: 0px -400px -50px -30px;
+  /* flex-direction: row;
+  justify-content: space-between;
+  align-items: center; */
 `;
 
 const Main2 = styled.div`
-  position: relative;
-  left: 10px;
-  top: -200px;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 5rem 1fr 5rem 1fr;
+  margin: 15px 30px;
   justify-content: center;
   align-items: center;
-  margin: 300px 100px -150px 30px;
+  border-bottom: 1px solid #cbcbcb;
+  padding-bottom: 20px;
 `;
 
 const TimeTable1 = styled.div`
-  display: flex;
-  flex-direction: row;
-  /* justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 30px 0px 30px 0px;
-  margin-left: 20px; */
 `;
 
 const TimeTable2 = styled.div`
@@ -466,56 +414,43 @@ const TimeTable2 = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px 0px 30px 45px;
 `;
 
 const Visitor = styled.div`
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: 5rem 1fr 5rem 1fr;
+  margin: 15px 30px;
   justify-content: center;
   align-items: center;
-  padding: 50px 0px 5px 80px;
-  gap: 80px;
 `;
 
 const SubmitBtn = styled.div`
   border-radius: 35px;
   cursor: pointer;
-
   color: white;
   background: #636fd7;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 15px;
-
-  position: relative;
-  left: 400px;
-  top: -25px;
-  height: 25px;
-  width: 100px;
+  width: 120px;
+  height: 48px;
+  margin: 10px;
 `;
 
 const CancelBtn = styled.div`
   border-radius: 35px;
   cursor: pointer;
-
   color: white;
   background: #656565;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 15px;
-
-  position: relative;
-  left: 250px;
-  top: 30px;
-  height: 25px;
-  width: 100px;
+  width: 120px;
+  height: 48px;
+  margin: 10px;
 `;
 
 const Msg = styled.div`
@@ -524,4 +459,53 @@ const Msg = styled.div`
   justify-content: center;
   align-items: center;
   color: #636fd7;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+const StTitle = styled.div`
+  margin-left: 38px;
+  height: 106px;
+  display: flex;
+  align-items: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+`;
+
+const StInput = styled.input`
+  padding-left: 10px;
+  &::placeholder {
+    color: #d2d2d2;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+const StTimeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #cbcbcb;
+  margin: 15px 25px;
+`;
+
+const StVisitWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StBtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20px 0;
 `;
