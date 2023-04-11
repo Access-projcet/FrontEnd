@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import DatePicker from "react-datepicker";
 import { submitConfirmForm } from "../api/api";
+import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
@@ -45,22 +46,35 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const dateTimeStart = `${startDate}T${startTime}:00`;
-    const dateTimeEnd = `${endDate}T${endTime}:00`;
+    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`;
+    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`;
     const confirmForm = {
       location,
       place,
       target,
       purpose,
-      startDate,
+      startDate: dateToString(startDate),
       startTime: dateTimeStart,
-      endDate,
+      endDate: dateToString(endDate),
       endTime: dateTimeEnd,
       visitor,
       phoneNum,
       status: "1",
     };
     mutation.mutate(confirmForm);
+    console.log({
+      location,
+      place,
+      target,
+      purpose,
+      startDate: dateToString(startDate),
+      startTime: dateTimeStart,
+      endDate: dateToString(endDate),
+      endTime: dateTimeEnd,
+      visitor,
+      phoneNum,
+      status: "1",
+    });
   };
 
   return (
@@ -68,8 +82,24 @@ const ConfirmForm = ({ onClose, company }) => {
       <Header>방문 양식</Header>
       <MainWrapper>
         <Main1>
-          <label htmlFor="location">방문지역</label>
-          <input
+          <label
+            htmlFor="location"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
+            }}
+          >
+            방문지역
+          </label>
+          <div
+            style={{
+              fontSize: "18px",
+            }}
+          >
+            {company.companyName}
+          </div>
+          {/* <input
             style={{
               marginLeft: "10px",
               marginRight: "75px",
@@ -82,15 +112,25 @@ const ConfirmForm = ({ onClose, company }) => {
             onChange={(e) => {
               setLocation(e.target.value);
             }}
-          />
+            readOnly
+          /> */}
 
-          <label htmlFor="place">방문장소</label>
+          <label
+            htmlFor="place"
+            style={{
+              paddingLeft: "100px",
+              marginRight: "20px",
+              fontSize: "18px",
+            }}
+          >
+            방문장소
+          </label>
           <input
             style={{
               marginLeft: "10px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
+              width: "300px",
+              height: "45px",
+              fontSize: "18px",
             }}
             id={place}
             value={place}
@@ -100,14 +140,23 @@ const ConfirmForm = ({ onClose, company }) => {
           />
         </Main1>
         <Main2>
-          <label htmlFor="target">찾아갈 분</label>
+          <label
+            htmlFor="target"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
+            }}
+          >
+            찾아갈 분
+          </label>
           <input
             style={{
               marginLeft: "10px",
               marginRight: "90px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
+              width: "300px",
+              height: "45px",
+              fontSize: "18px",
             }}
             id="target"
             value={target}
@@ -116,13 +165,22 @@ const ConfirmForm = ({ onClose, company }) => {
             }}
           />
 
-          <label htmlFor="purpose">목적</label>
+          <label
+            htmlFor="purpose"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
+            }}
+          >
+            목적
+          </label>
           <input
             style={{
               marginLeft: "10px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
+              width: "300px",
+              height: "45px",
+              fontSize: "18px",
             }}
             id="purpose"
             value={purpose}
@@ -133,15 +191,44 @@ const ConfirmForm = ({ onClose, company }) => {
         </Main2>
         <hr />
         <TimeTable1>
-          {/* <label htmlFor="startDate">방문 날짜 </label>
+          <label
+            htmlFor="startDate"
+            style={{
+              marginLeft: "130px",
+              paddingLeft: "0px",
+              marginRight: "30px",
+              fontSize: "18px",
+            }}
+          >
+            방문 날짜
+          </label>
           <DatePicker
             locale={ko}
             dateFormat="yyyy/MM/dd"
             selected={startDate}
             onChange={(date) => setStartDate(date)}
             minDate={new Date()}
-          /> */}
-          <label htmlFor="startDate">방문 날짜 </label>
+            customInput={
+              <input
+                style={{
+                  marginLeft: "10px",
+                  width: "150px",
+                  height: "45px",
+                  fontSize: "18px",
+                }}
+              />
+            }
+          />
+          {/* <label
+            htmlFor="startDate"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
+            }}
+          >
+            방문 날짜{" "}
+          </label>
           <input
             style={{
               marginLeft: "10px",
@@ -156,15 +243,24 @@ const ConfirmForm = ({ onClose, company }) => {
             onChange={(e) => {
               setStartDate(e.target.value);
             }}
-          ></input>
+          ></input> */}
 
-          <label htmlFor="방문시간">방문 시간 </label>
+          <label
+            htmlFor="startTime"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
+            }}
+          >
+            방문 시간
+          </label>
           <input
             style={{
-              marginLeft: "10px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
+              marginLeft: "100px",
+              width: "80px",
+              height: "45px",
+              fontSize: "18px",
             }}
             id="startTime"
             value={startTime}
@@ -182,15 +278,34 @@ const ConfirmForm = ({ onClose, company }) => {
           ⁓
         </span>
         <TimeTable2>
-          {/* <label htmlFor="endDate">종료 날짜 </label>
+          <label htmlFor="endDate">종료 날짜 </label>
           <DatePicker
             locale={ko}
             dateFormat="yyyy/MM/dd"
             selected={endDate}
             onChange={(date) => setEndDate(date)}
             minDate={new Date()}
-          /> */}
-          <label htmlFor="endDate">종료 날짜 </label>
+            customInput={
+              <input
+                style={{
+                  marginLeft: "10px",
+                  width: "150px",
+                  height: "45px",
+                  fontSize: "18px",
+                }}
+              />
+            }
+          />
+          {/* <label
+            htmlFor="endDate"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
+            }}
+          >
+            종료 날짜
+          </label>
           <input
             style={{
               marginLeft: "10px",
@@ -205,15 +320,24 @@ const ConfirmForm = ({ onClose, company }) => {
             onChange={(e) => {
               setEndDate(e.target.value);
             }}
-          ></input>
+          ></input> */}
 
-          <label htmlFor="endTime">종료 시간 </label>
+          <label
+            htmlFor="endTime"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
+            }}
+          >
+            종료 시간
+          </label>
           <input
             style={{
               marginLeft: "10px",
-              width: "200px",
-              height: "30px",
-              fontSize: "20px",
+              width: "80px",
+              height: "45px",
+              fontSize: "18px",
             }}
             id="endTime"
             value={endTime}
@@ -224,28 +348,35 @@ const ConfirmForm = ({ onClose, company }) => {
           ></input>
         </TimeTable2>
         <Msg>
-          <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40, 2023/03/31, 14:00</p>
+          <p>
+            * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
+            2023/03/31, 14:00
+          </p>
         </Msg>
 
         <hr />
         <Visitor>
-          <label htmlFor="visitor">이름 </label>
-          <input
+          <label
+            htmlFor="visitor"
             style={{
-              marginLeft: "10px",
-              marginRight: "110px",
-              width: "150px",
-              height: "30px",
-              fontSize: "20px",
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
             }}
-            id="visitor"
-            value={visitor}
-            onChange={(e) => {
-              setVisitor(e.target.value);
+          >
+            이름
+          </label>
+          <div>{localStorage.getItem("name")}</div>
+          <label
+            htmlFor="phoneNum"
+            style={{
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
             }}
-          />
-
-          <label htmlFor="phoneNum">전화번호</label>
+          >
+            전화번호
+          </label>
           <input
             style={{
               marginLeft: "10px",
@@ -272,16 +403,16 @@ export default ConfirmForm;
 const Header = styled.div`
   background: white;
   position: relative;
-  left: 0;
   top: 25px;
-  width: 730px;
+  width: 916px;
+  height: 75px;
   display: flex;
-  /* color: white; */
-  padding: 20px;
+  padding-top: 30px;
+  padding-left: 40px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  font-size: larger;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 700;
 `;
 
 const MainWrapper = styled.div`
@@ -293,6 +424,7 @@ const MainWrapper = styled.div`
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
+  height: 630px;
   width: 100%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -321,11 +453,12 @@ const Main2 = styled.div`
 `;
 
 const TimeTable1 = styled.div`
-  /* display: flex; */
-  flex-direction: column;
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center;
   align-items: center;
-  padding: 30px 0px 30px 45px;
+  padding: 30px 0px 30px 0px;
+  margin-left: 20px; */
 `;
 
 const TimeTable2 = styled.div`
@@ -337,11 +470,12 @@ const TimeTable2 = styled.div`
 `;
 
 const Visitor = styled.div`
-  /* display: flex; */
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 50px 0px 5px 80px;
+  gap: 80px;
 `;
 
 const SubmitBtn = styled.div`
