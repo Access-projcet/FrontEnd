@@ -27,7 +27,6 @@ const Navbar = () => {
 
   const notify = (msg) => toast(msg);
 
-
   const queryClient = new QueryClient();
 
   const { data, isError, isLoading, refetch } = useQuery(
@@ -41,7 +40,6 @@ const Navbar = () => {
       },
 
       enabled: menu === "admin",
-
     }
   );
 
@@ -152,9 +150,7 @@ const Navbar = () => {
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
                 {notificationCnt > 0 && (
-
                   <StNotificationCnt>{notificationCnt}</StNotificationCnt>
-
                 )}
               </StNotification>
               {showNotification && (
@@ -164,7 +160,7 @@ const Navbar = () => {
                   data={data}
                 />
               )}
-              {localStorage.getItem("name")}님 반갑습니다
+              <StSpan>{localStorage.getItem("name")}</StSpan>님 반갑습니다
             </StName>
             <StLogOutContainer>
               {menu === "guest" ? (
@@ -222,7 +218,7 @@ const StUser = styled.div`
 const StName = styled.div`
   color: white;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600px;
 `;
 const StLogOutContainer = styled.div`
   display: flex;
@@ -262,7 +258,7 @@ const StNotification = styled.button`
   cursor: pointer;
   color: white;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 800px;
   margin-right: 5px;
 `;
 const StNotificationCnt = styled.div`
@@ -277,4 +273,9 @@ const StNotificationCnt = styled.div`
   padding: 2px;
   width: 18px;
   height: 18px;
+`;
+
+const StSpan = styled.span`
+  font-weight: bold;
+  font-size: 17px;
 `;

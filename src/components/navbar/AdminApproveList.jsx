@@ -85,7 +85,7 @@ export default function AdminApproveList() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 200,
+        size: 150,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {

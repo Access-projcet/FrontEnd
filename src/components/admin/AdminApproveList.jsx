@@ -1,13 +1,15 @@
 import { Box, IconButton, Tooltip } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import SaveIcon from "@mui/icons-material/Save";
 import MaterialReactTable from "material-react-table";
 import { useQuery, useMutation } from "react-query";
 import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
+import { saveAs } from "file-saver";
 
-import { adminVisit, adminModify } from "../../api/api";
+import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
 import { color } from "../../utils/styles/color";
 
 export default function AdminApproveList() {
@@ -85,7 +87,7 @@ export default function AdminApproveList() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 200,
+        size: 150,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
@@ -116,6 +118,24 @@ export default function AdminApproveList() {
     ],
     []
   );
+
+  const HandlerExcel = () => {
+    const date = new Date();
+    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}_${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}시${date.getMinutes().toString().padStart(2, "0")}분`;
+    DownLoadExcel()
+      .then((res) => {
+        const blob = new Blob([res.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        saveAs(blob, `${dateString}.xlsx`);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <DivApprove>
@@ -156,17 +176,24 @@ export default function AdminApproveList() {
               : undefined
           }
           renderTopToolbarCustomActions={() => (
-            <Tooltip arrow title="Refresh Data">
-              <IconButton onClick={() => refetch()}>
-                <RefreshIcon />
-              </IconButton>
-            </Tooltip>
+            <Box sx={{ display: "flex", gap: "1rem" }}>
+              <Tooltip arrow title="Refresh Data">
+                <IconButton onClick={() => refetch()}>
+                  <RefreshIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip arrow title="Download Data">
+                <IconButton onClick={HandlerExcel}>
+                  <SaveIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
           )}
           enableRowActions
           positionActionsColumn="last"
           renderRowActions={({ row }) => (
             <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Tooltip arrow placement="left" title="Edit">
+              <Tooltip arrow placement="left" title="승인">
                 <IconButton
                   color="success"
                   onClick={() => {
@@ -176,7 +203,7 @@ export default function AdminApproveList() {
                   <TaskAltIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip arrow placement="right" title="Delete">
+              <Tooltip arrow placement="right" title="거절">
                 <IconButton
                   color="error"
                   onClick={() => {
@@ -212,4 +239,10 @@ const DivApprove = styled.div`
 const DivTable = styled.div`
   width: 70%;
   height: 100vh;
+`;
+
+const StBtnExcel = styled.button`
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  cursor: pointer;
 `;

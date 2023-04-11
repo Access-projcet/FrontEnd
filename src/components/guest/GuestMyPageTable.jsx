@@ -81,7 +81,7 @@ export default function GuestMyPageTable() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 200,
+        size: 150,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
@@ -162,7 +162,7 @@ export default function GuestMyPageTable() {
         positionActionsColumn="last"
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
-            <Tooltip arrow placement="left" title="Edit">
+            <Tooltip arrow placement="left" title="수정">
               <IconButton
                 onClick={(e) => {
                   HandlerEditVisit(row);
@@ -171,7 +171,7 @@ export default function GuestMyPageTable() {
                 <Edit />
               </IconButton>
             </Tooltip>
-            <Tooltip arrow placement="right" title="Delete">
+            <Tooltip arrow placement="right" title="삭제">
               <IconButton
                 color="error"
                 onClick={(e) => {

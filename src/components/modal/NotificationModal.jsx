@@ -10,6 +10,7 @@ export const NotificationModal = ({ position, onClose, data }) => {
     onSuccess: (res) => {
       console.log("알림 삭제 성공", res);
       queryClient.invalidateQueries("notification");
+      queryClient.refetchQueries("notification");
     },
   });
 
@@ -25,11 +26,17 @@ export const NotificationModal = ({ position, onClose, data }) => {
             return (
               <StNotification>
                 {item.content}
-                <button onClick={() => handlerDeleteNotification(item.id)}>읽음</button>
+                <StConformBtn
+                  onClick={() => handlerDeleteNotification(item.id)}
+                >
+                  ✔️
+                </StConformBtn>
               </StNotification>
             );
           })}
-        {data && data.filter((item) => !item.isRead).length === 0 && <p>안 읽은 알림이 없습니다.</p>}
+        {data && data.filter((item) => !item.isRead).length === 0 && (
+          <p>안 읽은 알림이 없습니다.</p>
+        )}
       </StNotificationList>
       <ButtonClose onClick={onClose}>X</ButtonClose>
     </StContainer>
@@ -38,15 +45,15 @@ export const NotificationModal = ({ position, onClose, data }) => {
 
 const StContainer = styled.div`
   position: absolute;
-  top: ${(props) => props.position.top};
+  top: ${(props) => props.position.top + 40}px;
   left: ${(props) => props.position.left};
   width: 400px;
-  height: 500px;
+  height: 400px;
   background-color: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   color: black;
   z-index: 99;
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
 `;
 const ButtonClose = styled.button`
@@ -66,11 +73,18 @@ const StNotificationList = styled.div`
   height: 100%;
   align-items: center;
   margin-top: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
 const StNotification = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #cbcbcb;
   margin: 10px 0px;
   width: 100%;
+  padding-bottom: 10px;
+`;
+const StConformBtn = styled.button`
+  background-color: transparent;
+  cursor: pointer;
 `;
