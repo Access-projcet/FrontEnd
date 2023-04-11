@@ -34,7 +34,7 @@ export default function SignUp() {
   const [name, setName] = React.useState("");
   const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [passwordCheck, setPasswordCheck] = React.useState("");
+  const [checkPassword, setCheckPassword] = React.useState("");
   const [phoneNum, setPhoneNum] = React.useState("");
 
   const queryClient = useQueryClient();
@@ -56,6 +56,7 @@ export default function SignUp() {
     const newGuest = {
       userId: data.get("userId"),
       password: data.get("password"),
+      checkPassword: data.get("checkPassword"),
       name: data.get("name"),
       phoneNum: data.get("phoneNum"),
     };
@@ -184,12 +185,12 @@ export default function SignUp() {
           <TextField
             required
             fullWidth
-            name="passwordCheck"
+            name="checkPassword"
             label="비밀번호 확인"
             type="password"
-            id="passwordCheck"
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
+            id="checkPassword"
+            value={checkPassword}
+            onChange={(e) => setCheckPassword(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -207,9 +208,9 @@ export default function SignUp() {
                 },
               },
             }}
-            error={passwordCheck.trim() !== "" && password !== passwordCheck}
+            error={checkPassword.trim() !== "" && password !== checkPassword}
             helperText={
-              passwordCheck.trim() !== "" && password !== passwordCheck
+              checkPassword.trim() !== "" && password !== checkPassword
                 ? "비밀번호가 일치하지 않습니다."
                 : " "
             }
