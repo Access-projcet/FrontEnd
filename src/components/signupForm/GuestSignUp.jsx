@@ -34,7 +34,7 @@ export default function SignUp() {
   const [name, setName] = React.useState("");
   const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [passwordCheck, setPasswordCheck] = React.useState("");
+  const [checkPassword, setCheckPassword] = React.useState("");
   const [phoneNum, setPhoneNum] = React.useState("");
 
   const queryClient = useQueryClient();
@@ -56,6 +56,7 @@ export default function SignUp() {
     const newGuest = {
       userId: data.get("userId"),
       password: data.get("password"),
+      checkPassword: data.get("checkPassword"),
       name: data.get("name"),
       phoneNum: data.get("phoneNum"),
     };
@@ -165,13 +166,9 @@ export default function SignUp() {
                 },
               },
             }}
-            error={
-              password.trim() !== "" &&
-              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
-            }
+            error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)}
             helperText={
-              password.trim() !== "" &&
-              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
+              password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
                 ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                 : " "
             }
@@ -184,12 +181,12 @@ export default function SignUp() {
           <TextField
             required
             fullWidth
-            name="passwordCheck"
+            name="checkPassword"
             label="비밀번호 확인"
             type="password"
-            id="passwordCheck"
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
+            id="checkPassword"
+            value={checkPassword}
+            onChange={(e) => setCheckPassword(e.target.value)}
             className={classes.root}
             sx={{
               "& label": {
@@ -207,11 +204,9 @@ export default function SignUp() {
                 },
               },
             }}
-            error={passwordCheck.trim() !== "" && password !== passwordCheck}
+            error={checkPassword.trim() !== "" && password !== checkPassword}
             helperText={
-              passwordCheck.trim() !== "" && password !== passwordCheck
-                ? "비밀번호가 일치하지 않습니다."
-                : " "
+              checkPassword.trim() !== "" && password !== checkPassword ? "비밀번호가 일치하지 않습니다." : " "
             }
             FormHelperTextProps={{
               sx: {
@@ -245,9 +240,7 @@ export default function SignUp() {
                 },
               },
             }}
-            error={
-              phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
-            }
+            error={phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)}
             helperText={
               phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
                 ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
@@ -260,9 +253,7 @@ export default function SignUp() {
             }}
           />
           <FormControlLabel
-            control={
-              <Checkbox value="allowExtraEmails" color="primary" required />
-            }
+            control={<Checkbox value="allowExtraEmails" color="primary" required />}
             label="개인정보 제공에 동의합니다"
           />
           <StLoginBtn>
@@ -288,9 +279,7 @@ export default function SignUp() {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
-        <StAlready onClick={gotoLogin}>
-          이미 회원이신가요? 로그인 하러 가기
-        </StAlready>
+        <StAlready onClick={gotoLogin}>이미 회원이신가요? 로그인 하러 가기</StAlready>
       </DivLoginContainer>
       {isModalOpen && (
         <Modal

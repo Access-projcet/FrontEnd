@@ -88,15 +88,15 @@ const ConfirmForm = ({ onClose, company }) => {
           <label
             htmlFor="location"
             style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
+              fontSize: "16px",
             }}
           >
             방문지역
           </label>
           <div
             style={{
+              marginLeft: "10px",
+
               fontSize: "18px",
             }}
           >
@@ -121,7 +121,7 @@ const ConfirmForm = ({ onClose, company }) => {
           />
         </Main1>
         <Main2>
-          <label htmlFor="target">찾아갈 분</label>
+          <label htmlFor="target">찾아갈분</label>
           <StInput
             style={{
               marginLeft: "10px",
@@ -139,7 +139,6 @@ const ConfirmForm = ({ onClose, company }) => {
             }}
             placeholder="찾아갈 분을 입력해주세요."
           />
-
 
           <label htmlFor="purpose">목적</label>
           <StInput
@@ -164,7 +163,7 @@ const ConfirmForm = ({ onClose, company }) => {
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
               <StInput
-                style={{=
+                style={{
                   marginLeft: "10px",
                   marginRight: "30px",
                   width: "116px",
@@ -247,10 +246,7 @@ const ConfirmForm = ({ onClose, company }) => {
           </TimeTable1>
 
           <Msg>
-            <p>
-              * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
-              2023/03/31, 14:00
-            </p>
+            <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40, 2023/03/31, 14:00</p>
           </Msg>
         </StTimeWrapper>
 
@@ -297,9 +293,6 @@ const ConfirmForm = ({ onClose, company }) => {
             <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
           </StBtnWrapper>
         </StVisitWrapper>
-
-
-
       </MainWrapper>
     </MainContainer>
   );
@@ -344,7 +337,6 @@ const Main1 = styled.div`
   margin: 15px 30px;
   justify-content: center;
   align-items: center;
-
   /* flex-direction: row;
   justify-content: space-between;
   align-items: center; */
@@ -388,10 +380,8 @@ const Visitor = styled.div`
 const SubmitBtn = styled.div`
   border-radius: 35px;
   cursor: pointer;
-
   color: white;
   background: #636fd7;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -404,10 +394,8 @@ const SubmitBtn = styled.div`
 const CancelBtn = styled.div`
   border-radius: 35px;
   cursor: pointer;
-
   color: white;
   background: #656565;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -447,6 +435,9 @@ const StInput = styled.input`
   padding-left: 10px;
   &::placeholder {
     color: #d2d2d2;
+  }
+  &:focus {
+    outline: none;
   }
 `;
 

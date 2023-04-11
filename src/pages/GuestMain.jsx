@@ -80,6 +80,7 @@ const GuestMain = () => {
                     }}
                   ></CloseIcon>
                 </ModalInner>
+                <div>QR 코드 이메일로 받기</div>
               </ModalWrapper>
             </ModalOverlay>
           }

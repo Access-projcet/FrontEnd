@@ -176,7 +176,7 @@ const DivLoginContainer = styled.div`
   position: absolute;
   width: 547px;
   height: 500px;
-  top: 290px;
+  top: 15%;
   display: flex;
   flex-direction: column;
   align-items: center;

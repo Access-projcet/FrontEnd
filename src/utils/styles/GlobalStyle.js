@@ -44,7 +44,14 @@ const GlobalStyle = createGlobalStyle`
         margin:0;
         box-sizing:border-box;
     }
-
+    body{
+        
+    }
+    #root{
+        position: relative;
+        width:100vw;
+        height:100vh;
+    }
 `;
 
 export default GlobalStyle;
