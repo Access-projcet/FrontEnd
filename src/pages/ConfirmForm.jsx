@@ -85,10 +85,7 @@ const ConfirmForm = ({ onClose, company }) => {
       <Header>
         <StTitle>방문 양식</StTitle>
       </Header>
-    <MainContainer>
-      <Header>
-        <StTitle>방문 양식</StTitle>
-      </Header>
+
       <MainWrapper>
         <Main1>
           <label
@@ -110,8 +107,6 @@ const ConfirmForm = ({ onClose, company }) => {
           </div>
           <label htmlFor="place">방문장소</label>
           <StInput
-          <label htmlFor="place">방문장소</label>
-          <StInput
             style={{
               marginLeft: "10px",
               width: "82%",
@@ -129,7 +124,6 @@ const ConfirmForm = ({ onClose, company }) => {
             onChange={(e) => {
               setPlace(e.target.value);
             }}
-            placeholder="방문장소를 입력해주세요."
             placeholder="방문장소를 입력해주세요."
           />
         </Main1>
@@ -155,7 +149,6 @@ const ConfirmForm = ({ onClose, company }) => {
               setTarget(e.target.value);
             }}
             placeholder="찾아갈 분을 입력해주세요."
-            placeholder="찾아갈 분을 입력해주세요."
           />
 
           <label htmlFor="purpose">목적</label>
@@ -177,7 +170,6 @@ const ConfirmForm = ({ onClose, company }) => {
             onChange={(e) => {
               setPurpose(e.target.value);
             }}
-            placeholder="방문 목적을 입력해주세요."
             placeholder="방문 목적을 입력해주세요."
           />
         </Main2>
@@ -364,7 +356,6 @@ const ConfirmForm = ({ onClose, company }) => {
           </StBtnWrapper>
         </StVisitWrapper>
       </MainWrapper>
-    </MainContainer>
     </MainContainer>
   );
 };

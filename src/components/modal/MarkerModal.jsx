@@ -32,7 +32,7 @@ const MarkerModal = ({ children, onClose }) => {
                 color: "#B1B1B1",
                 cursor: "pointer",
                 position: "absolute",
-                top: "35px",
+                top: "30px",
                 right: "20px",
               }}
             ></CloseIcon>
