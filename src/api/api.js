@@ -77,17 +77,30 @@ const readNotification = async (id) => {
   return response.data;
 };
 
+const SearchGuestID = async (user) => {
+  return await instance.post("/guest/user-id", user);
+};
+
+const SearchGuestPW = async (user) => {
+  return await instance.post("/guest/password", user);
+};
+
 const SearchAdminPW = async (user) => {
   return await instance.post("/admin/password", user);
+};
+
+const SearchAdminID = async (user) => {
+  return await instance.post("/admin/user-id", user);
 };
 
 const ChangeAdminPW = async (user) => {
   return await instance.put("/admin/password", user);
 };
 
-const SearchEmail = async (user) => {
-  return await instance.post("/email/authcode", user);
+const ChangeGuestPW = async (user) => {
+  return await instance.put("/guest/password", user);
 };
+
 
 export {
   loginGuest,
@@ -105,10 +118,13 @@ export {
   getConfirmList,
   SearchAdminPW,
   ChangeAdminPW,
-  SearchEmail,
   submitLobbyCheckInQr,
   submitLobbyCheckOutQr,
   getUserInfoQr,
   getNotifications,
   readNotification,
+  SearchAdminID,
+  SearchGuestID,
+  SearchGuestPW,
+  ChangeGuestPW,
 };
