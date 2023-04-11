@@ -1,81 +1,59 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import DatePicker from "react-datepicker";
-import { submitConfirmForm } from "../api/api";
-import { ko } from "date-fns/esm/locale";
-import "react-datepicker/dist/react-datepicker.css";
+import { guestModify } from "../../api/api";
 import styled from "styled-components";
 
-const ConfirmForm = ({ onClose, company }) => {
-  const [location, setLocation] = useState(company.companyName);
-  const [place, setPlace] = useState("");
-  const [target, setTarget] = useState("");
-  const [purpose, setPurpose] = useState("");
+export const ModifyForm = ({ onClose, data }) => {
+  console.log(data);
+  const [location, setLocation] = useState(data.location);
+  const [place, setPlace] = useState(data.place);
+  const [target, setTarget] = useState(data.target);
+  const [purpose, setPurpose] = useState(data.purpose);
   // const [startDate, setStartDate] = useState("");
   // const [endDate, setEndDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [visitor, setVisitor] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
+  const [startTime, setStartTime] = useState(data.startTime.split("T")[1]);
+  const [endTime, setEndTime] = useState(data.endTime.split("T")[1]);
+  const [visitor, setVisitor] = useState(data.visitor);
+  const [phoneNum, setPhoneNum] = useState(data.phoneNum);
 
   //datepicker 사용
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
-  const dateToString = (date) => {
-    return (
-      date.getFullYear() +
-      "-" +
-      (date.getMonth() + 1).toString().padStart(2, "0") +
-      "-" +
-      date.getDate().toString().padStart(2, "0")
-    );
-  };
+  const [startDate, setStartDate] = useState(data.startDate.split(" ")[0]);
+  const [endDate, setEndDate] = useState(data.endDate.split(" ")[0]);
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(submitConfirmForm, {
+
+  const modifyMutation = useMutation(guestModify, {
     onSuccess: (response) => {
-      console.log(response);
-      queryClient.invalidateQueries("user");
-      alert("방문신청이 완료되었습니다.");
+      alert("방문신청 기록 수정 성공");
+      queryClient.invalidateQueries("guests");
       onClose();
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      alert("방문신청 기록 수정 실패");
     },
   });
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`;
-    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`;
+    const dateTimeStart = `${startDate}T${startTime}:00`;
+    const dateTimeEnd = `${endDate}T${endTime}:00`;
     const confirmForm = {
-      location,
-      place,
-      target,
-      purpose,
-      startDate: dateToString(startDate),
-      startTime: dateTimeStart,
-      endDate: dateToString(endDate),
-      endTime: dateTimeEnd,
-      visitor,
-      phoneNum,
-      status: "1",
+      id: data.id,
+      data: {
+        location,
+        place,
+        target,
+        purpose,
+        startDate,
+        startTime: dateTimeStart,
+        endDate,
+        endTime: dateTimeEnd,
+        visitor,
+        phoneNum,
+        status: "1",
+      },
     };
-    mutation.mutate(confirmForm);
-    console.log({
-      location,
-      place,
-      target,
-      purpose,
-      startDate: dateToString(startDate),
-      startTime: dateTimeStart,
-      endDate: dateToString(endDate),
-      endTime: dateTimeEnd,
-      visitor,
-      phoneNum,
-      status: "1",
-    });
+    modifyMutation.mutate(confirmForm);
   };
 
   return (
@@ -85,23 +63,25 @@ const ConfirmForm = ({ onClose, company }) => {
       </Header>
       <MainWrapper>
         <Main1>
-          <label
-            htmlFor="location"
+          <label htmlFor="location">방문지역</label>
+          <input
             style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
+              marginLeft: "10px",
+              marginRight: "75px",
+              width: "82%",
+              height: "45px",
+              fontSize: "20px",
+              border: "none",
+              backgroundColor: "transparent",
             }}
-          >
-            방문지역
-          </label>
-          <div
-            style={{
-              fontSize: "18px",
+            id="location"
+            value={location}
+            onChange={(e) => {
+              setLocation(e.target.value);
             }}
-          >
-            {company.companyName}
-          </div>
+            readOnly
+          />
+
           <label htmlFor="place">방문장소</label>
           <StInput
             style={{
@@ -140,7 +120,6 @@ const ConfirmForm = ({ onClose, company }) => {
             placeholder="찾아갈 분을 입력해주세요."
           />
 
-
           <label htmlFor="purpose">목적</label>
           <StInput
             style={{
@@ -164,7 +143,7 @@ const ConfirmForm = ({ onClose, company }) => {
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
               <StInput
-                style={{=
+                style={{
                   marginLeft: "10px",
                   marginRight: "30px",
                   width: "116px",
@@ -297,15 +276,10 @@ const ConfirmForm = ({ onClose, company }) => {
             <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
           </StBtnWrapper>
         </StVisitWrapper>
-
-
-
       </MainWrapper>
     </MainContainer>
   );
 };
-
-export default ConfirmForm;
 
 const Header = styled.div`
   display: flex;
@@ -317,8 +291,8 @@ const Header = styled.div`
   /* color: white; */
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  font-size: 22px;
-  font-weight: 700;
+  font-size: larger;
+  font-weight: bold;
 `;
 
 const MainWrapper = styled.div`

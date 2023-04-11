@@ -27,6 +27,9 @@ const Navbar = () => {
 
   const notify = (msg) => toast(msg);
 
+
+  const queryClient = new QueryClient();
+
   const { data, isError, isLoading, refetch } = useQuery(
     "notification",
     getNotifications,
@@ -36,6 +39,9 @@ const Navbar = () => {
         const temp = res.filter((item) => !item.isRead).length;
         setNotificationCnt(temp);
       },
+
+      enabled: menu === "admin",
+
     }
   );
 
@@ -77,6 +83,7 @@ const Navbar = () => {
       // eventSource.close();
     };
     return () => {
+      console.log("SSE종료되었음!");
       eventSource.close();
     };
   }, [message, isConnection, refetch]);
@@ -104,6 +111,7 @@ const Navbar = () => {
   const handleCloseNotification = () => {
     console.log("눌림!");
     setShowNotification(false);
+    queryClient.invalidateQueries("notification");
   };
 
   // navigate 이동 함수
@@ -144,7 +152,9 @@ const Navbar = () => {
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
                 {notificationCnt > 0 && (
-                  <StNotificationCnt>notificationCnt</StNotificationCnt>
+
+                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
+
                 )}
               </StNotification>
               {showNotification && (
