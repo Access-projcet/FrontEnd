@@ -88,15 +88,15 @@ const ConfirmForm = ({ onClose, company }) => {
           <label
             htmlFor="location"
             style={{
-              marginLeft: "50px",
-              marginRight: "50px",
-              fontSize: "18px",
+              fontSize: "16px",
             }}
           >
             방문지역
           </label>
           <div
             style={{
+              marginLeft: "10px",
+
               fontSize: "18px",
             }}
           >
@@ -121,7 +121,7 @@ const ConfirmForm = ({ onClose, company }) => {
           />
         </Main1>
         <Main2>
-          <label htmlFor="target">찾아갈 분</label>
+          <label htmlFor="target">찾아갈분</label>
           <StInput
             style={{
               marginLeft: "10px",
@@ -139,7 +139,6 @@ const ConfirmForm = ({ onClose, company }) => {
             }}
             placeholder="찾아갈 분을 입력해주세요."
           />
-
 
           <label htmlFor="purpose">목적</label>
           <StInput
@@ -164,7 +163,7 @@ const ConfirmForm = ({ onClose, company }) => {
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
               <StInput
-                style={{=
+                style={{
                   marginLeft: "10px",
                   marginRight: "30px",
                   width: "116px",
@@ -297,9 +296,6 @@ const ConfirmForm = ({ onClose, company }) => {
             <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
           </StBtnWrapper>
         </StVisitWrapper>
-
-
-
       </MainWrapper>
     </MainContainer>
   );
