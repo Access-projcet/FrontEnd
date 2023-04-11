@@ -10,10 +10,9 @@ import GuestMyPage from "../pages/GuestMyPage";
 import AdminMain from "../pages/AdminMain";
 import Lobby from "../pages/Lobby";
 import NotFound from "../pages/NotFound";
-import Search_PW from "../components/modal/Search_PW";
-import Change_PW from "../components/modal/Change_PW";
+import ChangeAdminPw from "../pages/ChangeAdminPW";
 import SignUp from "../pages/SignUp";
-
+import ChangeGuestPw from "../pages/ChangeGuestPW";
 
 const Router = () => {
   return (
@@ -28,8 +27,8 @@ const Router = () => {
         <Route path="/admin/main" element={<AdminMain />} />
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/*" element={<NotFound />} />
-        <Route path="/search" element={<Search_PW/>} />
-        <Route path="/change" element={<Change_PW/>} />
+        <Route path="/change_pw/admin" element={<ChangeAdminPw/>} />
+        <Route path="/change_pw/guest" element={<ChangeGuestPw/>} />
       </Routes>
     </BrowserRouter>
   );

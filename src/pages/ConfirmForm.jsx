@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import DatePicker from "react-datepicker";
 import { submitConfirmForm } from "../api/api";
+import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
@@ -46,22 +47,35 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const dateTimeStart = `${startDate}T${startTime}:00`;
-    const dateTimeEnd = `${endDate}T${endTime}:00`;
+    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`;
+    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`;
     const confirmForm = {
       location,
       place,
       target,
       purpose,
-      startDate,
+      startDate: dateToString(startDate),
       startTime: dateTimeStart,
-      endDate,
+      endDate: dateToString(endDate),
       endTime: dateTimeEnd,
       visitor,
       phoneNum,
       status: "1",
     };
     mutation.mutate(confirmForm);
+    console.log({
+      location,
+      place,
+      target,
+      purpose,
+      startDate: dateToString(startDate),
+      startTime: dateTimeStart,
+      endDate: dateToString(endDate),
+      endTime: dateTimeEnd,
+      visitor,
+      phoneNum,
+      status: "1",
+    });
   };
 
   return (
@@ -71,25 +85,23 @@ const ConfirmForm = ({ onClose, company }) => {
       </Header>
       <MainWrapper>
         <Main1>
-          <label htmlFor="location">방문지역</label>
-          <input
+          <label
+            htmlFor="location"
             style={{
-              marginLeft: "10px",
-              marginRight: "75px",
-              width: "82%",
-              height: "45px",
-              fontSize: "20px",
-              border: "none",
-              backgroundColor: "transparent",
+              marginLeft: "50px",
+              marginRight: "50px",
+              fontSize: "18px",
             }}
-            id="location"
-            value={location}
-            onChange={(e) => {
-              setLocation(e.target.value);
+          >
+            방문지역
+          </label>
+          <div
+            style={{
+              fontSize: "18px",
             }}
-            readOnly
-          />
-
+          >
+            {company.companyName}
+          </div>
           <label htmlFor="place">방문장소</label>
           <StInput
             style={{
@@ -128,6 +140,7 @@ const ConfirmForm = ({ onClose, company }) => {
             placeholder="찾아갈 분을 입력해주세요."
           />
 
+
           <label htmlFor="purpose">목적</label>
           <StInput
             style={{
@@ -151,7 +164,7 @@ const ConfirmForm = ({ onClose, company }) => {
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
               <StInput
-                style={{
+                style={{=
                   marginLeft: "10px",
                   marginRight: "30px",
                   width: "116px",
@@ -284,6 +297,9 @@ const ConfirmForm = ({ onClose, company }) => {
             <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
           </StBtnWrapper>
         </StVisitWrapper>
+
+
+
       </MainWrapper>
     </MainContainer>
   );
@@ -301,8 +317,8 @@ const Header = styled.div`
   /* color: white; */
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  font-size: larger;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 700;
 `;
 
 const MainWrapper = styled.div`

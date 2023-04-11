@@ -27,6 +27,7 @@ const Navbar = () => {
 
   const notify = (msg) => toast(msg);
 
+
   const queryClient = new QueryClient();
 
   const { data, isError, isLoading, refetch } = useQuery(
@@ -38,7 +39,9 @@ const Navbar = () => {
         const temp = res.filter((item) => !item.isRead).length;
         setNotificationCnt(temp);
       },
+
       enabled: menu === "admin",
+
     }
   );
 
@@ -149,7 +152,9 @@ const Navbar = () => {
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
                 {notificationCnt > 0 && (
+
                   <StNotificationCnt>{notificationCnt}</StNotificationCnt>
+
                 )}
               </StNotification>
               {showNotification && (
@@ -162,6 +167,16 @@ const Navbar = () => {
               {localStorage.getItem("name")}님 반갑습니다
             </StName>
             <StLogOutContainer>
+              {menu === "guest" ? (
+                <Link to={"/change_pw/guest"}>
+                  <StLogOut>비밀번호 변경</StLogOut>
+                </Link>
+              ) : (
+                <Link to={"/change_pw/admin"}>
+                  <StLogOut>비밀번호 변경</StLogOut>
+                </Link>
+              )}
+
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
@@ -231,6 +246,7 @@ const StMenuUl = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 `;
 const StMenuLi = styled.li`
   color: white;

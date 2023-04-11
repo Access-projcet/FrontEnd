@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, Link, Grid } from "@mui/material";
+import { TextField, Button, Link } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 import { useMutation } from "react-query";
 import { loginBusiness } from "../../api/api";
@@ -8,6 +8,8 @@ import { setCookie } from "../../api/cookies";
 import { makeStyles } from "@mui/styles";
 import arrow from "../../utils/img/arrow_icon.png";
 import { useSelector } from "react-redux";
+import SearchAdminId from "../modal/SearchAdminID";
+import SearchAdminPw from "../modal/SearchAdminPW";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -31,19 +33,23 @@ export default function AdminLoginForm() {
   const { menu } = useSelector((state) => state.LoginMenuSlice);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [showIDModal, setShowIDModal] = useState(false);
+  const [showPWModal, setShowPWModal] = useState(false);
   const classes = useStyles();
-
   const mutation = useMutation(loginBusiness, {
     onSuccess: (data) => {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
+      localStorage.setItem(
+        "REFRESH_TOKEN",
+        data.headers.refreshtoken.split(" ")[1]
+      );
       localStorage.setItem("name", data.data.data.name);
       localStorage.setItem("usertype", menu);
 
       navigate("/admin/main");
     },
     onError: (error) => {
-      console.log(error.response);
+      alert(error.response.data.message);
     },
   });
 
@@ -144,10 +150,22 @@ export default function AdminLoginForm() {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
           <LoginFindForm>
-            <Link href="/search">
-              <StFindBtn>아이디 / 비밀번호 찾기</StFindBtn>
+            <Link
+              onClick={() => {
+                setShowIDModal(!showIDModal);
+              }}
+            >
+              <StFindBtn>아이디 찾기</StFindBtn>
+            </Link>
+            <Link
+              onClick={() => {
+                setShowPWModal(!showPWModal);
+              }}
+            >
+              <StFindBtn>비밀번호 찾기</StFindBtn>
             </Link>
           </LoginFindForm>
+
           <hr />
           <StLoginBtn>
             <Button
@@ -173,6 +191,20 @@ export default function AdminLoginForm() {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
+        {showIDModal === true ? (
+          <SearchAdminId
+            onClose={() => {
+              setShowIDModal(false);
+            }}
+          />
+        ) : null}
+        {showPWModal === true ? (
+          <SearchAdminPw
+            onClose={() => {
+              setShowPWModal(false);
+            }}
+          />
+        ) : null}
       </DivLoginContainer>
     </>
   );
@@ -215,13 +247,15 @@ const StloginImg = styled.img`
 const StFindBtn = styled.div`
   color: black;
   margin-top: 30px;
+  cursor: pointer;
 `;
 
 const LoginFindForm = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: -20px;
   margin-bottom: 30px;
+  gap: 30px;
 `;
