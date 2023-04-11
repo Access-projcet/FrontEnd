@@ -6,8 +6,9 @@ import { useQuery, useMutation } from "react-query";
 import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
+import { saveAs } from "file-saver";
 
-import { adminVisit, adminModify } from "../../api/api";
+import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
 import { color } from "../../utils/styles/color";
 
 export default function AdminApproveList() {
@@ -42,7 +43,7 @@ export default function AdminApproveList() {
     {
       keepPreviousData: true,
       cacheTime: 0,
-    },
+    }
   );
 
   const adminModifyMutation = useMutation(adminModify, {
@@ -117,18 +118,44 @@ export default function AdminApproveList() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    [],
+    []
   );
+
+  const HandlerExcel = () => {
+    const date = new Date();
+    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}_${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}시${date.getMinutes().toString().padStart(2, "0")}분`;
+    DownLoadExcel()
+      .then((res) => {
+        const blob = new Blob([res.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        saveAs(blob, `${dateString}.xlsx`);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <DivApprove>
+      <StBtnExcel onClick={HandlerExcel}>엑셀다운</StBtnExcel>
       <DivTable>
         <MaterialReactTable
           columns={columns}
           data={
             data?.data.data.map((item) => ({
               ...item,
-              startDate: item.startDate + " " + item.startTime + " - " + item.endDate + " " + item.endTime,
+              startDate:
+                item.startDate +
+                " " +
+                item.startTime +
+                " - " +
+                item.endDate +
+                " " +
+                item.endTime,
             })) ?? []
           } //data is undefined on first render
           initialState={{
@@ -222,4 +249,10 @@ const DivApprove = styled.div`
 const DivTable = styled.div`
   width: 70%;
   height: 100vh;
+`;
+
+const StBtnExcel = styled.button`
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  cursor: pointer;
 `;

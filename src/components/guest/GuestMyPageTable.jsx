@@ -5,36 +5,17 @@ import { useQuery } from "react-query";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { Delete, Edit } from "@mui/icons-material";
 import { useMutation } from "react-query";
-import { guestDeleteVisit, guestVisit } from "../../api/api";
+import { guestDeleteVisit, guestVisit, guestModify } from "../../api/api";
 import { color } from "../../utils/styles/color";
 
 export default function GuestMyPageTable() {
-  const [columnFilters, setColumnFilters] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState("");
-  const [sorting, setSorting] = useState([]);
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 15,
-  });
+  const [isMofify, setIsModify] = useState(false);
 
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
-    [
-      "guests", // 쿼리키
-      pagination.pageIndex,
-      pagination.pageSize,
-      sorting,
-      globalFilter,
-      columnFilters,
-    ],
+    "guests", // 쿼리키
+
     () => {
-      const queryParams = {
-        start: pagination.pageIndex * pagination.pageSize,
-        size: pagination.pageSize,
-        filters: JSON.stringify(columnFilters ?? []),
-        globalFilter: globalFilter ?? "",
-        sorting: JSON.stringify(sorting ?? []),
-      };
-      return guestVisit(queryParams);
+      return guestVisit();
     },
     {
       //query key가 변경되어도 새 데이터가 요청되는 동안 마지막 성공fetch data로 유지
@@ -42,13 +23,21 @@ export default function GuestMyPageTable() {
       keepPreviousData: true,
       //캐싱타임을 0으로 줘서 필터링시에 쓸데없는 캐싱을 하지않고 새로운 데이터를 요청하게함.
       cacheTime: 0,
-    },
+    }
   );
 
   const deleteMutaion = useMutation(guestDeleteVisit, {
     onSuccess: (data) => {
       console.log(data);
       alert("방문기록 삭제 성공");
+      refetch();
+    },
+  });
+
+  const modifyMutation = useMutation(guestModify, {
+    onSuccess: (data) => {
+      console.log(data);
+      alert("방문기록 수정 성공");
       refetch();
     },
   });
@@ -60,6 +49,7 @@ export default function GuestMyPageTable() {
 
   const HandlerEditVisit = (row) => {
     console.log("edit;", row.original.id);
+    setIsModify(true);
   };
 
   const columns = useMemo(
@@ -109,7 +99,7 @@ export default function GuestMyPageTable() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -118,11 +108,23 @@ export default function GuestMyPageTable() {
       data={
         data?.data.data.map((item) => ({
           ...item,
-          startDate: item.startDate + " " + item.startTime + " - " + item.endDate + " " + item.endTime,
+          startDate:
+            item.startDate +
+            " " +
+            item.startTime +
+            " - " +
+            item.endDate +
+            " " +
+            item.endTime,
         })) ?? []
       } //data is undefined on first render
       initialState={{
         showColumnFilters: false,
+      }}
+      filterFns={{
+        customFilterFn: (row, id, filterValue) => {
+          return row.getValue(id) === filterValue;
+        },
       }}
       muiTableHeadCellProps={{
         //simple styling with the `sx` prop, works just like a style prop in this example
@@ -133,13 +135,6 @@ export default function GuestMyPageTable() {
           color: `${color.textWhite}`,
         },
       }}
-      muiTableBodyCellProps={{
-        //simple styling with the `sx` prop, works just like a style prop in this example
-        sx: {},
-      }}
-      manualFiltering
-      manualPagination
-      manualSorting
       muiToolbarAlertBannerProps={
         isError
           ? {
@@ -148,10 +143,6 @@ export default function GuestMyPageTable() {
             }
           : undefined
       }
-      onColumnFiltersChange={setColumnFilters}
-      onGlobalFilterChange={setGlobalFilter}
-      onPaginationChange={setPagination}
-      onSortingChange={setSorting}
       renderTopToolbarCustomActions={() => (
         <Tooltip arrow title="Refresh Data">
           <IconButton onClick={() => refetch()}>
@@ -187,16 +178,9 @@ export default function GuestMyPageTable() {
       )}
       rowCount={data?.meta?.totalRowCount ?? 0}
       state={{
-        columnFilters,
-        globalFilter,
         isLoading,
-        pagination,
         showAlertBanner: isError,
         showProgressBars: isFetching,
-        sorting,
-      }}
-      muiTablePaginationProps={{
-        rowsPerPageOptions: [15],
       }}
     />
   );

@@ -35,6 +35,10 @@ const adminModify = async (payload) => {
   });
 };
 
+const guestModify = async (payload) => {
+  return await instance.put(`/visit/guest/${payload.id}`, payload.data);
+};
+
 const getMap = async () => {
   const response = await instance.get(`/company`);
   return response.data;
@@ -89,6 +93,12 @@ const SearchEmail = async (user) => {
   return await instance.post("/email/authcode", user);
 };
 
+const DownLoadExcel = async () => {
+  return await instance.get("/excel/access", {
+    responseType: "arraybuffer",
+  });
+};
+
 export {
   loginGuest,
   loginBusiness,
@@ -111,4 +121,6 @@ export {
   getUserInfoQr,
   getNotifications,
   readNotification,
+  DownLoadExcel,
+  guestModify,
 };
