@@ -1,46 +1,35 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import DatePicker from "react-datepicker";
-import { submitConfirmForm } from "../api/api";
-import "react-datepicker/dist/react-datepicker.css";
+import { guestModify } from "../../api/api";
 import styled from "styled-components";
 
-const ConfirmForm = ({ onClose, company }) => {
-  const [location, setLocation] = useState(company.companyName);
-  const [place, setPlace] = useState("");
-  const [target, setTarget] = useState("");
-  const [purpose, setPurpose] = useState("");
+export const ModifyForm = ({ onClose, data }) => {
+  console.log(data);
+  const [location, setLocation] = useState(data.location);
+  const [place, setPlace] = useState(data.place);
+  const [target, setTarget] = useState(data.target);
+  const [purpose, setPurpose] = useState(data.purpose);
   // const [startDate, setStartDate] = useState("");
   // const [endDate, setEndDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [visitor, setVisitor] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
+  const [startTime, setStartTime] = useState(data.startTime.split("T")[1]);
+  const [endTime, setEndTime] = useState(data.endTime.split("T")[1]);
+  const [visitor, setVisitor] = useState(data.visitor);
+  const [phoneNum, setPhoneNum] = useState(data.phoneNum);
 
   //datepicker 사용
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
-  const dateToString = (date) => {
-    return (
-      date.getFullYear() +
-      "-" +
-      (date.getMonth() + 1).toString().padStart(2, "0") +
-      "-" +
-      date.getDate().toString().padStart(2, "0")
-    );
-  };
+  const [startDate, setStartDate] = useState(data.startDate.split(" ")[0]);
+  const [endDate, setEndDate] = useState(data.endDate.split(" ")[0]);
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(submitConfirmForm, {
+
+  const modifyMutation = useMutation(guestModify, {
     onSuccess: (response) => {
-      console.log(response);
-      queryClient.invalidateQueries("user");
-      alert("방문신청이 완료되었습니다.");
+      alert("방문신청 기록 수정 성공");
+      queryClient.invalidateQueries("guests");
       onClose();
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      alert("방문신청 기록 수정 실패");
     },
   });
 
@@ -49,19 +38,22 @@ const ConfirmForm = ({ onClose, company }) => {
     const dateTimeStart = `${startDate}T${startTime}:00`;
     const dateTimeEnd = `${endDate}T${endTime}:00`;
     const confirmForm = {
-      location,
-      place,
-      target,
-      purpose,
-      startDate,
-      startTime: dateTimeStart,
-      endDate,
-      endTime: dateTimeEnd,
-      visitor,
-      phoneNum,
-      status: "1",
+      id: data.id,
+      data: {
+        location,
+        place,
+        target,
+        purpose,
+        startDate,
+        startTime: dateTimeStart,
+        endDate,
+        endTime: dateTimeEnd,
+        visitor,
+        phoneNum,
+        status: "1",
+      },
     };
-    mutation.mutate(confirmForm);
+    modifyMutation.mutate(confirmForm);
   };
 
   return (
@@ -288,8 +280,6 @@ const ConfirmForm = ({ onClose, company }) => {
     </MainContainer>
   );
 };
-
-export default ConfirmForm;
 
 const Header = styled.div`
   display: flex;

@@ -47,7 +47,11 @@ export default function MapContainer5() {
       const companyName = e.companyName || "";
       const companyAddress = e.companyAddress || "";
       const companyPhoneNum = e.companyPhoneNum || "";
-      return companyName.includes(target) || companyAddress.includes(target) || companyPhoneNum.includes(target);
+      return (
+        companyName.includes(target) ||
+        companyAddress.includes(target) ||
+        companyPhoneNum.includes(target)
+      );
     });
     setSearchResults(filteredResults);
   };
@@ -64,7 +68,7 @@ export default function MapContainer5() {
           companyName: e.companyName,
           companyAddress: e.companyAddress,
           companyPhoneNum: e.companyPhoneNum,
-        })),
+        }))
       );
     }
   }, [data]);
@@ -133,7 +137,9 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
-              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>방문 신청</ButtonVisitForm>
+              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>
+                방문 신청
+              </ButtonVisitForm>
             </StBtnDiv>
           </DivListBox>
         ))}
@@ -141,11 +147,13 @@ export default function MapContainer5() {
       <DivMapContainer>
         <Map // 지도를 표시할 Container
           id={`map`}
-          center={{
-            // 지도의 중심좌표
-            lat: 37.50073199,
-            lng: 127.03675448,
-          }}
+          center={mapstate.center}
+          isPanto={mapstate.isPanto}
+          // center={{
+          //   // 지도의 중심좌표
+          //   lat: 37.50073199,
+          //   lng: 127.03675448,
+          // }}
           style={{
             // 지도의 크기
             width: "100%",
@@ -178,16 +186,27 @@ export default function MapContainer5() {
                 <DivMapInfo className="info">
                   <DivMapTitle>
                     {selectedMarker.companyName}
-                    <BtnClose onClick={() => setSelectedMarker(null)} title="닫기" />
+                    <BtnClose
+                      onClick={() => setSelectedMarker(null)}
+                      title="닫기"
+                    />
                   </DivMapTitle>
 
                   <div className="body">
                     <StMapBody>
-                      <div className="ellipsis">{selectedMarker.companyAddress}</div>
-                      <div className="jibun ellipsis">{selectedMarker.companyPhoneNum}</div>
+                      <div className="ellipsis">
+                        {selectedMarker.companyAddress}
+                      </div>
+                      <div className="jibun ellipsis">
+                        {selectedMarker.companyPhoneNum}
+                      </div>
                     </StMapBody>
                     <DivMapButton>
-                      <BtnMapButton onClick={() => HandlerModalOn(selectedMarker)}>방문 신청</BtnMapButton>
+                      <BtnMapButton
+                        onClick={() => HandlerModalOn(selectedMarker)}
+                      >
+                        방문 신청
+                      </BtnMapButton>
                     </DivMapButton>
                   </div>
                 </DivMapInfo>
@@ -287,6 +306,10 @@ const DivListBox = styled.div`
   height: 133px;
   margin-top: 10px;
   background-color: #ffffff;
+  &:hover {
+    opacity: 0.8;
+    background-color: #f8f8f8;
+  }
 `;
 const DivListContent = styled.div`
   display: flex;
