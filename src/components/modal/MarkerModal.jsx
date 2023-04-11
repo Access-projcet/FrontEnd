@@ -28,7 +28,7 @@ const MarkerModal = ({ children, onClose }) => {
             <CloseIcon
               onClick={onClose}
               style={{
-                fontSize: "xx-large",
+                fontSize: "xxx-large",
                 color: "#B1B1B1",
                 cursor: "pointer",
                 position: "absolute",
@@ -47,6 +47,7 @@ export default MarkerModal;
 
 const ModalOverlay = styled.div`
   position: fixed;
+
   top: 0;
   left: 0;
   right: 0;
@@ -75,6 +76,6 @@ const ModalInner = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: 916px;
+  height: 630px;
 `;

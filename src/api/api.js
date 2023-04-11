@@ -35,6 +35,10 @@ const adminModify = async (payload) => {
   });
 };
 
+const guestModify = async (payload) => {
+  return await instance.put(`/visit/guest/${payload.id}`, payload.data);
+};
+
 const getMap = async () => {
   const response = await instance.get(`/company`);
   return response.data;
@@ -102,6 +106,17 @@ const ChangeGuestPW = async (user) => {
 };
 
 
+
+const getEnterPeople = async () => {
+  const response = await instance.get(`/access`);
+  return response.data;
+
+const DownLoadExcel = async () => {
+  return await instance.get("/excel/access", {
+    responseType: "arraybuffer",
+  });
+};
+
 export {
   loginGuest,
   loginBusiness,
@@ -127,4 +142,8 @@ export {
   SearchGuestID,
   SearchGuestPW,
   ChangeGuestPW,
+  getEnterPeople,
+  DownLoadExcel,
+  guestModify,
+
 };

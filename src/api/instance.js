@@ -17,13 +17,13 @@ instance.interceptors.request.use(
 
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 instance.interceptors.response.use(
   (response) => {
     if (response.headers.authorization) {
-      const re_access_token = response.headers.authorization.split("")[1];
+      const re_access_token = response.headers.authorization.split(" ")[1];
       removeCookie("ACCESS_TOKEN");
       setCookie("ACCESS_TOKEN", re_access_token);
     } else {
@@ -57,6 +57,6 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 export default instance;

@@ -34,7 +34,7 @@ export default function AdminApproveList() {
     {
       keepPreviousData: true,
       cacheTime: 0,
-    },
+    }
   );
 
   const adminModifyMutation = useMutation(adminModify, {
@@ -85,13 +85,19 @@ export default function AdminApproveList() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 250,
+        size: 200,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
         accessorKey: "startDate",
         header: "방문일자",
-        size: 300,
+        size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
+      },
+      {
+        accessorKey: "endDate",
+        header: "방문종료",
+        size: 100,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
       // {
@@ -108,7 +114,7 @@ export default function AdminApproveList() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -119,12 +125,14 @@ export default function AdminApproveList() {
           data={
             data?.data.data.map((item) => ({
               ...item,
-              startDate: item.startDate + " " + item.startTime + " - " + item.endDate + " " + item.endTime,
+              startDate: item.startDate + " " + item.startTime.split("T")[1],
+              endDate: item.endDate + " " + item.endTime.split("T")[1],
             })) ?? []
           } //data is undefined on first render
           initialState={{
             showColumnFilters: false,
           }}
+          isMultiSortEvent={() => true}
           filterFns={{
             customFilterFn: (row, id, filterValue) => {
               return row.getValue(id) === filterValue;
@@ -139,9 +147,6 @@ export default function AdminApproveList() {
               color: `${color.textWhite}`,
             },
           }}
-          // manualFiltering
-          // manualPagination
-          // manualSorting
           muiToolbarAlertBannerProps={
             isError
               ? {
@@ -150,10 +155,6 @@ export default function AdminApproveList() {
                 }
               : undefined
           }
-          // onColumnFiltersChange={setColumnFilters}
-          // onGlobalFilterChange={setGlobalFilter}
-          // onPaginationChange={setPagination}
-          // onSortingChange={setSorting}
           renderTopToolbarCustomActions={() => (
             <Tooltip arrow title="Refresh Data">
               <IconButton onClick={() => refetch()}>
@@ -193,9 +194,6 @@ export default function AdminApproveList() {
             showAlertBanner: isError,
             showProgressBars: isFetching,
           }}
-          // muiTablePaginationProps={{
-          //   rowsPerPageOptions: [5, 10, 15],
-          // }}
         />
       </DivTable>
     </DivApprove>
