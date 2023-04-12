@@ -53,7 +53,7 @@ const Lobby = () => {
           }}
         >
           <StMainMenu color="#829cf6;">
-            <StMainDiv>Qr-Check-in</StMainDiv>
+            <StMainDiv>QR Check-in</StMainDiv>
             <StMainImg src={btn1} alt="Check-in"></StMainImg>
           </StMainMenu>
         </Link>
@@ -76,7 +76,7 @@ const Lobby = () => {
           }}
         >
           <StMainMenu color="#57D4D4;">
-            <StMainDiv>check-out</StMainDiv>
+            <StMainDiv>Check-out</StMainDiv>
             <StMainImg src={btn2} alt="Check-out"></StMainImg>
           </StMainMenu>
         </Link>
@@ -87,7 +87,7 @@ const Lobby = () => {
           }}
         >
           <StMainMenu color="#57D4D4;">
-            <StMainDiv>Qr-Check-out</StMainDiv>
+            <StMainDiv>QR Check-out</StMainDiv>
             <StMainImg src={btn2} alt="Check-out"></StMainImg>
           </StMainMenu>
         </Link>
