@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import DatePicker from "react-datepicker";
-import { submitConfirmForm } from "../api/api";
+import { submitConfirmForm, sendUrlCode } from "../api/api";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
@@ -34,12 +34,30 @@ const ConfirmForm = ({ onClose, company }) => {
   };
 
   const queryClient = useQueryClient();
+
+  const mutation2 = useMutation(sendUrlCode, {
+    onSuccess: (response) => {
+      // console.log(response);
+      queryClient.invalidateQueries("user");
+    },
+    onError: (error) => {
+      alert(error.response.data.message);
+    },
+  });
+  const sendCodeHandler = () => {
+    const info = {
+      imgUrl: "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttp://localhost:3000/",
+    };
+    mutation2.mutate(info);
+  };
+
   const mutation = useMutation(submitConfirmForm, {
     onSuccess: (response) => {
-      console.log(response);
+      // console.log(response);
       queryClient.invalidateQueries("user");
       alert("방문신청이 완료되었습니다.");
       onClose();
+      sendCodeHandler();
     },
     onError: (error) => {
       alert(error.response.data.message);
@@ -48,8 +66,8 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`;
-    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`;
+    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`
+    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`
     const confirmForm = {
       location,
       place,
@@ -84,7 +102,6 @@ const ConfirmForm = ({ onClose, company }) => {
           <div
             style={{
               marginLeft: "10px",
-
               fontSize: "18px",
             }}
           >
@@ -157,7 +174,7 @@ const ConfirmForm = ({ onClose, company }) => {
                 onChange={(date) => setStartDate(date)}
                 minDate={new Date()}
                 customInput={
-                  <input
+                  <StInput
                     style={{
                       paddingLeft: "10px",
                       marginLeft: "10px",
@@ -170,8 +187,8 @@ const ConfirmForm = ({ onClose, company }) => {
                     }}
                   />
                 }
+                portalId="date-picker-portal"
               />
-
               <label htmlFor="방문시간">시간</label>
               <StInput
                 style={{
@@ -219,6 +236,7 @@ const ConfirmForm = ({ onClose, company }) => {
                     }}
                   />
                 }
+                portalId="date-picker-portal"
               />
 
               <label htmlFor="endTime">시간 </label>
@@ -242,10 +260,7 @@ const ConfirmForm = ({ onClose, company }) => {
           </TimeTable1>
 
           <Msg>
-            <p>
-              * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
-              2023/03/31, 14:00
-            </p>
+            <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40, 2023/03/31, 14:00</p>
           </Msg>
         </StTimeWrapper>
 
@@ -357,7 +372,6 @@ const TimeTable1 = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-
 const TimeTable2 = styled.div`
   /* display: flex; */
   flex-direction: column;
@@ -366,7 +380,6 @@ const TimeTable2 = styled.div`
 `;
 
 const Visitor = styled.div`
-  /* display: flex; */
   display: grid;
   grid-template-columns: 5rem 1fr 5rem 1fr;
   margin: 15px 30px;

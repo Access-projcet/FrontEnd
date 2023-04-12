@@ -65,153 +65,163 @@ function ChangeGuestPw() {
       <StLogo src={mainLogo} alt="VISITUS 로고" />
       <StMainBackground src={mainImg} alt="VISITUS 메인" />
 
-      <DivLoginContainer>
-        <StForm onSubmit={onSubmitHandler}>
-          <h2>비밀번호 변경</h2>
-          <InputForm>
-            <TextField
-              margin="normal"
-              label="현재 비밀번호"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoFocus
-              fullWidth
-              className={classes.root}
-              sx={{
-                "& label": {
-                  "&.Mui-focused": {
-                    color: "#49CDB5",
+      <StContainer>
+        <DivLoginContainer>
+          <StForm onSubmit={onSubmitHandler}>
+            <h2>비밀번호 변경</h2>
+            <InputForm>
+              <TextField
+                margin="normal"
+                label="현재 비밀번호"
+                name="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoFocus
+                fullWidth
+                className={classes.root}
+                sx={{
+                  "& label": {
+                    "&.Mui-focused": {
+                      color: "#49CDB5",
+                    },
                   },
-                },
-              }}
-              InputLabelProps={{
-                sx: {
-                  color: "#49CDB5",
+                }}
+                InputLabelProps={{
+                  sx: {
+                    color: "#49CDB5",
 
-                  ":&focus": {
-                    color: "#49CDB5",
+                    ":&focus": {
+                      color: "#49CDB5",
+                    },
                   },
-                },
-              }}
-              error={
-                password.trim() !== "" &&
-                !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                  password
-                )
-              }
-              helperText={
-                password.trim() !== "" &&
-                !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                  password
-                )
-                  ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
-                  : " "
-              }
-              FormHelperTextProps={{
-                sx: {
-                  color: "red",
-                },
-              }}
-            />
-            <TextField
-              margin="normal"
-              label="새 비밀번호"
-              type="password"
-              name="newPassword"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-              autoFocus
-              fullWidth
-              className={classes.root}
-              sx={{
-                "& label": {
-                  "&.Mui-focused": {
-                    color: "#49CDB5",
+                }}
+                error={
+                  password.trim() !== "" &&
+                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
+                    password
+                  )
+                }
+                helperText={
+                  password.trim() !== "" &&
+                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
+                    password
+                  )
+                    ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
+                    : " "
+                }
+                FormHelperTextProps={{
+                  sx: {
+                    color: "red",
                   },
-                },
-              }}
-              InputLabelProps={{
-                sx: {
-                  color: "#49CDB5",
+                }}
+              />
+              <TextField
+                margin="normal"
+                label="새 비밀번호"
+                type="password"
+                name="newPassword"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                autoFocus
+                fullWidth
+                className={classes.root}
+                sx={{
+                  "& label": {
+                    "&.Mui-focused": {
+                      color: "#49CDB5",
+                    },
+                  },
+                }}
+                InputLabelProps={{
+                  sx: {
+                    color: "#49CDB5",
 
-                  ":&focus": {
-                    color: "#49CDB5",
+                    ":&focus": {
+                      color: "#49CDB5",
+                    },
                   },
-                },
-              }}
-              error={
-                newPassword.trim() !== "" &&
-                !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                  newPassword
-                )
-              }
-              helperText={
-                newPassword.trim() !== "" &&
-                !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                  newPassword
-                )
-                  ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
-                  : " "
-              }
-              FormHelperTextProps={{
-                sx: {
-                  color: "red",
-                },
-              }}
-            />
-            <TextField
-              margin="normal"
-              label="새 비밀번호 확인"
-              type="password"
-              name="checkPassword"
-              value={checkPassword}
-              onChange={(e) => setCheckPassword(e.target.value)}
-              required
-              fullWidth
-              className={classes.root}
-              sx={{
-                "& label": {
-                  "&.Mui-focused": {
-                    color: "#49CDB5",
+                }}
+                error={
+                  newPassword.trim() !== "" &&
+                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
+                    newPassword
+                  )
+                }
+                helperText={
+                  newPassword.trim() !== "" &&
+                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
+                    newPassword
+                  )
+                    ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
+                    : " "
+                }
+                FormHelperTextProps={{
+                  sx: {
+                    color: "red",
                   },
-                },
-              }}
-              InputLabelProps={{
-                sx: {
-                  color: "#49CDB5",
+                }}
+              />
+              <TextField
+                margin="normal"
+                label="새 비밀번호 확인"
+                type="password"
+                name="checkPassword"
+                value={checkPassword}
+                onChange={(e) => setCheckPassword(e.target.value)}
+                required
+                fullWidth
+                className={classes.root}
+                sx={{
+                  "& label": {
+                    "&.Mui-focused": {
+                      color: "#49CDB5",
+                    },
+                  },
+                }}
+                InputLabelProps={{
+                  sx: {
+                    color: "#49CDB5",
 
-                  ":&focus": {
-                    color: "#49CDB5",
+                    ":&focus": {
+                      color: "#49CDB5",
+                    },
                   },
-                },
-              }}
-              error={
-                checkPassword.trim() !== "" && newPassword !== checkPassword
-              }
-              helperText={
-                checkPassword.trim() !== "" && newPassword !== checkPassword
-                  ? "비밀번호가 일치하지 않습니다."
-                  : " "
-              }
-              FormHelperTextProps={{
-                sx: {
-                  color: "red",
-                },
-              }}
-            />
-          </InputForm>
-          <StCheckBtn>확인</StCheckBtn>
-        </StForm>
-      </DivLoginContainer>
+                }}
+                error={
+                  checkPassword.trim() !== "" && newPassword !== checkPassword
+                }
+                helperText={
+                  checkPassword.trim() !== "" && newPassword !== checkPassword
+                    ? "비밀번호가 일치하지 않습니다."
+                    : " "
+                }
+                FormHelperTextProps={{
+                  sx: {
+                    color: "red",
+                  },
+                }}
+              />
+            </InputForm>
+            <StCheckBtn>확인</StCheckBtn>
+          </StForm>
+        </DivLoginContainer>
+      </StContainer>
     </>
   );
 }
 
 export default ChangeGuestPw;
+
+const StContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StLogo = styled.img`
   position: absolute;
@@ -242,8 +252,6 @@ const DivLoginContainer = styled.div`
   position: relative;
   width: 30%;
   height: 700px;
-  top: 200px;
-  left: 750px;
   display: flex;
   flex-direction: column;
   align-items: center;
