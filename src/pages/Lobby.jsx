@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Navbar from "../components/navbar/Navbar";
 import btn1 from "../utils/img/방문_icon@2x.png";
 import btn2 from "../utils/img/퇴장_icon@2x.png";
+import btn3 from "../utils/img/icon-QR.png";
 import LobbyCheckInModal from "../components/modal/LobbyCheckInModal";
 import LobbyCheckOutModal from "../components/modal/LobbyCheckOutModal";
 import QrReaderModal from "../components/modal/QrReaderModal";
@@ -21,16 +22,15 @@ const Lobby = () => {
       <Navbar />
       <StMain>
         {/* check-in */}
-        <Link
+        <StMainMenu
           onClick={() => {
             setShowCheckInModal(!showCheckInModal);
           }}
+          color="#829cf6;"
         >
-          <StMainMenu color="#829cf6;">
-            <StMainDiv>Check-in</StMainDiv>
-            <StMainImg src={btn1} alt="Check-in"></StMainImg>
-          </StMainMenu>
-        </Link>
+          <StMainDiv>Check-in</StMainDiv>
+          <StMainImg src={btn1} alt="Check-in"></StMainImg>
+        </StMainMenu>
         {showCheckInModal === true ? (
           <LobbyCheckInModal
             onClose={() => {
@@ -46,17 +46,27 @@ const Lobby = () => {
           />
         ) : null}
 
+        {/* check-out */}
+        <StMainMenu
+          onClick={() => {
+            setShowCheckOutModal(!showCheckOutModal);
+          }}
+          color="#57D4D4;"
+        >
+          <StMainDiv>check-out</StMainDiv>
+          <StMainImg src={btn2} alt="Check-out"></StMainImg>
+        </StMainMenu>
+
         {/* check-in-qr */}
-        <Link
+        <StMainMenu
           onClick={() => {
             setShowQrModalCheckIn(!showQrModalCheckIn);
           }}
+          color="#636FD7;"
         >
-          <StMainMenu color="#829cf6;">
-            <StMainDiv>Qr-Check-in</StMainDiv>
-            <StMainImg src={btn1} alt="Check-in"></StMainImg>
-          </StMainMenu>
-        </Link>
+          <StMainDiv>Qr-Check-in</StMainDiv>
+          <StMainImg src={btn3} alt="Check-in"></StMainImg>
+        </StMainMenu>
         {showQrModalCheckIn === true ? (
           <Modal
             children={
@@ -69,28 +79,16 @@ const Lobby = () => {
           />
         ) : null}
 
-        {/* check-out */}
-        <Link
-          onClick={() => {
-            setShowCheckOutModal(!showCheckOutModal);
-          }}
-        >
-          <StMainMenu color="#57D4D4;">
-            <StMainDiv>check-out</StMainDiv>
-            <StMainImg src={btn2} alt="Check-out"></StMainImg>
-          </StMainMenu>
-        </Link>
         {/* check-out-qr */}
-        <Link
+        <StMainMenu
           onClick={() => {
             setShowQrModalCheckOut(!showQrModalCheckOut);
           }}
+          color="#3DB7B7;"
         >
-          <StMainMenu color="#57D4D4;">
-            <StMainDiv>Qr-Check-out</StMainDiv>
-            <StMainImg src={btn2} alt="Check-out"></StMainImg>
-          </StMainMenu>
-        </Link>
+          <StMainDiv>Qr-Check-out</StMainDiv>
+          <StMainImg src={btn3} alt="Check-out"></StMainImg>
+        </StMainMenu>
         {showQrModalCheckOut === true ? (
           <Modal
             children={
@@ -111,30 +109,34 @@ export default Lobby;
 
 const StMain = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 94vh;
+  margin: 0 auto;
+  width: 80%;
 `;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 600px;
-  height: 90vh;
+  width: 60vh;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  box-sizing: border-box;
 `;
 
 const StMainDiv = styled.div`
   color: white;
   font-size: 32px;
-
   font-weight: 700;
 `;
 
-const StMainImg = styled.img``;
+const StMainImg = styled.img`
+  margin-top: 25px;
+`;
 
 const ModalOverlay = styled.div`
   position: fixed;

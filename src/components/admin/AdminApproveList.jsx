@@ -129,6 +129,11 @@ export default function AdminApproveList() {
     <>
       <Navbar />
       <DivApprove>
+        <StDashBoardGnb>
+          <StDashBoardTitleArea>
+            <h2>승인현황표</h2>
+          </StDashBoardTitleArea>
+        </StDashBoardGnb>
         <DivTable>
           <MaterialReactTable
             columns={columns}
@@ -228,10 +233,19 @@ const DivApprove = styled.div`
   justify-content: center;
   width: 100%;
   height: 100vh;
-  margin-top: 10%;
+  margin-top: 5%;
 `;
 
 const DivTable = styled.div`
   width: 70%;
   height: 100vh;
 `;
+const StDashBoardGnb = styled.div`
+  padding: 2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  margin: 0 auto;
+`;
+const StDashBoardTitleArea = styled.div``;

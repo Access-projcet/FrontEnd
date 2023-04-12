@@ -1,19 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
 
 const LobbyCheckOutDoneModal = ({ onClose }) => {
-  const navigate = useNavigate();
-
-  const gotoLobby = () => {
-    navigate("/lobby");
-  };
-
   return (
     <>
       <StBox>
         <StTxtContainer>
-          <div>안녕히가세요 {localStorage.getItem("name")}님</div>
           <div>체크아웃 되었습니다.</div>
         </StTxtContainer>
         <StCheckBtn onClick={onClose}>확인</StCheckBtn>
