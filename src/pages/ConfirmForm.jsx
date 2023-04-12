@@ -103,7 +103,6 @@ const ConfirmForm = ({ onClose, company }) => {
           <div
             style={{
               marginLeft: "10px",
-
               fontSize: "18px",
             }}
           >
@@ -189,6 +188,7 @@ const ConfirmForm = ({ onClose, company }) => {
                     }}
                   />
                 }
+                portalId="date-picker-portal"
               />
               <label htmlFor="방문시간">시간</label>
               <StInput
@@ -237,6 +237,7 @@ const ConfirmForm = ({ onClose, company }) => {
                     }}
                   />
                 }
+                portalId="date-picker-portal"
               />
 
               <label htmlFor="endTime">시간 </label>
@@ -372,7 +373,6 @@ const TimeTable1 = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-
 const TimeTable2 = styled.div`
   /* display: flex; */
   flex-direction: column;
@@ -381,6 +381,8 @@ const TimeTable2 = styled.div`
 `;
 
 const Visitor = styled.div`
+  display: grid;
+  grid-template-columns: 5rem 1fr 5rem 1fr;
   margin: 15px 30px;
   justify-content: center;
   align-items: center;

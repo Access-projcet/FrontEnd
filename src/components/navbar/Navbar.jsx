@@ -30,13 +30,13 @@ const Navbar = () => {
 
   const queryClient = new QueryClient();
 
-  const { data, isError, isLoading, refetch } = useQuery("notification", getNotifications, {
+  const { data, refetch } = useQuery("notification", getNotifications, {
     onSuccess: (res) => {
       console.log("알람 리스트 불러왔습니다.", res);
       const temp = res.filter((item) => !item.isRead).length;
       setNotificationCnt(temp);
     },
-
+    cacheTime: 0,
     enabled: menu === "admin",
   });
 
@@ -113,11 +113,11 @@ const Navbar = () => {
   const navigateMyPage = () => {
     navigate("/guest/mypage");
   };
-  const navigateAdminPage = () => {
-    navigate("/admin/main");
+  const navigateDashBoard = () => {
+    navigate("/admin/dashboard");
   };
-  const navigateLobby = () => {
-    navigate("/lobby");
+  const navigateApproveList = () => {
+    navigate("/admin/approvelist");
   };
   return (
     <>
@@ -134,8 +134,8 @@ const Navbar = () => {
           ) : (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi onClick={navigateLobby}>로비 메뉴</StMenuLi>
-                <StMenuLi onClick={navigateAdminPage}>관리자 페이지</StMenuLi>
+                <StMenuLi onClick={navigateDashBoard}>출입현황</StMenuLi>
+                <StMenuLi onClick={navigateApproveList}>승인현황</StMenuLi>
               </StMenuUl>
             </StMenuDiv>
           )}

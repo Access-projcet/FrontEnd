@@ -10,7 +10,7 @@ import { makeStyles } from "@mui/styles";
 import SearchGuestId from "../modal/SearchGuestID";
 import SearchGuestPw from "../modal/SearchGuestPW";
 import arrow from "../../utils/img/arrow_icon.png";
-
+import Swal from "sweetalert2";
 //mui custom css
 
 const useStyles = makeStyles({
@@ -41,16 +41,13 @@ export default function GuestLoginForm() {
     onSuccess: (data) => {
       console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem(
-        "REFRESH_TOKEN",
-        data.headers.refreshtoken.split(" ")[1]
-      );
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
       localStorage.setItem("usertype", menu);
       navigate("/guest/main");
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("오류", error.response.data.message, "error");
     },
   });
   const guestSignUpBtn = () => {

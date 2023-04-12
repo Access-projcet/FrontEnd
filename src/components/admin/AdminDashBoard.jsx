@@ -20,6 +20,7 @@ import { useMutation } from "react-query";
 import { color } from "../../utils/styles/color";
 
 import styled from "styled-components";
+import Navbar from "../navbar/Navbar";
 
 const SimpleLineChart = () => {
   const { data } = useQuery("confirmList", getConfirmList);
@@ -36,17 +37,19 @@ const SimpleLineChart = () => {
   });
   const [dataToDisplay, setDataToDisplay] = useState(data?.data);
 
-  const dataList = data?.data.map((item) => {
-    const date = new Date(item.date);
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return {
-      날짜: item.date,
-      "총 신청 수": item.applyNumber,
-      "총 승인 수": item.approveNumber,
-      "총 출입 수": item.accessNumber,
-    };
-  });
+  const dataList = data?.data
+    .map((item) => {
+      const date = new Date(item.date);
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      return {
+        날짜: item.date,
+        "총 신청 수": item.applyNumber,
+        "총 승인 수": item.approveNumber,
+        "총 출입 수": item.accessNumber,
+      };
+    })
+    .sort((a, b) => new Date(a.날짜) - new Date(b.날짜));
 
   //queryValidation 시 update 될 시 자동으로 렌더링 업데이트 추가
   // const newDataList = (item) => {
@@ -138,6 +141,7 @@ const SimpleLineChart = () => {
 
   return (
     <>
+      <Navbar />
       <StAdminMainDiv>
         <StDashBoardGnb>
           <StDashBoardTitleArea>
@@ -168,9 +172,9 @@ const SimpleLineChart = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" strokeWidth={2} />
-              <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" strokeWidth={2} />
-              <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" strokeWidth={2} />
+              <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" strokeWidth={3} />
+              <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" strokeWidth={3} />
+              <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </StContainer>
