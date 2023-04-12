@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -13,13 +13,26 @@ import {
 } from "recharts";
 import { useQuery } from "react-query";
 import { getConfirmList, getEnterPeople } from "../../api/api";
+import MaterialReactTable from "material-react-table";
+import { Box, IconButton } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { useMutation } from "react-query";
+import { color } from "../../utils/styles/color";
+
 import styled from "styled-components";
 
 const SimpleLineChart = () => {
   const { data } = useQuery("confirmList", getConfirmList);
-  const { data: getEnteringPeopleData } = useQuery("EnterPeople", getEnterPeople, {
+  const {
+    data: getEnteringPeopleData,
+    isError,
+    isFetching,
+    isLoading,
+    refetch,
+  } = useQuery("EnterPeople", getEnterPeople, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
   const [dataToDisplay, setDataToDisplay] = useState(data?.data);
 
@@ -74,22 +87,71 @@ const SimpleLineChart = () => {
     }
   };
 
+  //표 구성
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: "visitor",
+        header: "방문자",
+        size: 50,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Visitor" },
+      },
+      {
+        accessorKey: "location",
+        header: "방문지역",
+        size: 50,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Location" },
+      },
+      {
+        accessorKey: "place",
+        header: "방문장소",
+        size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Place" },
+      },
+      {
+        accessorKey: "purpose",
+        header: "목적",
+        size: 200,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Purpose" },
+      },
+      {
+        accessorKey: "target",
+        header: "찾아갈분",
+        size: 50,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Target" },
+      },
+      {
+        accessorKey: "inTime",
+        header: "방문시작",
+        size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "In Time" },
+      },
+      {
+        accessorKey: "outTime",
+        header: "방문종료",
+        size: 100,
+        muiTableHeadCellFilterTextFieldProps: { placeholder: "Out Time" },
+      },
+    ],
+    [],
+  );
+
   return (
     <>
       <StAdminMainDiv>
         <StDashBoardGnb>
           <StDashBoardTitleArea>
             <h2>출입현황표</h2>
-            <p>월별, 일별, 시간대별 출입현황을 조회할 수 있습니다.</p>
+            {/* <p>월별, 일별, 시간대별 출입현황을 조회할 수 있습니다.</p> */}
           </StDashBoardTitleArea>
-          <StDashBoardBtnArea>
+          {/* <StDashBoardBtnArea>
             <button onClick={() => handleClick("monthly")}>Monthly</button>
             <button onClick={() => handleClick("daily")}>Daily</button>
             <button onClick={() => handleClick("byTimeOfDay")}>By time of day</button>
-          </StDashBoardBtnArea>
+          </StDashBoardBtnArea> */}
         </StDashBoardGnb>
         <StContainer>
-          <ResponsiveContainer width="100%" height={400}>
+          <ResponsiveContainer width="80%" height={400}>
             <LineChart
               width={500}
               height={300}
@@ -100,20 +162,82 @@ const SimpleLineChart = () => {
                 left: 40,
                 bottom: 5,
               }}
-              a
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="날짜" />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" />
-              <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" />
-              <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" />
+              <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" strokeWidth={2} />
+              <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" strokeWidth={2} />
+              <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         </StContainer>
       </StAdminMainDiv>
+      <DivTable>
+        <MaterialReactTable
+          columns={columns}
+          data={
+            getEnteringPeopleData?.data?.map((item) => ({
+              ...item,
+              inTime: item.inTime.split("T")[1],
+              outTime: item.outTime.split("T")[1],
+            })) ?? []
+          } //data is undefined on first render
+          initialState={{
+            showColumnFilters: false,
+          }}
+          isMultiSortEvent={() => true}
+          filterFns={{
+            customFilterFn: (row, id, filterValue) => {
+              return row.getValue(id) === filterValue;
+            },
+          }}
+          muiTableHeadCellProps={{
+            //simple styling with the `sx` prop, works just like a style prop in this example
+            sx: {
+              fontWeight: "bold",
+              fontSize: "15px",
+              backgroundColor: `${color.tableHeader}`,
+              color: `${color.textWhite}`,
+            },
+          }}
+          muiToolbarAlertBannerProps={
+            isError
+              ? {
+                  color: "error",
+                  children: "Error loading data",
+                }
+              : undefined
+          }
+          renderTopToolbarCustomActions={() => (
+            <Tooltip arrow title="Refresh Data">
+              <IconButton onClick={() => refetch()}>
+                <RefreshIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+          enableRowActions
+          positionActionsColumn="last"
+          renderRowActions={({ row }) => (
+            <Box sx={{ display: "flex", gap: "1rem" }}>
+              <Tooltip arrow placement="left" title="Edit">
+                <IconButton></IconButton>
+              </Tooltip>
+              <Tooltip arrow placement="right" title="Delete">
+                <IconButton color="error"></IconButton>
+              </Tooltip>
+            </Box>
+          )}
+          rowCount={data?.meta?.totalRowCount ?? 0}
+          state={{
+            isLoading,
+            showAlertBanner: isError,
+            showProgressBars: isFetching,
+          }}
+        />
+      </DivTable>
     </>
   );
 };
@@ -126,7 +250,7 @@ const StDashBoardGnb = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
 `;
 const StDashBoardTitleArea = styled.div``;
@@ -137,5 +261,10 @@ const StDashBoardBtnArea = styled.div`
 const StContainer = styled.div`
   display: flex;
   padding: 2%;
+  margin-left: 10%;
+`;
+
+const DivTable = styled.div`
+  width: 70%;
   margin: 0 auto;
 `;
