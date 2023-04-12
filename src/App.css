@@ -6,5 +6,6 @@
 }
 
 .date-picker-portal {
-  z-index: 3; /* 원하는 z-index 값 */
+  position: relative;
+  z-index: 5; /* 원하는 z-index 값 */
 }

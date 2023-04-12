@@ -10,6 +10,7 @@ import { makeStyles } from "@mui/styles";
 import SearchGuestId from "../modal/SearchGuestID";
 import SearchGuestPw from "../modal/SearchGuestPW";
 import arrow from "../../utils/img/arrow_icon.png";
+import Swal from "sweetalert2";
 
 //mui custom css
 
@@ -50,7 +51,7 @@ export default function GuestLoginForm() {
       navigate("/guest/main");
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("오류", error.response.data.message, "error");
     },
   });
   const guestSignUpBtn = () => {

@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { submitLobbyCheckIn } from "../../api/api";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
+import Swal from "sweetalert2";
 
 const LobbyModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
@@ -19,7 +20,7 @@ const LobbyModal = ({ onClose }) => {
       queryClient.invalidateQueries("user");
     },
     onError: (error) => {
-      alert(error);
+      Swal.fire("오류", error.response.data.message, "error");
     },
   });
 

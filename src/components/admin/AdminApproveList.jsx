@@ -8,6 +8,7 @@ import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import { saveAs } from "file-saver";
+import Swal from "sweetalert2";
 
 import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
 import { color } from "../../utils/styles/color";
@@ -42,11 +43,12 @@ export default function AdminApproveList() {
   const adminModifyMutation = useMutation(adminModify, {
     onSuccess: (data) => {
       console.log("succecc", data);
-      alert("방문기록 수정 성공");
+      Swal.fire("성공", "방문기록이 수정되었습니다.", "success");
+
       refetch();
     },
     onError: (error) => {
-      alert("방문기록 수정 실패");
+      Swal.fire("오류", error, "success");
       console.log("mu error", error);
     },
   });
@@ -230,6 +232,7 @@ export default function AdminApproveList() {
             showAlertBanner: isError,
             showProgressBars: isFetching,
           }}
+          enablePagination={false}
         />
       </DivTable>
     </DivApprove>
@@ -248,10 +251,4 @@ const DivApprove = styled.div`
 const DivTable = styled.div`
   width: 70%;
   height: 100vh;
-`;
-
-const StBtnExcel = styled.button`
-  flex-direction: row-reverse;
-  align-items: flex-end;
-  cursor: pointer;
 `;

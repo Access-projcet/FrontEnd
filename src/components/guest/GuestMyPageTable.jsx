@@ -10,6 +10,7 @@ import { color } from "../../utils/styles/color";
 import MarkerModal from "../modal/MarkerModal";
 import ConfirmForm from "../../pages/ConfirmForm";
 import { ModifyForm } from "../modal/ModifyForm";
+import Swal from "sweetalert2";
 
 export default function GuestMyPageTable() {
   const [isMofify, setIsModify] = useState(false);
@@ -33,15 +34,7 @@ export default function GuestMyPageTable() {
   const deleteMutaion = useMutation(guestDeleteVisit, {
     onSuccess: (data) => {
       console.log(data);
-      alert("방문기록 삭제 성공");
-      refetch();
-    },
-  });
-
-  const modifyMutation = useMutation(guestModify, {
-    onSuccess: (data) => {
-      console.log(data);
-      alert("방문기록 수정 성공");
+      Swal.fire("성공!", "방문기록 삭제 성공", "success");
       refetch();
     },
   });
@@ -199,6 +192,7 @@ export default function GuestMyPageTable() {
           showAlertBanner: isError,
           showProgressBars: isFetching,
         }}
+        enablePagination={false}
       />
       {isMofify && (
         <MarkerModal

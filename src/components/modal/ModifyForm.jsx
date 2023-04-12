@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { guestModify } from "../../api/api";
+import DatePicker from "react-datepicker";
+
+import { ko } from "date-fns/esm/locale";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 export const ModifyForm = ({ onClose, data }) => {
   console.log(data);
@@ -17,26 +21,37 @@ export const ModifyForm = ({ onClose, data }) => {
   const [phoneNum, setPhoneNum] = useState(data.phoneNum);
 
   //datepicker 사용
-  const [startDate, setStartDate] = useState(data.startDate.split(" ")[0]);
-  const [endDate, setEndDate] = useState(data.endDate.split(" ")[0]);
+  const [startDate, setStartDate] = useState(
+    new Date(data.startDate.split(" ")[0])
+  );
+  const [endDate, setEndDate] = useState(new Date(data.endDate.split(" ")[0]));
 
   const queryClient = useQueryClient();
+  const dateToString = (date) => {
+    return (
+      date.getFullYear() +
+      "-" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      date.getDate().toString().padStart(2, "0")
+    );
+  };
 
   const modifyMutation = useMutation(guestModify, {
     onSuccess: (response) => {
-      alert("방문신청 기록 수정 성공");
+      Swal.fire("성공", "방문신청 기록 수정 성공", "success");
       queryClient.invalidateQueries("guests");
       onClose();
     },
     onError: (error) => {
-      alert("방문신청 기록 수정 실패");
+      Swal.fire("오류", "방문신청 기록 수정 실패", "error");
     },
   });
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const dateTimeStart = `${startDate}T${startTime}:00`;
-    const dateTimeEnd = `${endDate}T${endTime}:00`;
+    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`;
+    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`;
     const confirmForm = {
       id: data.id,
       data: {
@@ -44,9 +59,9 @@ export const ModifyForm = ({ onClose, data }) => {
         place,
         target,
         purpose,
-        startDate,
+        startDate: dateToString(startDate),
         startTime: dateTimeStart,
-        endDate,
+        endDate: dateToString(endDate),
         endTime: dateTimeEnd,
         visitor,
         phoneNum,
@@ -63,14 +78,21 @@ export const ModifyForm = ({ onClose, data }) => {
       </Header>
       <MainWrapper>
         <Main1>
-          <label htmlFor="location">방문지역</label>
+          <label
+            htmlFor="location"
+            style={{
+              fontSize: "16px",
+            }}
+          >
+            방문지역
+          </label>
           <input
             style={{
               marginLeft: "10px",
               marginRight: "75px",
               width: "82%",
               height: "45px",
-              fontSize: "20px",
+              fontSize: "18px",
               border: "none",
               backgroundColor: "transparent",
             }}
@@ -142,23 +164,29 @@ export const ModifyForm = ({ onClose, data }) => {
           <TimeTable1>
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
-              <StInput
-                style={{
-                  marginLeft: "10px",
-                  marginRight: "30px",
-                  width: "116px",
-                  height: "45px",
-                  fontSize: "15px",
-                  border: "1px solid #D2D2D2",
-                  color: "#D2D2D2",
-                }}
-                id="startDate"
-                type="date"
-                value={startDate}
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                }}
-              ></StInput>
+              <DatePicker
+                locale={ko}
+                dateFormat="yyyy/MM/dd"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                minDate={new Date()}
+                customInput={
+                  <input
+                    style={{
+                      paddingLeft: "10px",
+                      marginLeft: "10px",
+                      marginRight: "30px",
+                      width: "116px",
+                      height: "45px",
+                      fontSize: "15px",
+                      border: "1px solid #D2D2D2",
+
+                      color: "#D2D2D2",
+                    }}
+                  />
+                }
+                portalId="date-picker-portal"
+              />
 
               <label htmlFor="방문시간">시간</label>
               <StInput
@@ -187,23 +215,29 @@ export const ModifyForm = ({ onClose, data }) => {
             </span>
             <div>
               <label htmlFor="endDate">종료 날짜 </label>
-              <StInput
-                style={{
-                  marginLeft: "10px",
-                  marginRight: "30px",
-                  width: "116px",
-                  height: "45px",
-                  fontSize: "15px",
-                  border: "1px solid #D2D2D2",
-                  color: "#D2D2D2",
-                }}
-                id="endDate"
-                type="date"
-                value={endDate}
-                onChange={(e) => {
-                  setEndDate(e.target.value);
-                }}
-              ></StInput>
+
+              <DatePicker
+                locale={ko}
+                dateFormat="yyyy/MM/dd"
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                minDate={new Date()}
+                customInput={
+                  <input
+                    style={{
+                      paddingLeft: "10px",
+                      marginLeft: "10px",
+                      marginRight: "30px",
+                      width: "116px",
+                      height: "45px",
+                      fontSize: "15px",
+                      border: "1px solid #D2D2D2",
+                      color: "#D2D2D2",
+                    }}
+                  />
+                }
+                portalId="date-picker-portal"
+              />
 
               <label htmlFor="endTime">시간 </label>
               <StInput

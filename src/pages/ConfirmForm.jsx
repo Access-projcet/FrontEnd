@@ -39,7 +39,6 @@ const ConfirmForm = ({ onClose, company }) => {
       console.log(response);
       queryClient.invalidateQueries("user");
       alert("방문신청이 완료되었습니다.");
-      alert("방문신청이 완료되었습니다.");
       onClose();
     },
     onError: (error) => {
@@ -65,19 +64,6 @@ const ConfirmForm = ({ onClose, company }) => {
       status: "1",
     };
     mutation.mutate(confirmForm);
-    console.log({
-      location,
-      place,
-      target,
-      purpose,
-      startDate: dateToString(startDate),
-      startTime: dateTimeStart,
-      endDate: dateToString(endDate),
-      endTime: dateTimeEnd,
-      visitor,
-      phoneNum,
-      status: "1",
-    });
   };
 
   return (
@@ -99,7 +85,6 @@ const ConfirmForm = ({ onClose, company }) => {
           <div
             style={{
               marginLeft: "10px",
-
               fontSize: "18px",
             }}
           >
