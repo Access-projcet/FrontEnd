@@ -103,6 +103,13 @@ function SearchAdminId({ onClose }) {
                   },
                 },
               }}
+              error={name.trim() === ""}
+              helperText={name.trim() === "" ? "이름을 입력해주세요" : " "}
+              FormHelperTextProps={{
+                sx: {
+                  color: "red",
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -129,6 +136,19 @@ function SearchAdminId({ onClose }) {
                   },
                 },
               }}
+              error={
+                phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
+              }
+              helperText={
+                phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
+                  ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
+                  : " "
+              }
+              FormHelperTextProps={{
+                sx: {
+                  color: "red",
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -153,6 +173,21 @@ function SearchAdminId({ onClose }) {
                   ":&focus": {
                     color: "#49CDB5",
                   },
+                },
+              }}
+              error={
+                email.trim() !== "" &&
+                !/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email)
+              }
+              helperText={
+                email.trim() !== "" &&
+                !/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email)
+                  ? "이메일형식이 올바르지 않습니다"
+                  : " "
+              }
+              FormHelperTextProps={{
+                sx: {
+                  color: "red",
                 },
               }}
             />
