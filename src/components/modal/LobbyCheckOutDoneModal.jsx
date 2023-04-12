@@ -6,7 +6,7 @@ const LobbyCheckOutDoneModal = ({ onClose }) => {
     <>
       <StBox>
         <StTxtContainer>
-          <div>체크아웃 되었습니다.</div>
+          <div>체크아웃 되었습니다. 안녕히가세요.</div>
         </StTxtContainer>
         <StCheckBtn onClick={onClose}>확인</StCheckBtn>
       </StBox>

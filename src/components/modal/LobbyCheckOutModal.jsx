@@ -3,27 +3,34 @@ import { useMutation, useQueryClient } from "react-query";
 import { submitLobbyCheckOut } from "../../api/api";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
+import LobbyCheckOutErrorModal from "./LobbyCheckOutErrorModal";
 import LobbyCheckOutDoneModal from "./LobbyCheckOutDoneModal";
 
 const LobbyCheckOutModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
-
   const [showModal, setShowModal] = useState(false);
-  // const now = new Date();
-  // const hours = now.getHours();
-  // const minutes = now.getMinutes();
+  const [showCheckOutModal, setShowCheckOutModal] = useState(false);
 
   const queryClient = useQueryClient();
   const mutation = useMutation(submitLobbyCheckOut, {
     onSuccess: (response) => {
-      console.log(response);
       queryClient.invalidateQueries("user");
+
+      //체크아웃 정상적으로 되었을 때 모달 스위치
       setShowModal(true);
-      onClose();
+
+      // 모달을 onClose로 닫으면 위에 모달이 안뜸
+      // onClose();
     },
     onError: (error) => {
-      onClose();
+      //402에러일 때 뜨는 모달 스위치
+      if (error.response.data.statusCode === 402) {
+        setShowCheckOutModal(true);
+      }
+
+      // 모달을 onClose로 닫으면 위에 모달이 안뜸
+      // onClose()
     },
   });
 
@@ -87,10 +94,21 @@ const LobbyCheckOutModal = ({ onClose }) => {
           </ModalInner>
           <CancelBtn onClick={onClose}>취소</CancelBtn>
           <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
+
+          {/* 체크아웃 완료가 정상적으로 되었을 때 모달 */}
           {showModal === true ? (
-            <LobbyCheckOutDoneModal
+            <LobbyCheckOutErrorModal
               onClose={() => {
                 setShowModal(false);
+              }}
+            />
+          ) : null}
+
+          {/* 체크아웃을 이미 했을 때 나오는 모달 */}
+          {showCheckOutModal === true ? (
+            <LobbyCheckOutDoneModal
+              onClose={() => {
+                setShowCheckOutModal(false);
               }}
             />
           ) : null}

@@ -10,38 +10,33 @@ import LobbyCheckInErrorModal from "./LobbyCheckInErrorModal";
 const LobbyCheckInModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
-
   const [showModal, setShowModal] = useState(false);
   const [showNoMatchModal, setShowNoMatchModal] = useState(false);
-  // const now = new Date();
-  // const hours = now.getHours();
-  // const minutes = now.getMinutes();
+  const [showCheckInModal, setShowCheckInModal] = useState(false);
 
   const queryClient = useQueryClient();
   const mutation = useMutation(submitLobbyCheckIn, {
     onSuccess: (response) => {
-      console.log(response);
       queryClient.invalidateQueries("user");
+
+      // 체크인 정상적으로 되었을 때 모달 스위치
       setShowModal(true);
-      onClose();
+
+      // 모달을 onClose로 닫으면 위에 모달이 안뜸
+      // onClose();
     },
     onError: (error) => {
 
+      //400에러일 때 뜨는 모달 스위치
       setShowNoMatchModal(true);
 
-      // <LobbyNoMatchModal
-      //   onClose={() => {
-      //     setShowModal(false);
-      //   }}
-      // />;
-      // if (error.response.data.statusCode === 401) {
-      //   <LobbyCheckInErrorModal
-      //     onClose={() => {
-      //       setShowModal(false);
-      //     }}
-      //   />;
-      // }
-      onClose();
+      //401에러일 때 뜨는 모달 스위치
+      if (error.response.data.statusCode === 401) {
+        setShowCheckInModal(true);
+      }
+
+      // 모달을 onClose로 닫으면 위에 모달이 안뜸
+      // onClose()
     },
   });
 
@@ -105,6 +100,8 @@ const LobbyCheckInModal = ({ onClose }) => {
           </ModalInner>
           <CancelBtn onClick={onClose}>취소</CancelBtn>
           <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
+
+          {/* 데이터가 정상적으로 완료 됬을때 체크인 되었다는 모달 */}
           {showModal === true ? (
             <LobbyCheckInDoneModal
               onClose={() => {
@@ -112,10 +109,21 @@ const LobbyCheckInModal = ({ onClose }) => {
               }}
             />
           ) : null}
+
+          {/* 이름 전화번호 입력했을 때 일치하는 사람이 없을때의 모달 */}
           {showNoMatchModal === true ? (
             <LobbyNoMatchModal
               onClose={() => {
                 setShowModal(false);
+              }}
+            />
+          ) : null}
+
+          {/* 체크인이 이미 완료되었을 때 또 체크인을 시도하면 체크인이 완료되었다는 모달 */}
+          {showCheckInModal === true ? (
+            <LobbyCheckInErrorModal
+              onClose={() => {
+                setShowCheckInModal(false);
               }}
             />
           ) : null}
