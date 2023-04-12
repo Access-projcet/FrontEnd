@@ -3,11 +3,13 @@ import { useMutation, useQueryClient } from "react-query";
 import { submitLobbyCheckOut } from "../../api/api";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
+import LobbyCheckOutDoneModal from "./LobbyCheckOutDoneModal";
 
 const LobbyCheckOutModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
 
+  const [showModal, setShowModal] = useState(false);
   // const now = new Date();
   // const hours = now.getHours();
   // const minutes = now.getMinutes();
@@ -17,9 +19,11 @@ const LobbyCheckOutModal = ({ onClose }) => {
     onSuccess: (response) => {
       console.log(response);
       queryClient.invalidateQueries("user");
+      setShowModal(true);
+      onClose();
     },
     onError: (error) => {
-      alert(error);
+      onClose();
     },
   });
 
@@ -83,6 +87,13 @@ const LobbyCheckOutModal = ({ onClose }) => {
           </ModalInner>
           <CancelBtn onClick={onClose}>취소</CancelBtn>
           <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
+          {showModal === true ? (
+            <LobbyCheckOutDoneModal
+              onClose={() => {
+                setShowModal(false);
+              }}
+            />
+          ) : null}
         </ModalWrapper>
       </ModalOverlay>
     </>
