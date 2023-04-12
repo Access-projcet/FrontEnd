@@ -5,6 +5,7 @@ import { submitConfirmForm } from "../api/api";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
+import "../App.css";
 
 const ConfirmForm = ({ onClose, company }) => {
   const [location, setLocation] = useState(company.companyName);
@@ -63,19 +64,6 @@ const ConfirmForm = ({ onClose, company }) => {
       status: "1",
     };
     mutation.mutate(confirmForm);
-    console.log({
-      location,
-      place,
-      target,
-      purpose,
-      startDate: dateToString(startDate),
-      startTime: dateTimeStart,
-      endDate: dateToString(endDate),
-      endTime: dateTimeEnd,
-      visitor,
-      phoneNum,
-      status: "1",
-    });
   };
 
   return (
@@ -162,23 +150,29 @@ const ConfirmForm = ({ onClose, company }) => {
           <TimeTable1>
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
-              <StInput
-                style={{
-                  marginLeft: "10px",
-                  marginRight: "30px",
-                  width: "116px",
-                  height: "45px",
-                  fontSize: "15px",
-                  border: "1px solid #D2D2D2",
-                  color: "#D2D2D2",
-                }}
-                id="startDate"
-                type="date"
-                value={startDate}
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                }}
-              ></StInput>
+
+              <DatePicker
+                locale={ko}
+                dateFormat="yyyy/MM/dd"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                minDate={new Date()}
+                customInput={
+                  <input
+                    style={{
+                      paddingLeft: "10px",
+                      marginLeft: "10px",
+                      marginRight: "30px",
+                      width: "116px",
+                      height: "45px",
+                      fontSize: "15px",
+                      border: "1px solid #D2D2D2",
+                      color: "#D2D2D2",
+                    }}
+                  />
+                }
+              />
+
 
               <label htmlFor="방문시간">시간</label>
               <StInput
@@ -207,23 +201,27 @@ const ConfirmForm = ({ onClose, company }) => {
             </span>
             <div>
               <label htmlFor="endDate">종료 날짜 </label>
-              <StInput
-                style={{
-                  marginLeft: "10px",
-                  marginRight: "30px",
-                  width: "116px",
-                  height: "45px",
-                  fontSize: "15px",
-                  border: "1px solid #D2D2D2",
-                  color: "#D2D2D2",
-                }}
-                id="endDate"
-                type="date"
-                value={endDate}
-                onChange={(e) => {
-                  setEndDate(e.target.value);
-                }}
-              ></StInput>
+              <DatePicker
+                locale={ko}
+                dateFormat="yyyy/MM/dd"
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                minDate={new Date()}
+                customInput={
+                  <input
+                    style={{
+                      paddingLeft: "10px",
+                      marginLeft: "10px",
+                      marginRight: "30px",
+                      width: "116px",
+                      height: "45px",
+                      fontSize: "15px",
+                      border: "1px solid #D2D2D2",
+                      color: "#D2D2D2",
+                    }}
+                  />
+                }
+              />
 
               <label htmlFor="endTime">시간 </label>
               <StInput
@@ -326,7 +324,6 @@ const MainWrapper = styled.div`
   font-weight: 700;
   font-size: 16px;
   height: calc(100% - 106px);
-  border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `;
 
@@ -358,7 +355,6 @@ const TimeTable1 = styled.div`
   /* display: flex; */
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 
 const TimeTable2 = styled.div`
