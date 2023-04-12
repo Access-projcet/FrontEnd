@@ -64,34 +64,10 @@ const Lobby = () => {
           }}
           color="#636FD7;"
         >
-          <StMainMenu color="#829cf6;">
-            <StMainDiv>QR Check-in</StMainDiv>
-            <StMainImg src={btn1} alt="Check-in"></StMainImg>
-          </StMainMenu>
-        </Link>
-        {showQrModalCheckIn === true ? (
-          <Modal
-            children={
-              <ModalOverlay>
-                <ModalWrapper>
-                  <QrReaderModal />
-                </ModalWrapper>
-              </ModalOverlay>
-            }
-          />
-        ) : null}
+          <StMainDiv>Qr-Check-in</StMainDiv>
+          <StMainImg src={btn3} alt="Check-in"></StMainImg>
+        </StMainMenu>
 
-        {/* check-out */}
-        <Link
-          onClick={() => {
-            setShowCheckOutModal(!showCheckOutModal);
-          }}
-        >
-          <StMainMenu color="#57D4D4;">
-            <StMainDiv>Check-out</StMainDiv>
-            <StMainImg src={btn2} alt="Check-out"></StMainImg>
-          </StMainMenu>
-        </Link>
         {/* check-out-qr */}
         <StMainMenu
           onClick={() => {
@@ -99,11 +75,16 @@ const Lobby = () => {
           }}
           color="#3DB7B7;"
         >
-          <StMainMenu color="#57D4D4;">
-            <StMainDiv>QR Check-out</StMainDiv>
-            <StMainImg src={btn2} alt="Check-out"></StMainImg>
-          </StMainMenu>
-        </Link>
+          <StMainDiv>Qr-Check-out</StMainDiv>
+          <StMainImg src={btn3} alt="Check-out"></StMainImg>
+        </StMainMenu>
+        {showQrModalCheckIn === true ? (
+          <QrReaderRebuilding
+            onClose={() => {
+              setShowQrModalCheckIn(false);
+            }}
+          />
+        ) : null}
         {showQrModalCheckOut === true ? (
           <QrReaderRebuilding2
             onClose={() => {

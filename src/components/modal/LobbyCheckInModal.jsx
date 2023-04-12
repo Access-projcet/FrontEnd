@@ -26,8 +26,6 @@ const LobbyCheckInModal = ({ onClose }) => {
       // onClose();
     },
     onError: (error) => {
-
-
       //400에러일 때 뜨는 모달 스위치
       setShowNoMatchModal(true);
 
@@ -150,6 +148,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
+  position: relative;
   background-color: #f2f2f2;
   width: 500px;
   height: 500px;
