@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import DatePicker from "react-datepicker";
-import { submitConfirmForm } from "../api/api";
+import { submitConfirmForm, sendUrlCode } from "../api/api";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
@@ -34,12 +34,31 @@ const ConfirmForm = ({ onClose, company }) => {
   };
 
   const queryClient = useQueryClient();
+
+  const mutation2 = useMutation(sendUrlCode, {
+    onSuccess: (response) => {
+      console.log(response);
+      queryClient.invalidateQueries("user");
+      alert("방문신청이 완료되었습니다.");
+    },
+    onError: (error) => {
+      alert(error.response.data.message);
+    },
+  });
+  const sendCodeHandler = () => {
+    const info = {
+      imgUrl: "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttp://localhost:3000/",
+    };
+    mutation2.mutate(info);
+  };
+
   const mutation = useMutation(submitConfirmForm, {
     onSuccess: (response) => {
       console.log(response);
       queryClient.invalidateQueries("user");
       alert("방문신청이 완료되었습니다.");
       onClose();
+      sendCodeHandler();
     },
     onError: (error) => {
       alert(error.response.data.message);
@@ -64,19 +83,6 @@ const ConfirmForm = ({ onClose, company }) => {
       status: "1",
     };
     mutation.mutate(confirmForm);
-    console.log({
-      location,
-      place,
-      target,
-      purpose,
-      startDate: dateToString(startDate),
-      startTime: dateTimeStart,
-      endDate: dateToString(endDate),
-      endTime: dateTimeEnd,
-      visitor,
-      phoneNum,
-      status: "1",
-    });
   };
 
   return (
@@ -171,7 +177,7 @@ const ConfirmForm = ({ onClose, company }) => {
                 onChange={(date) => setStartDate(date)}
                 minDate={new Date()}
                 customInput={
-                  <input
+                  <StInput
                     style={{
                       paddingLeft: "10px",
                       marginLeft: "10px",
@@ -180,7 +186,6 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-
                       color: "#D2D2D2",
                     }}
                   />
@@ -438,8 +443,8 @@ const TimeTable2 = styled.div`
 
 const Visitor = styled.div`
   /* display: flex; */
-  display: grid;
-  grid-template-columns: 5rem 1fr 5rem 1fr;
+  /* display: grid;
+  grid-template-columns: 5rem 1fr 5rem 1fr; */
   margin: 15px 30px;
   /* display: flex; */
   display: grid;

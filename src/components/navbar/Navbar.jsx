@@ -187,7 +187,7 @@ const StNavBar = styled.div`
   min-height: 6vh;
 `;
 const StNavbarContainer = styled.div`
-  width: 90%;
+  width: 75%;
   min-height: 6vh;
   display: flex;
   justify-content: space-around;
@@ -232,7 +232,22 @@ const StLogOut = styled.button`
 `;
 const StLogOutImg = styled.img``;
 
-const StMenuDiv = styled.div``;
+const StMenuDiv = styled.div`
+  @media screen and (max-width: 1500px) {
+    transform: none;
+  }
+  @media screen and (min-width: 1500px) {
+    transform: translateX(-40%);
+  }
+
+  @media screen and (min-width: 1700px) {
+    transform: translateX(-60%);
+  }
+
+  @media screen and (min-width: 1900px) {
+    transform: translateX(-80%);
+  }
+`;
 
 const StMenuUl = styled.ul`
   list-style: none;

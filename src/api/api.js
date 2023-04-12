@@ -116,6 +116,10 @@ const DownLoadExcel = async () => {
   });
 };
 
+const sendUrlCode = async (code) => {
+  return await instance.post(`/qrCode`, code);
+};
+
 export {
   loginGuest,
   loginBusiness,
@@ -144,4 +148,5 @@ export {
   getEnterPeople,
   DownLoadExcel,
   guestModify,
+  sendUrlCode,
 };
