@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
 import store from "./redux/config/ConfigStore";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,7 +13,15 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 function App() {
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`); //"--vh"라는 속성으로 정의해준다.
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>

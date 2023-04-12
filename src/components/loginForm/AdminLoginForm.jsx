@@ -10,7 +10,7 @@ import arrow from "../../utils/img/arrow_icon.png";
 import { useSelector } from "react-redux";
 import SearchAdminId from "../modal/SearchAdminID";
 import SearchAdminPw from "../modal/SearchAdminPW";
-
+import Swal from "sweetalert2";
 //mui custom css
 const useStyles = makeStyles({
   root: {
@@ -39,17 +39,18 @@ export default function AdminLoginForm() {
   const mutation = useMutation(loginBusiness, {
     onSuccess: (data) => {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem(
-        "REFRESH_TOKEN",
-        data.headers.refreshtoken.split(" ")[1]
-      );
+      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
       localStorage.setItem("name", data.data.data.name);
-      localStorage.setItem("usertype", menu);
-
-      navigate("/admin/main");
+      if (data.data.data.name.includes("LobbyId")) {
+        navigate("/lobby");
+        localStorage.setItem("usertype", "lobby");
+      } else {
+        localStorage.setItem("usertype", menu);
+        navigate("/admin/main");
+      }
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("실패", error.response.data.message, "error");
     },
   });
 

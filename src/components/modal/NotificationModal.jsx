@@ -4,12 +4,14 @@ import { useMutation } from "react-query";
 import { readNotification } from "../../api/api";
 import { QueryClient } from "react-query";
 
-export const NotificationModal = ({ position, onClose, data }) => {
-  const queryClient = new QueryClient();
+export const NotificationModal = ({ position, onClose, data, refetch }) => {
+  console.log(position);
+  // const queryClient = new QueryClient();
   const deleteMutation = useMutation(readNotification, {
     onSuccess: (res) => {
       console.log("알림 삭제 성공", res);
-      queryClient.invalidateQueries("notification");
+      // queryClient.invalidateQueries("notification");
+      refetch();
     },
   });
 
@@ -25,11 +27,17 @@ export const NotificationModal = ({ position, onClose, data }) => {
             return (
               <StNotification>
                 {item.content}
-                <button onClick={() => handlerDeleteNotification(item.id)}>읽음</button>
+                <StConformBtn
+                  onClick={() => handlerDeleteNotification(item.id)}
+                >
+                  ✔️
+                </StConformBtn>
               </StNotification>
             );
           })}
-        {data && data.filter((item) => !item.isRead).length === 0 && <p>안 읽은 알림이 없습니다.</p>}
+        {data && data.filter((item) => !item.isRead).length === 0 && (
+          <p>안 읽은 알림이 없습니다.</p>
+        )}
       </StNotificationList>
       <ButtonClose onClick={onClose}>X</ButtonClose>
     </StContainer>
@@ -38,16 +46,31 @@ export const NotificationModal = ({ position, onClose, data }) => {
 
 const StContainer = styled.div`
   position: absolute;
-  top: ${(props) => props.position.top};
+  top: ${(props) => parseInt(props.position.top, 10) + 15}px;
   left: ${(props) => props.position.left};
   width: 400px;
-  height: 500px;
+  height: 400px;
   background-color: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   color: black;
   z-index: 99;
   border-radius: 10px;
   overflow: hidden;
+  border-radius: 5px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 const ButtonClose = styled.button`
   width: 40px;
@@ -66,11 +89,18 @@ const StNotificationList = styled.div`
   height: 100%;
   align-items: center;
   margin-top: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
 const StNotification = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #cbcbcb;
   margin: 10px 0px;
   width: 100%;
+  padding-bottom: 10px;
+`;
+const StConformBtn = styled.button`
+  background-color: transparent;
+  cursor: pointer;
 `;

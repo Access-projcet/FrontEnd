@@ -26,6 +26,8 @@ const LobbyCheckInModal = ({ onClose }) => {
       // onClose();
     },
     onError: (error) => {
+
+
       //400에러일 때 뜨는 모달 스위치
       setShowNoMatchModal(true);
 

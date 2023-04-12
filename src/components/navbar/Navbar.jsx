@@ -8,16 +8,18 @@ import { useQuery, QueryClient } from "react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useCookies } from "react-cookie";
 
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
 import { Link } from "react-router-dom";
 
-import { getCookie, removeCookie } from "./../../api/cookies";
+import { getCookie } from "./../../api/cookies";
 import { NotificationModal } from "../modal/NotificationModal";
 import { getNotifications } from "../../api/api";
 
 const Navbar = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["ACCESS_TOKEN"]);
   const navigate = useNavigate();
   const menu = localStorage.getItem("usertype");
   const [message, setMessage] = useState("not yet");
@@ -28,23 +30,17 @@ const Navbar = () => {
 
   const notify = (msg) => toast(msg);
 
-
   const queryClient = new QueryClient();
 
-  const { data, isError, isLoading, refetch } = useQuery(
-    "notification",
-    getNotifications,
-    {
-      onSuccess: (res) => {
-        console.log("알람 리스트 불러왔습니다.", res);
-        const temp = res.filter((item) => !item.isRead).length;
-        setNotificationCnt(temp);
-      },
-
-      enabled: menu === "admin",
-
-    }
-  );
+  const { data, refetch } = useQuery("notification", getNotifications, {
+    onSuccess: (res) => {
+      console.log("알람 리스트 불러왔습니다.", res);
+      const temp = res.filter((item) => !item.isRead).length;
+      setNotificationCnt(temp);
+    },
+    cacheTime: 0,
+    enabled: menu === "admin",
+  });
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
@@ -61,19 +57,18 @@ const Navbar = () => {
     eventSource.onopen = () => {
       console.log("최초 오픈!");
       setIsConnection(true);
-      refetch();
     };
 
     eventSource.onmessage = (event) => {
       const target = event.data.split(" ")[0];
-      console.log("여기 왜 안옴?", event.data.split(" "));
       if (isConnection) {
         if (target === "EventStream" || target === "event:") {
           return;
         }
-        setMessage(event.data);
-        notify(message);
       }
+      setMessage(event.data);
+      notify(message);
+      refetch();
       // refetch();
       // queryClient.invalidateQueries("notification");
     };
@@ -90,10 +85,10 @@ const Navbar = () => {
   }, [message, isConnection, refetch]);
 
   const logoutBtn = () => {
+    removeCookie("ACCESS_TOKEN");
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
     localStorage.removeItem("usertype");
-    removeCookie("ACCESS_TOKEN", { path: "/" });
     navigate("/");
   };
 
@@ -122,11 +117,11 @@ const Navbar = () => {
   const navigateMyPage = () => {
     navigate("/guest/mypage");
   };
-  const navigateAdminPage = () => {
-    navigate("/admin/main");
+  const navigateDashBoard = () => {
+    navigate("/admin/dashboard");
   };
-  const navigateLobby = () => {
-    navigate("/lobby");
+  const navigateApproveList = () => {
+    navigate("/admin/approvelist");
   };
   return (
     <>
@@ -140,22 +135,20 @@ const Navbar = () => {
                 <StMenuLi onClick={navigateMyPage}>내가 신청한 목록</StMenuLi>
               </StMenuUl>
             </StMenuDiv>
-          ) : (
+          ) : menu === "admin" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi onClick={navigateLobby}>로비 메뉴</StMenuLi>
-                <StMenuLi onClick={navigateAdminPage}>관리자 페이지</StMenuLi>
+                <StMenuLi onClick={navigateDashBoard}>출입현황</StMenuLi>
+                <StMenuLi onClick={navigateApproveList}>승인현황</StMenuLi>
               </StMenuUl>
             </StMenuDiv>
-          )}
+          ) : null}
           <StUser>
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
                 {notificationCnt > 0 && (
-
                   <StNotificationCnt>{notificationCnt}</StNotificationCnt>
-
                 )}
               </StNotification>
               {showNotification && (
@@ -163,10 +156,13 @@ const Navbar = () => {
                   onClose={handleCloseNotification}
                   position={modalPosition}
                   data={data}
+                  refetch={refetch}
                 />
               )}
-              {localStorage.getItem("name")}님 반갑습니다
+              {localStorage.getItem("name")}
+              <StNameDes>님 반갑습니다</StNameDes>
             </StName>
+
             <StLogOutContainer>
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
@@ -203,10 +199,11 @@ export default Navbar;
 const StNavBar = styled.div`
   background-color: #636fd7;
   width: 100%;
+  min-height: 6vh;
 `;
 const StNavbarContainer = styled.div`
-  width: 90%;
-  height: 80px;
+  width: 75%;
+  min-height: 6vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -224,6 +221,13 @@ const StUser = styled.div`
   align-items: center;
 `;
 const StName = styled.div`
+  color: white;
+  font-size: 17px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+`;
+const StNameDes = styled.div`
   color: white;
   font-size: 16px;
   font-weight: 800;
@@ -243,7 +247,22 @@ const StLogOut = styled.button`
 `;
 const StLogOutImg = styled.img``;
 
-const StMenuDiv = styled.div``;
+const StMenuDiv = styled.div`
+  @media screen and (max-width: 1500px) {
+    transform: none;
+  }
+  @media screen and (min-width: 1500px) {
+    transform: translateX(-40%);
+  }
+
+  @media screen and (min-width: 1700px) {
+    transform: translateX(-60%);
+  }
+
+  @media screen and (min-width: 1900px) {
+    transform: translateX(-80%);
+  }
+`;
 
 const StMenuUl = styled.ul`
   list-style: none;
