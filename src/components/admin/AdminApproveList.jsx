@@ -6,8 +6,8 @@ import { useQuery, useMutation } from "react-query";
 import styled from "styled-components";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
-
-import { adminVisit, adminModify } from "../../api/api";
+import { saveAs } from "file-saver";
+import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
 import { color } from "../../utils/styles/color";
 
 export default function AdminApproveList() {
@@ -15,26 +15,12 @@ export default function AdminApproveList() {
     "guests", // 쿼리키
 
     () => {
-      // const queryParams = {
-      //   start: pagination.pageIndex * pagination.pageSize,
-      //   size: pagination.pageSize,
-      //   filters: JSON.stringify(columnFilters ?? []),
-      //   globalFilter: globalFilter ?? "",
-      //   sorting: JSON.stringify(sorting ?? []),
-      // };
-      // const queryParams = {
-      //   orderby: "status",
-      // };
-
       return adminVisit();
-      ///visit-forms/sort
-      // visit/admin
-      // return adminVisitSort(queryParams);
     },
     {
       keepPreviousData: true,
       cacheTime: 0,
-    }
+    },
   );
 
   const adminModifyMutation = useMutation(adminModify, {
@@ -114,7 +100,7 @@ export default function AdminApproveList() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    []
+    [],
   );
 
   return (

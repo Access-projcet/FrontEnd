@@ -150,6 +150,7 @@ const ConfirmForm = ({ onClose, company }) => {
           <TimeTable1>
             <div>
               <label htmlFor="startDate">방문 날짜 </label>
+
               <DatePicker
                 locale={ko}
                 dateFormat="yyyy/MM/dd"
@@ -171,6 +172,7 @@ const ConfirmForm = ({ onClose, company }) => {
                   />
                 }
               />
+
 
               <label htmlFor="방문시간">시간</label>
               <StInput
@@ -242,10 +244,7 @@ const ConfirmForm = ({ onClose, company }) => {
           </TimeTable1>
 
           <Msg>
-            <p>
-              * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
-              2023/03/31, 14:00
-            </p>
+            <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40, 2023/03/31, 14:00</p>
           </Msg>
         </StTimeWrapper>
 

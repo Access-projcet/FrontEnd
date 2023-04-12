@@ -28,35 +28,26 @@ const Navbar = () => {
 
   const notify = (msg) => toast(msg);
 
-
   const queryClient = new QueryClient();
 
-  const { data, isError, isLoading, refetch } = useQuery(
-    "notification",
-    getNotifications,
-    {
-      onSuccess: (res) => {
-        console.log("알람 리스트 불러왔습니다.", res);
-        const temp = res.filter((item) => !item.isRead).length;
-        setNotificationCnt(temp);
-      },
+  const { data, isError, isLoading, refetch } = useQuery("notification", getNotifications, {
+    onSuccess: (res) => {
+      console.log("알람 리스트 불러왔습니다.", res);
+      const temp = res.filter((item) => !item.isRead).length;
+      setNotificationCnt(temp);
+    },
 
-      enabled: menu === "admin",
-
-    }
-  );
+    enabled: menu === "admin",
+  });
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(
-      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      }
-    );
+    const eventSource = new EventSourcePolyfill(`${process.env.REACT_APP_SERVER_URL}/subscribe/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
 
     eventSource.onopen = () => {
       console.log("최초 오픈!");
@@ -152,30 +143,20 @@ const Navbar = () => {
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
-                {notificationCnt > 0 && (
-
-                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
-
-                )}
+                {notificationCnt > 0 && <StNotificationCnt>{notificationCnt}</StNotificationCnt>}
               </StNotification>
               {showNotification && (
-                <NotificationModal
-                  onClose={handleCloseNotification}
-                  position={modalPosition}
-                  data={data}
-                />
+                <NotificationModal onClose={handleCloseNotification} position={modalPosition} data={data} />
               )}
-              {localStorage.getItem("name")}님 반갑습니다
+              {localStorage.getItem("name")}
+              <StNameDes>님 반갑습니다</StNameDes>
             </StName>
+
             <StLogOutContainer>
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
-                <StLogOutImg
-                  src={logout}
-                  alt="logoutImg"
-                  onClick={logoutBtn}
-                ></StLogOutImg>
+                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
               </Link>
               {menu === "guest" ? (
                 <Link to={"/change_pw/guest"}>
@@ -203,10 +184,11 @@ export default Navbar;
 const StNavBar = styled.div`
   background-color: #636fd7;
   width: 100%;
+  min-height: 6vh;
 `;
 const StNavbarContainer = styled.div`
   width: 90%;
-  height: 80px;
+  min-height: 6vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -224,6 +206,13 @@ const StUser = styled.div`
   align-items: center;
 `;
 const StName = styled.div`
+  color: white;
+  font-size: 17px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+`;
+const StNameDes = styled.div`
   color: white;
   font-size: 16px;
   font-weight: 800;

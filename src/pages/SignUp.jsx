@@ -9,7 +9,6 @@ import mainLogo from "../utils/img/VISITUS_logo@2x.png";
 import { setMenu } from "../redux/store/LoginMenuSlice";
 
 const SignUp = () => {
-  
   const { menu } = useSelector((state) => state.LoginMenuSlice);
   const dispatch = useDispatch();
   const HandleChangeTab = (e, newValue) => {
@@ -110,7 +109,7 @@ export default SignUp;
 const StLogo = styled.img`
   position: absolute;
   left: 50%;
-  top: 10%;
+  top: 200px;
   z-index: 0;
   transform: translate(-50%, -50%);
 `;
@@ -123,6 +122,7 @@ const StMainBackground = styled.img`
   width: 100%;
   height: 100vh;
   transform: translate(-50%, -50%);
+  object-fit: cover;
 `;
 
 const DivLoginContainer = styled.div`
