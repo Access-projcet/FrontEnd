@@ -263,7 +263,7 @@ const ConfirmForm = ({ onClose, company }) => {
           <Msg>
             <p>
               * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
-              2023/03/31, 14:00
+              2023/03/31, 01:00
             </p>
           </Msg>
         </StTimeWrapper>
