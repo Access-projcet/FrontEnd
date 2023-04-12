@@ -5,13 +5,14 @@ import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import LobbyCheckInDoneModal from "./LobbyCheckInDoneModal";
 import LobbyNoMatchModal from "./LobbyNoMatchModal";
+import LobbyCheckInErrorModal from "./LobbyCheckInErrorModal";
 
 const LobbyCheckInModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
 
   const [showModal, setShowModal] = useState(false);
-
+  const [showNoMatchModal, setShowNoMatchModal] = useState(false);
   // const now = new Date();
   // const hours = now.getHours();
   // const minutes = now.getMinutes();
@@ -25,9 +26,21 @@ const LobbyCheckInModal = ({ onClose }) => {
       onClose();
     },
     onError: (error) => {
-      if (error.response.data.statusCode === 400) {
-        <LobbyNoMatchModal onClose={() => {}} />;
-      }
+
+      setShowNoMatchModal(true);
+
+      // <LobbyNoMatchModal
+      //   onClose={() => {
+      //     setShowModal(false);
+      //   }}
+      // />;
+      // if (error.response.data.statusCode === 401) {
+      //   <LobbyCheckInErrorModal
+      //     onClose={() => {
+      //       setShowModal(false);
+      //     }}
+      //   />;
+      // }
       onClose();
     },
   });
@@ -94,6 +107,13 @@ const LobbyCheckInModal = ({ onClose }) => {
           <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
           {showModal === true ? (
             <LobbyCheckInDoneModal
+              onClose={() => {
+                setShowModal(false);
+              }}
+            />
+          ) : null}
+          {showNoMatchModal === true ? (
+            <LobbyNoMatchModal
               onClose={() => {
                 setShowModal(false);
               }}
