@@ -8,16 +8,18 @@ import { useQuery, QueryClient } from "react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useCookies } from "react-cookie";
 
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
 import { Link } from "react-router-dom";
 
-import { getCookie, removeCookie } from "./../../api/cookies";
+import { getCookie } from "./../../api/cookies";
 import { NotificationModal } from "../modal/NotificationModal";
 import { getNotifications } from "../../api/api";
 
 const Navbar = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["ACCESS_TOKEN"]);
   const navigate = useNavigate();
   const menu = localStorage.getItem("usertype");
   const [message, setMessage] = useState("not yet");
@@ -42,12 +44,15 @@ const Navbar = () => {
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(`${process.env.REACT_APP_SERVER_URL}/subscribe/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
+    const eventSource = new EventSourcePolyfill(
+      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     eventSource.onopen = () => {
       console.log("최초 오픈!");
@@ -143,10 +148,17 @@ const Navbar = () => {
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
-                {notificationCnt > 0 && <StNotificationCnt>{notificationCnt}</StNotificationCnt>}
+                {notificationCnt > 0 && (
+                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
+                )}
               </StNotification>
               {showNotification && (
-                <NotificationModal onClose={handleCloseNotification} position={modalPosition} data={data} />
+                <NotificationModal
+                  onClose={handleCloseNotification}
+                  position={modalPosition}
+                  data={data}
+                  refetch={refetch}
+                />
               )}
               {localStorage.getItem("name")}
               <StNameDes>님 반갑습니다</StNameDes>
@@ -156,7 +168,11 @@ const Navbar = () => {
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
-                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
+                <StLogOutImg
+                  src={logout}
+                  alt="logoutImg"
+                  onClick={logoutBtn}
+                ></StLogOutImg>
               </Link>
               {menu === "guest" ? (
                 <Link to={"/change_pw/guest"}>
