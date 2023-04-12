@@ -145,7 +145,7 @@ const SimpleLineChart = () => {
       <StAdminMainDiv>
         <StDashBoardGnb>
           <StDashBoardTitleArea>
-            <h2>출입현황표</h2>
+            <h2>출입 관리 그래프</h2>
             {/* <p>월별, 일별, 시간대별 출입현황을 조회할 수 있습니다.</p> */}
           </StDashBoardTitleArea>
           {/* <StDashBoardBtnArea>
@@ -179,6 +179,11 @@ const SimpleLineChart = () => {
           </ResponsiveContainer>
         </StContainer>
       </StAdminMainDiv>
+      <StDashBoardGnb>
+        <StDashBoardTitleArea>
+          <h2>출입현황표</h2>
+        </StDashBoardTitleArea>
+      </StDashBoardGnb>
       <DivTable>
         <MaterialReactTable
           columns={columns}
@@ -264,7 +269,7 @@ const StDashBoardBtnArea = styled.div`
 `;
 const StContainer = styled.div`
   display: flex;
-  padding: 2%;
+  padding: 0 2%;
   margin-left: 10%;
 `;
 
