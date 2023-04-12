@@ -5,12 +5,14 @@ import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import LobbyCheckOutErrorModal from "./LobbyCheckOutErrorModal";
 import LobbyCheckOutDoneModal from "./LobbyCheckOutDoneModal";
+import LobbyNoMatchModal from "./LobbyNoMatchModal";
 
 const LobbyCheckOutModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showCheckOutModal, setShowCheckOutModal] = useState(false);
+  const [showNoMatchModal, setShowNoMatchModal] = useState(false);
 
   const queryClient = useQueryClient();
   const mutation = useMutation(submitLobbyCheckOut, {
@@ -24,6 +26,8 @@ const LobbyCheckOutModal = ({ onClose }) => {
       // onClose();
     },
     onError: (error) => {
+      //400에러일 때 뜨는 모달 스위치
+      setShowNoMatchModal(true);
       //402에러일 때 뜨는 모달 스위치
       if (error.response.data.statusCode === 402) {
         setShowCheckOutModal(true);
@@ -97,7 +101,7 @@ const LobbyCheckOutModal = ({ onClose }) => {
 
           {/* 체크아웃 완료가 정상적으로 되었을 때 모달 */}
           {showModal === true ? (
-            <LobbyCheckOutErrorModal
+            <LobbyCheckOutDoneModal
               onClose={() => {
                 setShowModal(false);
               }}
@@ -106,9 +110,18 @@ const LobbyCheckOutModal = ({ onClose }) => {
 
           {/* 체크아웃을 이미 했을 때 나오는 모달 */}
           {showCheckOutModal === true ? (
-            <LobbyCheckOutDoneModal
+            <LobbyCheckOutErrorModal
               onClose={() => {
                 setShowCheckOutModal(false);
+              }}
+            />
+          ) : null}
+
+          {/* 이름 전화번호 입력했을 때 일치하는 사람이 없을때의 모달 */}
+          {showNoMatchModal === true ? (
+            <LobbyNoMatchModal
+              onClose={() => {
+                setShowNoMatchModal(false);
               }}
             />
           ) : null}

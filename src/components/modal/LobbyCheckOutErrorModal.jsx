@@ -8,7 +8,7 @@ const LobbyCheckOutErrorModal = ({ onClose }) => {
         <StTxtContainer>
           <div>이미 체크아웃이 완료되었습니다.</div>
         </StTxtContainer>
-        <StCheckBtn onClick={onClose}>확인</StCheckBtn>
+        {/* <StCheckBtn onClick={onClose}>확인</StCheckBtn> */}
       </StBox>
     </>
   );
