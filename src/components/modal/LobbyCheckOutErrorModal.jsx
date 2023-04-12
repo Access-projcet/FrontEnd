@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const LobbyCheckInErrorModal = ({ onClose }) => {
+const LobbyCheckOutErrorModal = ({ onClose }) => {
   return (
     <>
       <StBox>
@@ -14,7 +14,7 @@ const LobbyCheckInErrorModal = ({ onClose }) => {
   );
 };
 
-export default LobbyCheckInErrorModal;
+export default LobbyCheckOutErrorModal;
 
 const StBox = styled.div`
   display: flex;

@@ -1,18 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
 
 const LobbyNoMatchModal = ({ onClose }) => {
-  const navigate = useNavigate();
-
-  const gotoLobby = () => {
-    navigate("/lobby");
-  };
   return (
     <>
       <StBox>
         <StTxtContainer>
-          <div>일치하는 예약자가 없습니다.</div>
+          <div>일치하는 방문 예약자가 없습니다.</div>
         </StTxtContainer>
         <StCheckBtn onClick={onClose}>확인</StCheckBtn>
       </StBox>
@@ -28,6 +22,7 @@ const StBox = styled.div`
   justify-content: space-around;
   align-items: center;
   gap: 20px;
+  z-index: 10;
 `;
 const StTxtContainer = styled.div`
   display: flex;
