@@ -26,6 +26,7 @@ const StBox = styled.div`
   width: 400px;
   height: 200px;
   gap: 20px;
+  background-color: beige;
   z-index: 10;
 `;
 const StTxtContainer = styled.div`
@@ -46,4 +47,5 @@ const StCheckBtn = styled.button`
   color: white;
   font-size: 16px;
   font-weight: 700;
+  cursor: pointer;
 `;

@@ -104,7 +104,7 @@ const LobbyCheckInModal = ({ onClose }) => {
           {showModal === true ? (
             <LobbyCheckInDoneModal
               onClose={() => {
-                setShowModal(false);
+                setShowCheckInModal(false);
               }}
             />
           ) : null}
@@ -113,7 +113,7 @@ const LobbyCheckInModal = ({ onClose }) => {
           {showNoMatchModal === true ? (
             <LobbyNoMatchModal
               onClose={() => {
-                setShowModal(false);
+                setShowNoMatchModal(false);
               }}
             />
           ) : null}
