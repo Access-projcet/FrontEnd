@@ -57,19 +57,18 @@ const Navbar = () => {
     eventSource.onopen = () => {
       console.log("최초 오픈!");
       setIsConnection(true);
-      refetch();
     };
 
     eventSource.onmessage = (event) => {
       const target = event.data.split(" ")[0];
-      console.log("여기 왜 안옴?", event.data.split(" "));
       if (isConnection) {
         if (target === "EventStream" || target === "event:") {
           return;
         }
-        setMessage(event.data);
-        notify(message);
       }
+      setMessage(event.data);
+      notify(message);
+      refetch();
       // refetch();
       // queryClient.invalidateQueries("notification");
     };

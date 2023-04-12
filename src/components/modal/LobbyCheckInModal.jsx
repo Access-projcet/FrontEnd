@@ -26,7 +26,6 @@ const LobbyCheckInModal = ({ onClose }) => {
       onClose();
     },
     onError: (error) => {
-
       setShowNoMatchModal(true);
 
       // <LobbyNoMatchModal
