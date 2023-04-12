@@ -47,7 +47,7 @@ const ConfirmForm = ({ onClose, company }) => {
   const sendCodeHandler = () => {
     const info = {
       imgUrl:
-        "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttp://localhost:3000/",
+        "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttps://visitus.vercel.app/",
     };
     mutation2.mutate(info);
   };
