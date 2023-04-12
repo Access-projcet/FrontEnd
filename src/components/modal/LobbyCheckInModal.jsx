@@ -3,10 +3,14 @@ import { useMutation, useQueryClient } from "react-query";
 import { submitLobbyCheckIn } from "../../api/api";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
+import LobbyCheckInDoneModal from "./LobbyCheckInDoneModal";
+import LobbyNoMatchModal from "./LobbyNoMatchModal";
 
-const LobbyModal = ({ onClose }) => {
+const LobbyCheckInModal = ({ onClose }) => {
   const [visitor, setVisitor] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
+
+  const [showModal, setShowModal] = useState(false);
 
   // const now = new Date();
   // const hours = now.getHours();
@@ -17,9 +21,18 @@ const LobbyModal = ({ onClose }) => {
     onSuccess: (response) => {
       console.log(response);
       queryClient.invalidateQueries("user");
+      setShowModal(true);
+      onClose();
     },
     onError: (error) => {
-      alert(error);
+      if (error.response.data.statusCode === 400) {
+        <LobbyNoMatchModal
+          onClose={() => {
+            setShowModal(false);
+          }}
+        />;
+      }
+      onClose();
     },
   });
 
@@ -38,7 +51,7 @@ const LobbyModal = ({ onClose }) => {
       <ModalOverlay>
         <ModalWrapper>
           <ModalInner>
-            <Header>Check-in & out</Header>
+            <Header>Check-in</Header>
             <Input1>
               이름
               <input
@@ -83,13 +96,20 @@ const LobbyModal = ({ onClose }) => {
           </ModalInner>
           <CancelBtn onClick={onClose}>취소</CancelBtn>
           <SubmitBtn onClick={onSubmitHandler}>확인</SubmitBtn>
+          {showModal === true ? (
+            <LobbyCheckInDoneModal
+              onClose={() => {
+                setShowModal(false);
+              }}
+            />
+          ) : null}
         </ModalWrapper>
       </ModalOverlay>
     </>
   );
 };
 
-export default LobbyModal;
+export default LobbyCheckInModal;
 
 const ModalOverlay = styled.div`
   position: fixed;

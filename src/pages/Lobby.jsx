@@ -4,13 +4,15 @@ import styled from "styled-components";
 import Navbar from "../components/navbar/Navbar";
 import btn1 from "../utils/img/방문_icon@2x.png";
 import btn2 from "../utils/img/퇴장_icon@2x.png";
-import LobbyModal from "../components/modal/LobbyModal";
+import LobbyCheckInModal from "../components/modal/LobbyCheckInModal";
+import LobbyCheckOutModal from "../components/modal/LobbyCheckOutModal";
 import QrReaderModal from "../components/modal/QrReaderModal";
 import QrReaderModal2 from "../components/modal/QrReaderModal2";
 import Modal from "../components/modal/Modal";
 
 const Lobby = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showCheckInModal, setShowCheckInModal] = useState(false);
+  const [showCheckOutModal, setShowCheckOutModal] = useState(false);
   const [showQrModalCheckIn, setShowQrModalCheckIn] = useState(false);
   const [showQrModalCheckOut, setShowQrModalCheckOut] = useState(false);
 
@@ -21,7 +23,7 @@ const Lobby = () => {
         {/* check-in */}
         <Link
           onClick={() => {
-            setShowModal(!showModal);
+            setShowCheckInModal(!showCheckInModal);
           }}
         >
           <StMainMenu color="#829cf6;">
@@ -29,12 +31,17 @@ const Lobby = () => {
             <StMainImg src={btn1} alt="Check-in"></StMainImg>
           </StMainMenu>
         </Link>
-        {showModal === true ? (
-          <LobbyModal
-            Check-in={"Check-in"}
-            Check-out={"Check-out"}
+        {showCheckInModal === true ? (
+          <LobbyCheckInModal
             onClose={() => {
-              setShowModal(false);
+              setShowCheckInModal(false);
+            }}
+          />
+        ) : null}
+        {showCheckOutModal === true ? (
+          <LobbyCheckOutModal
+            onClose={() => {
+              setShowCheckOutModal(false);
             }}
           />
         ) : null}
@@ -65,7 +72,7 @@ const Lobby = () => {
         {/* check-out */}
         <Link
           onClick={() => {
-            setShowModal(!showModal);
+            setShowCheckOutModal(!showCheckOutModal);
           }}
         >
           <StMainMenu color="#57D4D4;">
