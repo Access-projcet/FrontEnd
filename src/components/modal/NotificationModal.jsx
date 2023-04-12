@@ -2,15 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { useMutation } from "react-query";
 import { readNotification } from "../../api/api";
-import { QueryClient } from "react-query";
+// import { QueryClient } from "react-query";
 
-export const NotificationModal = ({ position, onClose, data }) => {
-  const queryClient = new QueryClient();
+export const NotificationModal = ({ position, onClose, data, refetch }) => {
+  // const queryClient = new QueryClient();
   const deleteMutation = useMutation(readNotification, {
     onSuccess: (res) => {
       console.log("알림 삭제 성공", res);
-      queryClient.invalidateQueries("notification");
-      queryClient.refetchQueries("notification");
+      // queryClient.invalidateQueries("notification");
+      // queryClient.refetchQueries("notification");
+      refetch();
     },
   });
 
@@ -54,7 +55,21 @@ const StContainer = styled.div`
   color: black;
   z-index: 99;
   border-radius: 5px;
-  overflow: hidden;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 const ButtonClose = styled.button`
   width: 40px;

@@ -232,7 +232,6 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-                      zIndex: "3",
                       color: "#D2D2D2",
                     }}
                   />

@@ -160,6 +160,11 @@ export default function GuestMyPageTable() {
         )}
         enableRowActions
         positionActionsColumn="last"
+        displayColumnDefOptions={{
+          "mrt-row-actions": {
+            header: "수정/삭제", //change header text
+          },
+        }}
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
             <Tooltip arrow placement="left" title="수정">
@@ -167,8 +172,10 @@ export default function GuestMyPageTable() {
                 onClick={(e) => {
                   HandlerEditVisit(row);
                 }}
+                sx={{ fontSize: "14px" }}
               >
-                <Edit />
+                <span>수정</span>
+                {/* <Edit /> */}
               </IconButton>
             </Tooltip>
             <Tooltip arrow placement="right" title="삭제">
@@ -178,8 +185,10 @@ export default function GuestMyPageTable() {
                   HandlerDeleteVisit(row);
                   console.log("del");
                 }}
+                sx={{ fontSize: "14px" }}
               >
-                <Delete />
+                <span>삭제</span>
+                {/* <Delete /> */}
               </IconButton>
             </Tooltip>
           </Box>

@@ -30,19 +30,15 @@ const Navbar = () => {
 
   const queryClient = new QueryClient();
 
-  const { data, isError, isLoading, refetch } = useQuery(
-    "notification",
-    getNotifications,
-    {
-      onSuccess: (res) => {
-        console.log("알람 리스트 불러왔습니다.", res);
-        const temp = res.filter((item) => !item.isRead).length;
-        setNotificationCnt(temp);
-      },
-
-      enabled: menu === "admin",
-    }
-  );
+  const { data, refetch } = useQuery("notification", getNotifications, {
+    onSuccess: (res) => {
+      console.log("알람 리스트 불러왔습니다.", res);
+      const temp = res.filter((item) => !item.isRead).length;
+      setNotificationCnt(temp);
+    },
+    cacheTime: 0,
+    enabled: menu === "admin",
+  });
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
@@ -159,6 +155,7 @@ const Navbar = () => {
                   onClose={handleCloseNotification}
                   position={modalPosition}
                   data={data}
+                  refetch={refetch}
                 />
               )}
               <StSpan>{localStorage.getItem("name")}</StSpan>님 반갑습니다

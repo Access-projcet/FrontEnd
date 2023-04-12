@@ -191,6 +191,11 @@ export default function AdminApproveList() {
           )}
           enableRowActions
           positionActionsColumn="last"
+          displayColumnDefOptions={{
+            "mrt-row-actions": {
+              header: "승인/거절", //change header text
+            },
+          }}
           renderRowActions={({ row }) => (
             <Box sx={{ display: "flex", gap: "1rem" }}>
               <Tooltip arrow placement="left" title="승인">
@@ -199,8 +204,10 @@ export default function AdminApproveList() {
                   onClick={() => {
                     HandlerApprove(row);
                   }}
+                  sx={{ fontSize: "14px" }}
                 >
-                  <TaskAltIcon />
+                  <span>승인</span>
+                  {/* <TaskAltIcon /> */}
                 </IconButton>
               </Tooltip>
               <Tooltip arrow placement="right" title="거절">
@@ -209,8 +216,10 @@ export default function AdminApproveList() {
                   onClick={() => {
                     HandlerReject(row);
                   }}
+                  sx={{ fontSize: "14px" }}
                 >
-                  <NotInterestedIcon />
+                  <span>거절</span>
+                  {/* <NotInterestedIcon /> */}
                 </IconButton>
               </Tooltip>
             </Box>
