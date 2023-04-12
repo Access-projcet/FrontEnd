@@ -8,7 +8,7 @@ const LobbyNoMatchModal = ({ onClose }) => {
         <StTxtContainer>
           <div>일치하는 방문 예약자가 없습니다.</div>
         </StTxtContainer>
-        <StCheckBtn onClick={onClose}>확인</StCheckBtn>
+        {/* <StCheckBtn onClick={onClose}>확인</StCheckBtn> */}
       </StBox>
     </>
   );
@@ -18,12 +18,13 @@ export default LobbyNoMatchModal;
 
 const StBox = styled.div`
   position: fixed;
-  width: 400px;
-  height: 200px;
-  display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  display: flex;
+  background-color: #f2f2f2;
+  width: 400px;
+  height: 200px;
   gap: 20px;
   background-color: beige;
   z-index: 10;
