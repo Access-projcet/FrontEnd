@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getCookie, removeCookie, setCookie } from "./cookies";
+import Swal from "sweetalert2";
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -17,7 +18,7 @@ instance.interceptors.request.use(
 
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 instance.interceptors.response.use(
@@ -50,13 +51,13 @@ instance.interceptors.response.use(
         localStorage.removeItem("REFRESH_TOKEN");
         localStorage.removeItem("name");
         removeCookie("ACCESS_TOKEN");
-        alert("다시 로그인하세욧!");
+        Swal.fire("토큰 유효기간 만료", "다시 로그인하세요", "error");
         window.location.href = "/login";
         return Promise.reject(error);
       }
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 export default instance;

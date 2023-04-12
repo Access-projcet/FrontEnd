@@ -10,6 +10,7 @@ import { color } from "../../utils/styles/color";
 import MarkerModal from "../modal/MarkerModal";
 import ConfirmForm from "../../pages/ConfirmForm";
 import { ModifyForm } from "../modal/ModifyForm";
+import Swal from "sweetalert2";
 
 export default function GuestMyPageTable() {
   const [isMofify, setIsModify] = useState(false);
@@ -27,21 +28,13 @@ export default function GuestMyPageTable() {
       keepPreviousData: true,
       //캐싱타임을 0으로 줘서 필터링시에 쓸데없는 캐싱을 하지않고 새로운 데이터를 요청하게함.
       cacheTime: 0,
-    }
+    },
   );
 
   const deleteMutaion = useMutation(guestDeleteVisit, {
     onSuccess: (data) => {
       console.log(data);
-      alert("방문기록 삭제 성공");
-      refetch();
-    },
-  });
-
-  const modifyMutation = useMutation(guestModify, {
-    onSuccess: (data) => {
-      console.log(data);
-      alert("방문기록 수정 성공");
+      Swal.fire("성공!", "방문기록 삭제 성공", "success");
       refetch();
     },
   });
@@ -81,7 +74,7 @@ export default function GuestMyPageTable() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 200,
+        size: 150,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
@@ -96,12 +89,6 @@ export default function GuestMyPageTable() {
         size: 100,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "date" },
       },
-      // {
-      //   accessorKey: "startTime",
-      //   header: "방문시간",
-      //   size: 20,
-      //   muiTableHeadCellFilterTextFieldProps: { placeholder: "time" },
-      // },
       {
         accessorKey: "status",
         header: "상태",
@@ -111,7 +98,7 @@ export default function GuestMyPageTable() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -160,26 +147,33 @@ export default function GuestMyPageTable() {
         )}
         enableRowActions
         positionActionsColumn="last"
+        displayColumnDefOptions={{
+          "mrt-row-actions": {
+            header: "수정/삭제", //change header text
+          },
+        }}
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
-            <Tooltip arrow placement="left" title="Edit">
+            <Tooltip arrow placement="left" title="수정">
               <IconButton
                 onClick={(e) => {
                   HandlerEditVisit(row);
                 }}
+                sx={{ fontSize: "14px" }}
               >
-                <Edit />
+                <span>수정</span>
               </IconButton>
             </Tooltip>
-            <Tooltip arrow placement="right" title="Delete">
+            <Tooltip arrow placement="right" title="삭제">
               <IconButton
                 color="error"
                 onClick={(e) => {
                   HandlerDeleteVisit(row);
                   console.log("del");
                 }}
+                sx={{ fontSize: "14px" }}
               >
-                <Delete />
+                <span>삭제</span>
               </IconButton>
             </Tooltip>
           </Box>
@@ -190,6 +184,7 @@ export default function GuestMyPageTable() {
           showAlertBanner: isError,
           showProgressBars: isFetching,
         }}
+        enablePagination={false}
       />
       {isMofify && (
         <MarkerModal

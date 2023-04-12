@@ -6,14 +6,9 @@ import AdminApproveList from "../components/admin/AdminApproveList";
 import Navbar from "../components/navbar/Navbar";
 
 export default function AdminMain() {
-  const { menu } = useSelector((state) => state.AdminMenuSlice);
-  console.log(menu);
   return (
     <>
-      <Navbar />
-      <AdminMenuBar menu={menu} />
-      {menu === "dashboard" && <AdminDashBoard />}
-      {menu === "approve" && <AdminApproveList />}
+      <AdminDashBoard />
     </>
   );
 }

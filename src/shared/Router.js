@@ -13,7 +13,8 @@ import NotFound from "../pages/NotFound";
 import ChangeAdminPw from "../pages/ChangeAdminPW";
 import SignUp from "../pages/SignUp";
 import ChangeGuestPw from "../pages/ChangeGuestPW";
-
+import AdminDashBoard from "../components/admin/AdminDashBoard";
+import AdminApproveList from "../components/admin/AdminApproveList";
 const Router = () => {
   return (
     <BrowserRouter>
@@ -27,8 +28,10 @@ const Router = () => {
         <Route path="/admin/main" element={<AdminMain />} />
         <Route path="/lobby" element={<Lobby />} />
         <Route path="/*" element={<NotFound />} />
-        <Route path="/change_pw/admin" element={<ChangeAdminPw/>} />
-        <Route path="/change_pw/guest" element={<ChangeGuestPw/>} />
+        <Route path="/change_pw/admin" element={<ChangeAdminPw />} />
+        <Route path="/change_pw/guest" element={<ChangeGuestPw />} />
+        <Route path="/admin/dashBoard" element={<AdminDashBoard />} />
+        <Route path="/admin/approvelist" element={<AdminApproveList />} />
       </Routes>
     </BrowserRouter>
   );
