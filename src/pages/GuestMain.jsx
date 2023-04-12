@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/navbar/Navbar";
 import btn1 from "../utils/img/방문_icon@2x.png";
@@ -12,21 +12,10 @@ import { useQuery } from "react-query";
 import CloseIcon from "@mui/icons-material/Close";
 
 const GuestMain = () => {
+  const navigate = useNavigate();
   const [qrCodeValue, setQrCodeValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useQuery("userInfoQr", getUserInfoQr);
-  console.log(data);
-
-  // const downloadQRCode = () => {
-  //   const canvas = document.getElementById("qr-code");
-  //   const dataURL = canvas.toDataURL("image/png");
-  //   const link = document.createElement("a");
-  //   link.download = "qrcode.png";
-  //   link.href = dataURL;
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
 
   const handleGenerateQrCode = () => {
     const makeUserQr = `name=${data.data.name}&phoneNum=${data.data.phoneNum}`;
@@ -34,29 +23,31 @@ const GuestMain = () => {
     setIsModalOpen(true);
   };
 
+  const moveToMapPage = () => {
+    navigate("/guest/company");
+  };
+  const moveToMyPage = () => {
+    navigate("/guest/mypage");
+  };
   return (
     <>
       <Navbar />
       <StMain>
-        <Link to={"/guest/company"}>
-          <StMainMenu color="#829cf6;">
-            <StMainDiv>방문 신청하기</StMainDiv>
-            <StMainImg src={btn1} alt="방문신청하기"></StMainImg>
-          </StMainMenu>
-        </Link>
-        <div>
-          <Link to={"/guest/mypage"}>
-            <StMainMenu2 color="#57D4D4;">
-              <StMainDiv>내 방문 이력 보기</StMainDiv>
-              <StMainImg src={btn2} alt="내 방문 이력 보기"></StMainImg>
-            </StMainMenu2>
-          </Link>
+        <StMainMenu onClick={moveToMapPage} color="#829cf6;">
+          <StMainDiv>방문 신청하기</StMainDiv>
+          <StMainImg src={btn1} alt="방문신청하기"></StMainImg>
+        </StMainMenu>
 
-          <StMainMenu2 color="#28d4d4;">
+        <StMainMenu>
+          <StMainMenu2 onClick={moveToMyPage} color="#57D4D4;">
+            <StMainDiv>내 방문 이력 보기</StMainDiv>
+            <StMainImg src={btn2} alt="내 방문 이력 보기"></StMainImg>
+          </StMainMenu2>
+          <StMainMenu2 color="#3DB7B7">
             <StQrBtn onClick={handleGenerateQrCode}>QR 코드 발급</StQrBtn>
             <StMainImg src={btn3} alt="QR발급하기"></StMainImg>
           </StMainMenu2>
-        </div>
+        </StMainMenu>
       </StMain>
       {isModalOpen && (
         <Modal
@@ -80,7 +71,6 @@ const GuestMain = () => {
                     }}
                   ></CloseIcon>
                 </ModalInner>
-                <div>QR 코드 이메일로 받기</div>
               </ModalWrapper>
             </ModalOverlay>
           }
@@ -96,28 +86,26 @@ const StMain = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 94vh;
 `;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 600px;
+  width: 60vh;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
 `;
 const StMainMenu2 = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 600px;
+  width: 60vh;
   height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
 `;
 
 const StMainDiv = styled.div`
@@ -127,7 +115,9 @@ const StMainDiv = styled.div`
   font-weight: 700;
 `;
 
-const StMainImg = styled.img``;
+const StMainImg = styled.img`
+  margin-top: 25px;
+`;
 
 const StQrBtn = styled.button`
   color: white;

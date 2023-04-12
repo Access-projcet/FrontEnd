@@ -206,9 +206,7 @@ export default function SignUp() {
             }}
             error={checkPassword.trim() !== "" && password !== checkPassword}
             helperText={
-              checkPassword.trim() !== "" && password !== checkPassword
-                ? "비밀번호가 일치하지 않습니다."
-                : " "
+              checkPassword.trim() !== "" && password !== checkPassword ? "비밀번호가 일치하지 않습니다." : " "
             }
             FormHelperTextProps={{
               sx: {

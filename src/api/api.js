@@ -108,13 +108,16 @@ const ChangeGuestPW = async (user) => {
 const getEnterPeople = async () => {
   const response = await instance.get(`/access`);
   return response.data;
-
 };
 
 const DownLoadExcel = async () => {
   return await instance.get("/excel/access", {
     responseType: "arraybuffer",
   });
+};
+
+const sendUrlCode = async (code) => {
+  return await instance.post(`/qrCode`, code);
 };
 
 export {
@@ -145,4 +148,5 @@ export {
   getEnterPeople,
   DownLoadExcel,
   guestModify,
+  sendUrlCode,
 };
