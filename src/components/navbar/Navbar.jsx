@@ -199,11 +199,11 @@ export default Navbar;
 const StNavBar = styled.div`
   background-color: #636fd7;
   width: 100%;
-  min-height: 6vh;
+  min-height: 8vh;
 `;
 const StNavbarContainer = styled.div`
   width: 75%;
-  min-height: 6vh;
+  min-height: 8vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -248,20 +248,28 @@ const StLogOut = styled.button`
 const StLogOutImg = styled.img``;
 
 const StMenuDiv = styled.div`
-  @media screen and (max-width: 1500px) {
-    transform: none;
-  }
-  @media screen and (min-width: 1500px) {
-    transform: translateX(-40%);
-  }
+  transform: translateX(-10vw);
 
-  @media screen and (min-width: 1700px) {
-    transform: translateX(-60%);
-  }
+// @media screen and (min-width: 1200px) {
+//   transform: translateX(-100px);
+  
+//  }
 
-  @media screen and (min-width: 1900px) {
-    transform: translateX(-80%);
-  }
+// @media screen and (min-width: 1500px) {
+//   transform: translateX(-100px);
+  
+//  }
+//   @media screen and (max-width: 1500px) {
+//    transform: translateX(-150px);
+   
+//   }
+
+
+//   @media screen and (min-width: 1700px) {
+//   transform: translateX(-200px);
+//   }
+
+
 `;
 
 const StMenuUl = styled.ul`

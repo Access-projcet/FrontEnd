@@ -191,7 +191,7 @@ const SimpleLineChart = () => {
             getEnteringPeopleData?.data?.map((item) => ({
               ...item,
               inTime: item.inTime.split("T")[1],
-              outTime: item.outTime.split("T")[1],
+              outTime: item.outTime ? item.outTime.split("T")[1] : " ",
             })) ?? []
           } //data is undefined on first render
           initialState={{

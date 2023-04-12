@@ -139,7 +139,7 @@ export default function AdminLoginForm() {
                 mb: 2,
                 background: "#49CDB5",
                 borderRadius: 30,
-                height: "60px",
+                height: 50,
                 "&:hover": {
                   background: "#49CDB5",
                 },
@@ -179,7 +179,7 @@ export default function AdminLoginForm() {
                 mb: 2,
                 background: "#686868",
                 borderRadius: 30,
-                height: "60px",
+                height: 50,
                 "&:hover": {
                   background: "#686868",
                 },
@@ -221,9 +221,9 @@ const fadeIn = keyframes`
 `;
 
 const DivLoginContainer = styled.div`
-  width: 500px;
-  height: 500px;
-  margin-top: 40px;
+width: 70%;
+margin-top: 10%;
+padding: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;

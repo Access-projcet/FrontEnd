@@ -109,6 +109,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -151,6 +152,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -186,6 +188,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -224,6 +227,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -267,6 +271,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -305,6 +310,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -337,6 +343,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -377,6 +384,7 @@ const AdminSignUp = () => {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -397,7 +405,7 @@ const AdminSignUp = () => {
                 mb: 2,
                 background: "#49CDB5",
                 borderRadius: 30,
-                height: "60px",
+                height: 50,
                 "&:hover": {
                   background: "#49CDB5",
                 },
@@ -437,8 +445,8 @@ const fadeIn = keyframes`
 `;
 
 const DivLoginContainer = styled.div`
-  width: 500px;
-  margin-top: 40px;
+width: 70%;
+padding: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -448,8 +456,9 @@ const DivLoginContainer = styled.div`
 const StForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 500px;
+  box-sizing: border-box;
+  gap: 8px;
+  width: 400px;
 `;
 const StLoginBtn = styled.div`
   position: relative;
@@ -460,10 +469,7 @@ const StloginImg = styled.img`
   right: 10%;
 `;
 
-// const StFindBtn = styled.div`
-//   color: black;
-//   margin-top: 30px;
-// `;
+
 
 const StAlready = styled.button`
   color: gray;
