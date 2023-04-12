@@ -26,11 +26,7 @@ const LobbyCheckInModal = ({ onClose }) => {
     },
     onError: (error) => {
       if (error.response.data.statusCode === 400) {
-        <LobbyNoMatchModal
-          onClose={() => {
-            setShowModal(false);
-          }}
-        />;
+        <LobbyNoMatchModal onClose={() => {}} />;
       }
       onClose();
     },

@@ -81,10 +81,10 @@ const Navbar = () => {
   }, [message, isConnection, refetch]);
 
   const logoutBtn = () => {
+    removeCookie("ACCESS_TOKEN");
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
     localStorage.removeItem("usertype");
-    removeCookie("ACCESS_TOKEN", { path: "/" });
     navigate("/");
   };
 
@@ -131,14 +131,14 @@ const Navbar = () => {
                 <StMenuLi onClick={navigateMyPage}>내가 신청한 목록</StMenuLi>
               </StMenuUl>
             </StMenuDiv>
-          ) : (
+          ) : menu === "admin" ? (
             <StMenuDiv>
               <StMenuUl>
                 <StMenuLi onClick={navigateDashBoard}>출입현황</StMenuLi>
                 <StMenuLi onClick={navigateApproveList}>승인현황</StMenuLi>
               </StMenuUl>
             </StMenuDiv>
-          )}
+          ) : null}
           <StUser>
             <StName>
               <StNotification onClick={handleClickNotification}>

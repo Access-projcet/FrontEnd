@@ -37,9 +37,8 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const mutation2 = useMutation(sendUrlCode, {
     onSuccess: (response) => {
-      console.log(response);
+      // console.log(response);
       queryClient.invalidateQueries("user");
-      alert("방문신청이 완료되었습니다.");
     },
     onError: (error) => {
       alert(error.response.data.message);
@@ -54,7 +53,7 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const mutation = useMutation(submitConfirmForm, {
     onSuccess: (response) => {
-      console.log(response);
+      // console.log(response);
       queryClient.invalidateQueries("user");
       alert("방문신청이 완료되었습니다.");
       onClose();

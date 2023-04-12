@@ -111,7 +111,6 @@ const StMainMenu2 = styled.div`
 const StMainDiv = styled.div`
   color: white;
   font-size: 32px;
-
   font-weight: 700;
 `;
 
