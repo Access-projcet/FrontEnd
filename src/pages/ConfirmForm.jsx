@@ -47,7 +47,7 @@ const ConfirmForm = ({ onClose, company }) => {
   const sendCodeHandler = () => {
     const info = {
       imgUrl:
-        "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttp://localhost:3000/",
+        "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttps://visitus.vercel.app/",
     };
     mutation2.mutate(info);
   };
@@ -263,7 +263,7 @@ const ConfirmForm = ({ onClose, company }) => {
           <Msg>
             <p>
               * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
-              2023/03/31, 14:00
+              2023/03/31, 01:00
             </p>
           </Msg>
         </StTimeWrapper>
