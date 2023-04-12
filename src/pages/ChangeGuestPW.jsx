@@ -7,6 +7,7 @@ import mainImg from "../utils/img/background.png";
 import mainLogo from "../utils/img/VISITUS_logo@2x.png";
 import { useNavigate } from "react-router-dom";
 import { ChangeGuestPW } from "../api/api";
+import HomeIcon from "@mui/icons-material/Home";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -70,6 +71,18 @@ function ChangeGuestPw() {
         <DivLoginContainer>
           <StForm onSubmit={onSubmitHandler}>
             <h2>비밀번호 변경</h2>
+            <HomeIcon
+              type="button"
+              onClick={() => {
+                navigate("/");
+              }}
+              style={{
+                cursor: "pointer",
+                position: "absolute",
+                top: "25px",
+                left: "50px",
+              }}
+            />
             <InputForm>
               <TextField
                 margin="normal"
@@ -252,7 +265,7 @@ const InputForm = styled.div`
 const DivLoginContainer = styled.div`
   position: relative;
   width: 30%;
-  height: 700px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
