@@ -1,13 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
 
-const LobbyCheckInErrorModal = ({ onClose }) => {
-  const navigate = useNavigate();
-
-  const gotoLobby = () => {
-    navigate("/lobby");
-  };
+const LobbyCheckOutErrorModal = ({ onClose }) => {
   return (
     <>
       <StBox>
@@ -20,7 +14,7 @@ const LobbyCheckInErrorModal = ({ onClose }) => {
   );
 };
 
-export default LobbyCheckInErrorModal;
+export default LobbyCheckOutErrorModal;
 
 const StBox = styled.div`
   display: flex;
