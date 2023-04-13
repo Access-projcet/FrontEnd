@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/navbar/Navbar";
-import btn1 from "../utils/img/방문_icon@2x.png";
-import btn2 from "../utils/img/방문이력_icon@2x.png";
-import btn3 from "../utils/img/icon-QR.png";
+import btn1 from "../utils/img/방문_icon.png";
+import btn2 from "../utils/img/방문이력_icon.png";
+import btn3 from "../utils/img/icon_QR (1).png";
 import QrCode from "qrcode.react";
 import Modal from "../components/modal/Modal";
 import { getUserInfoQr } from "../api/api";
@@ -86,7 +86,7 @@ const StMain = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 94vh;
+  height: 92vh;
 `;
 
 const StMainMenu = styled.div`
@@ -110,7 +110,7 @@ const StMainMenu2 = styled.div`
 
 const StMainDiv = styled.div`
   color: white;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
 `;
 

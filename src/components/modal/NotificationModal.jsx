@@ -5,6 +5,7 @@ import { readNotification } from "../../api/api";
 import { QueryClient } from "react-query";
 
 export const NotificationModal = ({ position, onClose, data, refetch }) => {
+  console.log(position);
   // const queryClient = new QueryClient();
   const deleteMutation = useMutation(readNotification, {
     onSuccess: (res) => {
@@ -26,11 +27,17 @@ export const NotificationModal = ({ position, onClose, data, refetch }) => {
             return (
               <StNotification>
                 {item.content}
-                <StConformBtn onClick={() => handlerDeleteNotification(item.id)}>✔️</StConformBtn>
+                <StConformBtn
+                  onClick={() => handlerDeleteNotification(item.id)}
+                >
+                  ✔️
+                </StConformBtn>
               </StNotification>
             );
           })}
-        {data && data.filter((item) => !item.isRead).length === 0 && <p>안 읽은 알림이 없습니다.</p>}
+        {data && data.filter((item) => !item.isRead).length === 0 && (
+          <p>안 읽은 알림이 없습니다.</p>
+        )}
       </StNotificationList>
       <ButtonClose onClick={onClose}>X</ButtonClose>
     </StContainer>
@@ -39,7 +46,7 @@ export const NotificationModal = ({ position, onClose, data, refetch }) => {
 
 const StContainer = styled.div`
   position: absolute;
-  top: ${(props) => props.position.top + 40}px;
+  top: ${(props) => parseInt(props.position.top, 10) + 15}px;
   left: ${(props) => props.position.left};
   width: 400px;
   height: 400px;

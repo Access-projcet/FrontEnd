@@ -202,15 +202,13 @@ function SearchGuestId({ onClose }) {
 export default SearchGuestId;
 
 const InputForm = styled.div`
-  margin: 70px;
+  padding: 0% 12%;
   align-items: center;
   margin-top: 10px;
 `;
 
 const DivLoginContainer = styled.div`
   position: absolute;
-  width: 547px;
-  height: 500px;
   top: 15%;
   display: flex;
   flex-direction: column;
