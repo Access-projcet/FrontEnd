@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
 
 const LobbyCheckInErrorModal = ({ onClose }) => {
   return (
@@ -9,7 +8,7 @@ const LobbyCheckInErrorModal = ({ onClose }) => {
         <StTxtContainer>
           <div>이미 체크인이 완료되었습니다.</div>
         </StTxtContainer>
-        <StCheckBtn onClick={onClose}>확인</StCheckBtn>
+        {/* <StCheckBtn onClick={onClose}>확인</StCheckBtn> */}
       </StBox>
     </>
   );
@@ -18,11 +17,16 @@ const LobbyCheckInErrorModal = ({ onClose }) => {
 export default LobbyCheckInErrorModal;
 
 const StBox = styled.div`
-  display: flex;
+  position: fixed;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  display: flex;
+  background-color: #f2f2f2;
+  width: 400px;
+  height: 200px;
   gap: 20px;
+  z-index: 10;
 `;
 const StTxtContainer = styled.div`
   display: flex;

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/navbar/Navbar";
-import btn1 from "../utils/img/방문_icon@2x.png";
-import btn2 from "../utils/img/방문이력_icon@2x.png";
-import btn3 from "../utils/img/icon-QR.png";
+import btn1 from "../utils/img/방문_icon.png";
+import btn2 from "../utils/img/방문이력_icon.png";
+import btn3 from "../utils/img/icon_QR (1).png";
 import QrCode from "qrcode.react";
 import Modal from "../components/modal/Modal";
 import { getUserInfoQr } from "../api/api";
@@ -37,17 +37,14 @@ const GuestMain = () => {
           <StMainDiv>방문 신청하기</StMainDiv>
           <StMainImg src={btn1} alt="방문신청하기"></StMainImg>
         </StMainMenu>
-
-        <StMainMenu>
-          <StMainMenu2 onClick={moveToMyPage} color="#57D4D4;">
-            <StMainDiv>내 방문 이력 보기</StMainDiv>
-            <StMainImg src={btn2} alt="내 방문 이력 보기"></StMainImg>
-          </StMainMenu2>
-          <StMainMenu2 color="#3DB7B7">
-            <StQrBtn onClick={handleGenerateQrCode}>QR 코드 발급</StQrBtn>
-            <StMainImg src={btn3} alt="QR발급하기"></StMainImg>
-          </StMainMenu2>
-        </StMainMenu>
+        <StMainMenu2 onClick={moveToMyPage} color="#57D4D4;">
+          <StMainDiv>내 방문 이력 보기</StMainDiv>
+          <StMainImg src={btn2} alt="내 방문 이력 보기"></StMainImg>
+        </StMainMenu2>
+        <StMainMenu2 onClick={handleGenerateQrCode} color="#3DB7B7">
+          <StMainDiv>QR 코드 발급</StMainDiv>
+          <StMainImg src={btn3} alt="QR발급하기"></StMainImg>
+        </StMainMenu2>
       </StMain>
       {isModalOpen && (
         <Modal
@@ -84,38 +81,86 @@ export default GuestMain;
 
 const StMain = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 94vh;
+  height: 92vh;
+  margin: 0 auto;
+  padding: 0 11vw;
+  @media (max-width: 1024px) {
+    padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    height: auto;
+  }
 `;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 60vh;
+  width: 32.5vw;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 1024px) {
+    width: 40vw;
+  }
+  @media (max-width: 768px) {
+    width: 40vw;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    flex: 2;
+    height: auto;
+    padding: 10vw 0;
+  }
 `;
 const StMainMenu2 = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 60vh;
+  width: 32.5vw;
   height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 1024px) {
+    width: 40vw;
+  }
+  @media (max-width: 768px) {
+    width: 40vw;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    padding: 10vw 0;
+    flex: 1;
+    height: auto;
+  }
 `;
 
 const StMainDiv = styled.div`
   color: white;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
+  @media (max-width: 768px) {
+    font-size: 3vw;
+  }
+  @media (max-width: 480px) {
+    font-size: 5vw;
+  }
 `;
 
 const StMainImg = styled.img`
   margin-top: 25px;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 15px;
+  }
 `;
 
 const StQrBtn = styled.button`

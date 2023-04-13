@@ -8,7 +8,7 @@ const LobbyCheckInDoneModal = ({ onClose }) => {
         <StTxtContainer>
           <div>체크인 되었습니다.</div>
         </StTxtContainer>
-        <StCheckBtn onClick={onClose}>확인</StCheckBtn>
+        {/* <StCheckBtn onClick={onClose}>확인</StCheckBtn> */}
       </StBox>
     </>
   );
@@ -17,11 +17,16 @@ const LobbyCheckInDoneModal = ({ onClose }) => {
 export default LobbyCheckInDoneModal;
 
 const StBox = styled.div`
-  display: flex;
+  position: fixed;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  display: flex;
+  background-color: #f2f2f2;
+  width: 400px;
+  height: 200px;
   gap: 20px;
+  z-index: 10;
 `;
 const StTxtContainer = styled.div`
   display: flex;

@@ -1,27 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 
-const LobbyCheckInErrorModal = ({ onClose }) => {
+const LobbyCheckOutErrorModal = ({ onClose }) => {
   return (
     <>
       <StBox>
         <StTxtContainer>
           <div>이미 체크아웃이 완료되었습니다.</div>
         </StTxtContainer>
-        <StCheckBtn onClick={onClose}>확인</StCheckBtn>
+        {/* <StCheckBtn onClick={onClose}>확인</StCheckBtn> */}
       </StBox>
     </>
   );
 };
 
-export default LobbyCheckInErrorModal;
+export default LobbyCheckOutErrorModal;
 
 const StBox = styled.div`
-  display: flex;
+  position: fixed;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  display: flex;
+  background-color: #f2f2f2;
+  width: 400px;
+  height: 200px;
   gap: 20px;
+  z-index: 10;
 `;
 const StTxtContainer = styled.div`
   display: flex;

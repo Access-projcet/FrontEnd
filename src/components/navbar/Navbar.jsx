@@ -8,16 +8,18 @@ import { useQuery, QueryClient } from "react-query";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useCookies } from "react-cookie";
 
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
 import { Link } from "react-router-dom";
 
-import { getCookie, removeCookie } from "./../../api/cookies";
+import { getCookie } from "./../../api/cookies";
 import { NotificationModal } from "../modal/NotificationModal";
 import { getNotifications } from "../../api/api";
 
 const Navbar = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["ACCESS_TOKEN"]);
   const navigate = useNavigate();
   const menu = localStorage.getItem("usertype");
   const [message, setMessage] = useState("not yet");
@@ -42,29 +44,31 @@ const Navbar = () => {
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(`${process.env.REACT_APP_SERVER_URL}/subscribe/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
+    const eventSource = new EventSourcePolyfill(
+      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     eventSource.onopen = () => {
       console.log("최초 오픈!");
       setIsConnection(true);
-      refetch();
     };
 
     eventSource.onmessage = (event) => {
       const target = event.data.split(" ")[0];
-      console.log("여기 왜 안옴?", event.data.split(" "));
       if (isConnection) {
         if (target === "EventStream" || target === "event:") {
           return;
         }
-        setMessage(event.data);
-        notify(message);
       }
+      setMessage(event.data);
+      notify(message);
+      refetch();
       // refetch();
       // queryClient.invalidateQueries("notification");
     };
@@ -143,10 +147,17 @@ const Navbar = () => {
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
-                {notificationCnt > 0 && <StNotificationCnt>{notificationCnt}</StNotificationCnt>}
+                {notificationCnt > 0 && (
+                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
+                )}
               </StNotification>
               {showNotification && (
-                <NotificationModal onClose={handleCloseNotification} position={modalPosition} data={data} />
+                <NotificationModal
+                  onClose={handleCloseNotification}
+                  position={modalPosition}
+                  data={data}
+                  refetch={refetch}
+                />
               )}
               {localStorage.getItem("name")}
               <StNameDes>님 반갑습니다</StNameDes>
@@ -156,7 +167,11 @@ const Navbar = () => {
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
-                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
+                <StLogOutImg
+                  src={logout}
+                  alt="logoutImg"
+                  onClick={logoutBtn}
+                ></StLogOutImg>
               </Link>
               {menu === "guest" ? (
                 <Link to={"/change_pw/guest"}>
@@ -184,11 +199,11 @@ export default Navbar;
 const StNavBar = styled.div`
   background-color: #636fd7;
   width: 100%;
-  min-height: 6vh;
+  min-height: 8vh;
 `;
 const StNavbarContainer = styled.div`
   width: 75%;
-  min-height: 6vh;
+  min-height: 8vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -233,20 +248,28 @@ const StLogOut = styled.button`
 const StLogOutImg = styled.img``;
 
 const StMenuDiv = styled.div`
-  @media screen and (max-width: 1500px) {
-    transform: none;
-  }
-  @media screen and (min-width: 1500px) {
-    transform: translateX(-40%);
-  }
+  transform: translateX(-10vw);
 
-  @media screen and (min-width: 1700px) {
-    transform: translateX(-60%);
-  }
+// @media screen and (min-width: 1200px) {
+//   transform: translateX(-100px);
+  
+//  }
 
-  @media screen and (min-width: 1900px) {
-    transform: translateX(-80%);
-  }
+// @media screen and (min-width: 1500px) {
+//   transform: translateX(-100px);
+  
+//  }
+//   @media screen and (max-width: 1500px) {
+//    transform: translateX(-150px);
+   
+//   }
+
+
+//   @media screen and (min-width: 1700px) {
+//   transform: translateX(-200px);
+//   }
+
+
 `;
 
 const StMenuUl = styled.ul`

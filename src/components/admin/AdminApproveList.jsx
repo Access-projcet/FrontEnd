@@ -5,8 +5,6 @@ import SaveIcon from "@mui/icons-material/Save";
 import MaterialReactTable from "material-react-table";
 import { useQuery, useMutation } from "react-query";
 import styled from "styled-components";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import { saveAs } from "file-saver";
 import Swal from "sweetalert2";
 import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
@@ -133,6 +131,9 @@ export default function AdminApproveList() {
       textAlign: "center",
       verticalAlign: "middle",
       borderBottom: "1px solid rgba(224, 224, 224, 1)",
+      fontWeight: "900",
+      fontSize: "24px",
+      className: "bold",
     },
   };
   return (
@@ -157,23 +158,6 @@ export default function AdminApproveList() {
             initialState={{
               showColumnFilters: false,
             }}
-            renderRow={(row, index) => {
-              const rowProps = {
-                style: {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                },
-                key: index,
-              };
-              return (
-                <tr {...row.getRowProps(rowProps)}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  ))}
-                </tr>
-              );
-            }}
             muiTableCellProps={muiTableCellProps}
             isMultiSortEvent={() => true}
             filterFns={{
@@ -183,8 +167,7 @@ export default function AdminApproveList() {
             }}
             muiTableHeadCellProps={{
               sx: {
-                fontWeight: "bold",
-                fontSize: "15px",
+                fontSize: "12px",
                 backgroundColor: `${color.tableHeader}`,
                 color: `${color.textWhite}`,
               },
@@ -279,7 +262,8 @@ const StDashBoardGnb = styled.div`
 const StDashBoardTitleArea = styled.div``;
 
 const StSpanAlert = styled.span`
-  border: 1px solid black;
+  /* border: 1px solid black;
   border-radius: 10%;
-  padding: 1% 3%;
+  padding: 1% 3%; */
+  font-weight: 900;
 `;

@@ -154,21 +154,15 @@ const DivLoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* background: url(${mainImg}) no-repeat;
-  background-size: 100%;
-  background-position: center; */
 `;
 
 const DivLoginBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 550px;
-  width: 25vw;
   background-color: white;
   border-radius: 30px;
   overflow: hidden;
-  padding-bottom: 20px;
   position: relative;
 `;
 const DivLoginType = styled.div`

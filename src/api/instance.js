@@ -1,6 +1,9 @@
 import axios from "axios";
 import { getCookie, removeCookie, setCookie } from "./cookies";
 import Swal from "sweetalert2";
+import { json } from "react-router-dom";
+import React from "react";
+import { queryAllByAltText } from "@testing-library/react";
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -50,7 +53,7 @@ instance.interceptors.response.use(
       } catch (error) {
         localStorage.removeItem("REFRESH_TOKEN");
         localStorage.removeItem("name");
-        removeCookie("ACCESS_TOKEN");
+        setCookie("ACCESS_TOKEN", "", -1);
         Swal.fire("토큰 유효기간 만료", "다시 로그인하세요", "error");
         window.location.href = "/login";
         return Promise.reject(error);
