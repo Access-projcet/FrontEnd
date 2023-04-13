@@ -28,20 +28,34 @@ export default function GuestMyPageTable() {
       keepPreviousData: true,
       //캐싱타임을 0으로 줘서 필터링시에 쓸데없는 캐싱을 하지않고 새로운 데이터를 요청하게함.
       cacheTime: 0,
-    },
+    }
   );
 
   const deleteMutaion = useMutation(guestDeleteVisit, {
     onSuccess: (data) => {
       console.log(data);
-      Swal.fire("성공!", "방문기록 삭제 성공", "success");
+      Swal.fire("삭제 완료", "신청이 취소되었습니다.", "success");
       refetch();
     },
   });
 
   const HandlerDeleteVisit = (row) => {
-    console.log("row", row.original.id);
-    deleteMutaion.mutate(row.original.id);
+    Swal.fire({
+      title: "정말 취소 하시겠습니까?",
+      text: "취소 하면 다시 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteMutaion.mutate(row.original.id);
+      }
+    });
+
+    // deleteMutaion.mutate(row.original.id);
   };
 
   const HandlerEditVisit = (row) => {
@@ -98,7 +112,7 @@ export default function GuestMyPageTable() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -169,7 +183,6 @@ export default function GuestMyPageTable() {
                 color="error"
                 onClick={(e) => {
                   HandlerDeleteVisit(row);
-                  console.log("del");
                 }}
                 sx={{ fontSize: "14px" }}
               >
