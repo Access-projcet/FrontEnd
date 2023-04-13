@@ -137,7 +137,7 @@ const SimpleLineChart = () => {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "Out Time" },
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -146,7 +146,7 @@ const SimpleLineChart = () => {
       <StAdminMainDiv>
         <StDashBoardGnb>
           <StDashBoardTitleArea>
-            <h2>출입 관리 그래프</h2>
+            <h2>출입관리그래프</h2>
             {/* <p>월별, 일별, 시간대별 출입현황을 조회할 수 있습니다.</p> */}
           </StDashBoardTitleArea>
           {/* <StDashBoardBtnArea>
@@ -173,24 +173,9 @@ const SimpleLineChart = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey="총 신청 수"
-                stroke="#8884d8"
-                strokeWidth={3}
-              />
-              <Line
-                type="monotone"
-                dataKey="총 승인 수"
-                stroke="#82ca9d"
-                strokeWidth={3}
-              />
-              <Line
-                type="monotone"
-                dataKey="총 출입 수"
-                stroke="#15c4fe"
-                strokeWidth={3}
-              />
+              <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" strokeWidth={3} />
+              <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" strokeWidth={3} />
+              <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </StContainer>

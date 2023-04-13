@@ -44,7 +44,6 @@ export default function MapContainer5() {
       return;
     }
     const filteredResults = data.data.filter((e) => {
-
       const companyName = (e.companyName || "").toLowerCase(); // 검색어와 항목의 값을 모두 소문자로 변환
       const companyAddress = (e.companyAddress || "").toLowerCase();
       const companyPhoneNum = (e.companyPhoneNum || "").toLowerCase();
@@ -53,7 +52,6 @@ export default function MapContainer5() {
         companyName.includes(targetLowerCase) ||
         companyAddress.includes(targetLowerCase) ||
         companyPhoneNum.includes(targetLowerCase)
-
       );
     });
     setSearchResults(filteredResults);
@@ -71,7 +69,7 @@ export default function MapContainer5() {
           companyName: e.companyName,
           companyAddress: e.companyAddress,
           companyPhoneNum: e.companyPhoneNum,
-        }))
+        })),
       );
     }
   }, [data]);
@@ -129,8 +127,6 @@ export default function MapContainer5() {
 
         {searchResults?.map((e) => (
           <DivListBox onClick={() => HandlerFocusMap(e)}>
-            <div></div>
-
             <DivListContent key={e.id}>
               <DivCompanyName>
                 <StImg src={markon} alt={markoff} />
@@ -140,9 +136,7 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
-              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>
-                방문 신청
-              </ButtonVisitForm>
+              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>방문 신청</ButtonVisitForm>
             </StBtnDiv>
           </DivListBox>
         ))}
@@ -176,39 +170,10 @@ export default function MapContainer5() {
                   option: imageOption,
                 }}
               ></MapMarker>
-              <CustomOverlayMap
-                position={{ lat: marker.lat, lng: marker.lng }}
-                yAnchor={2.0}
-              >
-                <div
-                  className="customoverlay"
-                  style={customOverlayStyle}
-                  onClick={() => handleMarkerClick(marker)}
-                >
-                  <span
-                    className="title"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "4px",
-                    }}
-                  >
-                    {marker.companyName}
-                  </span>
-                  <div
-                    style={{
-                      backgroundColor: "#636FD7",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      borderRadius: "0 5px 5px 0",
-                      padding: "0 8px",
-                      color: "#fff",
-                      fontSize: "14px",
-                    }}
-                  >
-                    ▶
-                  </div>
+              <CustomOverlayMap position={{ lat: marker.lat, lng: marker.lng }} yAnchor={2.0}>
+                <div className="customoverlay" style={customOverlayStyle} onClick={() => handleMarkerClick(marker)}>
+                  <StOverlaySpan className="title">{marker.companyName}</StOverlaySpan>
+                  <StOverlayArrow>▶</StOverlayArrow>
                 </div>
               </CustomOverlayMap>
             </>
@@ -224,27 +189,16 @@ export default function MapContainer5() {
                 <DivMapInfo className="info">
                   <DivMapTitle>
                     {selectedMarker.companyName}
-                    <BtnClose
-                      onClick={() => setSelectedMarker(null)}
-                      title="닫기"
-                    />
+                    <BtnClose onClick={() => setSelectedMarker(null)} title="닫기" />
                   </DivMapTitle>
 
                   <div className="body">
                     <StMapBody>
-                      <div className="ellipsis">
-                        {selectedMarker.companyAddress}
-                      </div>
-                      <div className="jibun ellipsis">
-                        {selectedMarker.companyPhoneNum}
-                      </div>
+                      <div className="ellipsis">{selectedMarker.companyAddress}</div>
+                      <div className="jibun ellipsis">{selectedMarker.companyPhoneNum}</div>
                     </StMapBody>
                     <DivMapButton>
-                      <BtnMapButton
-                        onClick={() => HandlerModalOn(selectedMarker)}
-                      >
-                        방문 신청
-                      </BtnMapButton>
+                      <BtnMapButton onClick={() => HandlerModalOn(selectedMarker)}>방문 신청</BtnMapButton>
                     </DivMapButton>
                   </div>
                 </DivMapInfo>
@@ -316,9 +270,11 @@ const DivInput = styled.div`
   background-color: #ffffff;
   border-radius: 32px;
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
 `;
 const InputText = styled.input`
-  width: 82%;
+  width: 88%;
   height: 52px;
   border: none;
   outline: none;
@@ -326,16 +282,17 @@ const InputText = styled.input`
   padding: 0 20px;
   font-size: 16px;
   border: 2px solid #636fd7;
-  margin-left: 35px;
+  margin: 0 auto;
   border-radius: 32px;
   &::placeholder {
     color: #a0a6d8; // 변경하고자 하는 색상으로 바꿔주세요
   }
+  box-sizing: border-box;
 `;
 const StImgSearch = styled.img`
   position: absolute;
   top: 50%;
-  right: 30px;
+  right: 10%;
   transform: translateY(-50%);
 `;
 
@@ -345,13 +302,16 @@ const DivTemp = styled.div`
 `;
 
 const DivListBox = styled.div`
-  display: grid;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  gap: 25px;
+  /* display: grid;
   grid-template-columns: 30px 1fr 135px;
   grid-template-rows: 1fr;
   grid-gap: 15px;
-  grid-template-areas: "img content button";
-  width: 100%;
-  height: 133px;
+  grid-template-areas: "img content button"; 
+  width: 100%;*/
   margin-top: 10px;
   background-color: #ffffff;
   &:hover {
@@ -363,7 +323,6 @@ const DivListContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 5px;
   & > * {
     margin: 8px 0;
   }
@@ -373,16 +332,17 @@ const StBtnDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5px;
 `;
 const ButtonVisitForm = styled.button`
-  width: 126px;
-  height: 52px;
+  width: 100px;
+  height: 50px;
   background-color: #636fd7;
-  border-radius: 32px;
+  border-radius: 25px;
   color: #ffffff;
-  margin-right: 8px;
+  margin: 0 auto;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
 `;
 
 const DivCompanyName = styled.div`
@@ -464,4 +424,23 @@ const BtnMapButton = styled.button`
   font-size: 16px;
   line-height: 20px;
   cursor: pointer;
+`;
+
+const StOverlaySpan = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8%;
+  font-size: 12px;
+  font-weight: 700;
+`;
+const StOverlayArrow = styled.div`
+  background-color: #636fd7;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0 5px 5px 0;
+  padding: 0 8px;
+  color: #fff;
+  font-size: 14px;
 `;
