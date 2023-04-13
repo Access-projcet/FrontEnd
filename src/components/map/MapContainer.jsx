@@ -44,6 +44,7 @@ export default function MapContainer5() {
       return;
     }
     const filteredResults = data.data.filter((e) => {
+
       const companyName = (e.companyName || "").toLowerCase(); // 검색어와 항목의 값을 모두 소문자로 변환
       const companyAddress = (e.companyAddress || "").toLowerCase();
       const companyPhoneNum = (e.companyPhoneNum || "").toLowerCase();
@@ -52,6 +53,7 @@ export default function MapContainer5() {
         companyName.includes(targetLowerCase) ||
         companyAddress.includes(targetLowerCase) ||
         companyPhoneNum.includes(targetLowerCase)
+
       );
     });
     setSearchResults(filteredResults);
@@ -69,7 +71,7 @@ export default function MapContainer5() {
           companyName: e.companyName,
           companyAddress: e.companyAddress,
           companyPhoneNum: e.companyPhoneNum,
-        })),
+        }))
       );
     }
   }, [data]);
@@ -138,7 +140,9 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyPhoneNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
-              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>방문 신청</ButtonVisitForm>
+              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>
+                방문 신청
+              </ButtonVisitForm>
             </StBtnDiv>
           </DivListBox>
         ))}
@@ -161,18 +165,53 @@ export default function MapContainer5() {
           level={3} // 지도의 확대 레벨
         >
           {filteredMarkers?.map((marker, index) => (
-            <MapMarker
-              key={index}
-              position={{ lat: marker.lat, lng: marker.lng }}
-              onClick={() => handleMarkerClick(marker)}
-              image={{
-                src: imageSrc,
-                size: imageSize,
-                option: imageOption,
-              }}
-            >
-              {/* <div>{marker.companyName}</div> */}
-            </MapMarker>
+            <>
+              <MapMarker
+                key={index}
+                position={{ lat: marker.lat, lng: marker.lng }}
+                onClick={() => handleMarkerClick(marker)}
+                image={{
+                  src: imageSrc,
+                  size: imageSize,
+                  option: imageOption,
+                }}
+              ></MapMarker>
+              <CustomOverlayMap
+                position={{ lat: marker.lat, lng: marker.lng }}
+                yAnchor={2.0}
+              >
+                <div
+                  className="customoverlay"
+                  style={customOverlayStyle}
+                  onClick={() => handleMarkerClick(marker)}
+                >
+                  <span
+                    className="title"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "4px",
+                    }}
+                  >
+                    {marker.companyName}
+                  </span>
+                  <div
+                    style={{
+                      backgroundColor: "#636FD7",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      borderRadius: "0 5px 5px 0",
+                      padding: "0 8px",
+                      color: "#fff",
+                      fontSize: "14px",
+                    }}
+                  >
+                    ▶
+                  </div>
+                </div>
+              </CustomOverlayMap>
+            </>
           ))}
           {selectedMarker && (
             <CustomOverlayMap
@@ -185,16 +224,27 @@ export default function MapContainer5() {
                 <DivMapInfo className="info">
                   <DivMapTitle>
                     {selectedMarker.companyName}
-                    <BtnClose onClick={() => setSelectedMarker(null)} title="닫기" />
+                    <BtnClose
+                      onClick={() => setSelectedMarker(null)}
+                      title="닫기"
+                    />
                   </DivMapTitle>
 
                   <div className="body">
                     <StMapBody>
-                      <div className="ellipsis">{selectedMarker.companyAddress}</div>
-                      <div className="jibun ellipsis">{selectedMarker.companyPhoneNum}</div>
+                      <div className="ellipsis">
+                        {selectedMarker.companyAddress}
+                      </div>
+                      <div className="jibun ellipsis">
+                        {selectedMarker.companyPhoneNum}
+                      </div>
                     </StMapBody>
                     <DivMapButton>
-                      <BtnMapButton onClick={() => HandlerModalOn(selectedMarker)}>방문 신청</BtnMapButton>
+                      <BtnMapButton
+                        onClick={() => HandlerModalOn(selectedMarker)}
+                      >
+                        방문 신청
+                      </BtnMapButton>
                     </DivMapButton>
                   </div>
                 </DivMapInfo>
@@ -223,6 +273,14 @@ export default function MapContainer5() {
     </DivMap>
   );
 }
+
+const customOverlayStyle = {
+  display: "flex",
+  background: "rgba(255, 255, 255)",
+  borderRadius: "5px",
+  height: "35px",
+  boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.2)",
+};
 
 const DivMap = styled.div`
   width: 100%;
@@ -260,7 +318,7 @@ const DivInput = styled.div`
   margin-top: 10px;
 `;
 const InputText = styled.input`
-  width: 90%;
+  width: 82%;
   height: 52px;
   border: none;
   outline: none;
@@ -268,6 +326,7 @@ const InputText = styled.input`
   padding: 0 20px;
   font-size: 16px;
   border: 2px solid #636fd7;
+  margin-left: 35px;
   border-radius: 32px;
   &::placeholder {
     color: #a0a6d8; // 변경하고자 하는 색상으로 바꿔주세요
@@ -276,7 +335,7 @@ const InputText = styled.input`
 const StImgSearch = styled.img`
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 30px;
   transform: translateY(-50%);
 `;
 
@@ -287,8 +346,9 @@ const DivTemp = styled.div`
 
 const DivListBox = styled.div`
   display: grid;
-  grid-template-columns: 49px 1fr 135px;
+  grid-template-columns: 30px 1fr 135px;
   grid-template-rows: 1fr;
+  grid-gap: 15px;
   grid-template-areas: "img content button";
   width: 100%;
   height: 133px;

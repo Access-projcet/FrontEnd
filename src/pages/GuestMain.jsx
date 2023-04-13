@@ -38,16 +38,16 @@ const GuestMain = () => {
           <StMainImg src={btn1} alt="방문신청하기"></StMainImg>
         </StMainMenu>
 
-        <StMainMenu>
+        <StMainMenuu>
           <StMainMenu2 onClick={moveToMyPage} color="#57D4D4;">
             <StMainDiv>내 방문 이력 보기</StMainDiv>
             <StMainImg src={btn2} alt="내 방문 이력 보기"></StMainImg>
           </StMainMenu2>
-          <StMainMenu2 color="#3DB7B7">
+          <StMainMenu3 color="#3DB7B7">
             <StQrBtn onClick={handleGenerateQrCode}>QR 코드 발급</StQrBtn>
             <StMainImg src={btn3} alt="QR발급하기"></StMainImg>
-          </StMainMenu2>
-        </StMainMenu>
+          </StMainMenu3>
+        </StMainMenuu>
       </StMain>
       {isModalOpen && (
         <Modal
@@ -88,6 +88,17 @@ const StMain = styled.div`
   align-items: center;
   height: 92vh;
 `;
+const StMainDiv = styled.div`
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+`;
+
+const StMainImg = styled.img`
+  margin-top: 25px;
+  transition: all 0.2s ease-in-out;
+`;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
@@ -97,6 +108,25 @@ const StMainMenu = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  &:hover {
+    ${StMainDiv} {
+      transform: scale(1.2);
+    }
+    ${StMainImg} {
+      transform: scale(1.2);
+    }
+  }
+`;
+const StMainMenuu = styled.div`
+  background-color: ${(props) => props.color || "blue"};
+  width: 60vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 const StMainMenu2 = styled.div`
   background-color: ${(props) => props.color || "blue"};
@@ -106,23 +136,41 @@ const StMainMenu2 = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &:hover {
+    ${StMainDiv} {
+      transform: scale(1.2);
+    }
+    ${StMainImg} {
+      transform: scale(1.2);
+    }
+  }
 `;
-
-const StMainDiv = styled.div`
-  color: white;
-  font-size: 28px;
-  font-weight: 700;
-`;
-
-const StMainImg = styled.img`
-  margin-top: 25px;
-`;
-
 const StQrBtn = styled.button`
   color: white;
   font-size: 32px;
   font-weight: 700;
   background-color: transparent;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+`;
+
+const StMainMenu3 = styled.div`
+  background-color: ${(props) => props.color || "blue"};
+  width: 60vh;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    ${StQrBtn} {
+      transform: scale(1.2);
+    }
+    ${StMainImg} {
+      transform: scale(1.2);
+    }
+  }
 `;
 
 const ModalOverlay = styled.div`

@@ -108,6 +108,17 @@ const StMain = styled.div`
   margin: 0 auto;
   width: 80%;
 `;
+const StMainDiv = styled.div`
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+`;
+
+const StMainImg = styled.img`
+  margin-top: 25px;
+  transition: all 0.2s ease-in-out;
+`;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
@@ -118,14 +129,13 @@ const StMainMenu = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-`;
-
-const StMainDiv = styled.div`
-  color: white;
-  font-size: 32px;
-  font-weight: 700;
-`;
-
-const StMainImg = styled.img`
-  margin-top: 25px;
+  cursor: pointer;
+  &:hover {
+    ${StMainDiv} {
+      transform: scale(1.2);
+    }
+    ${StMainImg} {
+      transform: scale(1.2);
+    }
+  }
 `;
