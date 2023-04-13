@@ -38,7 +38,7 @@ const Lobby = () => {
           }}
           color="#57D4D4;"
         >
-          <StMainDiv>check-out</StMainDiv>
+          <StMainDiv>Check-out</StMainDiv>
           <StMainImg src={btn2} alt="Check-out"></StMainImg>
         </StMainMenu>
 
@@ -64,7 +64,7 @@ const Lobby = () => {
           }}
           color="#636FD7;"
         >
-          <StMainDiv>Qr-Check-in</StMainDiv>
+          <StMainDiv>QR Check-in</StMainDiv>
           <StMainImg src={btn3} alt="Check-in"></StMainImg>
         </StMainMenu>
 
@@ -75,7 +75,7 @@ const Lobby = () => {
           }}
           color="#3DB7B7;"
         >
-          <StMainDiv>Qr-Check-out</StMainDiv>
+          <StMainDiv>QR Check-out</StMainDiv>
           <StMainImg src={btn3} alt="Check-out"></StMainImg>
         </StMainMenu>
         {showQrModalCheckIn === true ? (
