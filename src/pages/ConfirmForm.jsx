@@ -12,8 +12,6 @@ const ConfirmForm = ({ onClose, company }) => {
   const [place, setPlace] = useState("");
   const [target, setTarget] = useState("");
   const [purpose, setPurpose] = useState("");
-  // const [startDate, setStartDate] = useState("");
-  // const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [visitor, setVisitor] = useState("");
@@ -203,7 +201,14 @@ const ConfirmForm = ({ onClose, company }) => {
                 value={startTime}
                 placeholder="00:00"
                 onChange={(e) => {
-                  setStartTime(e.target.value);
+                  let value = e.target.value.replace(/-/g, "");
+                  if (value.length === 4) {
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  } else {
+                    value = value.slice(0, 5);
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  }
+                  setStartTime(value);
                 }}
               ></StInput>
             </div>
@@ -253,7 +258,14 @@ const ConfirmForm = ({ onClose, company }) => {
                 value={endTime}
                 placeholder="00:00"
                 onChange={(e) => {
-                  setEndTime(e.target.value);
+                  let value = e.target.value.replace(/-/g, "");
+                  if (value.length === 4) {
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  } else {
+                    value = value.slice(0, 5);
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  }
+                  setEndTime(value);
                 }}
               ></StInput>
             </div>
@@ -297,7 +309,14 @@ const ConfirmForm = ({ onClose, company }) => {
               id="phoneNum"
               value={phoneNum}
               onChange={(e) => {
-                setPhoneNum(e.target.value);
+                let value = e.target.value.replace(/-/g, "");
+                if (value.length === 11) {
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                } else {
+                  value = value.slice(0, 11);
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                }
+                setPhoneNum(value);
               }}
               placeholder="전화번호를 입력하세요"
             />

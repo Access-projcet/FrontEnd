@@ -36,7 +36,7 @@ const AdminSignUp = () => {
   const [businessNum, setBusinessNum] = useState("");
   const [companyToken, setCompanyToken] = useState("");
   const [password, setPassword] = useState("");
-  const [checkPassword, setCheckPassword] = React.useState("");
+  const [checkPassword, setCheckPassword] = useState("");
   const [name, setName] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const queryClient = useQueryClient();
@@ -121,7 +121,7 @@ const AdminSignUp = () => {
             value={businessNum}
             onChange={(e) => {
               let value = e.target.value.replace(/-/g, "");
-              if (value.length <= 10) {
+              if (value.length === 10) {
                 value = value.replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
               } else {
                 value = value.slice(0, 10);
@@ -352,11 +352,9 @@ const AdminSignUp = () => {
             value={phoneNum}
             onChange={(e) => {
               let value = e.target.value.replace(/-/g, "");
-              if (value.length === 10) {
-                value = value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
-              } else if (value.length === 11) {
+              if (value.length === 11) {
                 value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
-              } else if (value.length >= 12) {
+              } else {
                 value = value.slice(0, 11);
                 value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
               }

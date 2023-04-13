@@ -127,8 +127,6 @@ export default function MapContainer5() {
 
         {searchResults?.map((e) => (
           <DivListBox onClick={() => HandlerFocusMap(e)}>
-            <div></div>
-
             <DivListContent key={e.id}>
               <DivCompanyName>
                 <StImg src={markon} alt={markoff} />
@@ -161,18 +159,24 @@ export default function MapContainer5() {
           level={3} // 지도의 확대 레벨
         >
           {filteredMarkers?.map((marker, index) => (
-            <MapMarker
-              key={index}
-              position={{ lat: marker.lat, lng: marker.lng }}
-              onClick={() => handleMarkerClick(marker)}
-              image={{
-                src: imageSrc,
-                size: imageSize,
-                option: imageOption,
-              }}
-            >
-              {/* <div>{marker.companyName}</div> */}
-            </MapMarker>
+            <>
+              <MapMarker
+                key={index}
+                position={{ lat: marker.lat, lng: marker.lng }}
+                onClick={() => handleMarkerClick(marker)}
+                image={{
+                  src: imageSrc,
+                  size: imageSize,
+                  option: imageOption,
+                }}
+              ></MapMarker>
+              <CustomOverlayMap position={{ lat: marker.lat, lng: marker.lng }} yAnchor={2.0}>
+                <div className="customoverlay" style={customOverlayStyle} onClick={() => handleMarkerClick(marker)}>
+                  <StOverlaySpan className="title">{marker.companyName}</StOverlaySpan>
+                  <StOverlayArrow>▶</StOverlayArrow>
+                </div>
+              </CustomOverlayMap>
+            </>
           ))}
           {selectedMarker && (
             <CustomOverlayMap
@@ -224,6 +228,14 @@ export default function MapContainer5() {
   );
 }
 
+const customOverlayStyle = {
+  display: "flex",
+  background: "rgba(255, 255, 255)",
+  borderRadius: "5px",
+  height: "35px",
+  boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.2)",
+};
+
 const DivMap = styled.div`
   width: 100%;
   height: 93vh;
@@ -258,9 +270,11 @@ const DivInput = styled.div`
   background-color: #ffffff;
   border-radius: 32px;
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
 `;
 const InputText = styled.input`
-  width: 90%;
+  width: 88%;
   height: 52px;
   border: none;
   outline: none;
@@ -268,15 +282,17 @@ const InputText = styled.input`
   padding: 0 20px;
   font-size: 16px;
   border: 2px solid #636fd7;
+  margin: 0 auto;
   border-radius: 32px;
   &::placeholder {
     color: #a0a6d8; // 변경하고자 하는 색상으로 바꿔주세요
   }
+  box-sizing: border-box;
 `;
 const StImgSearch = styled.img`
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 10%;
   transform: translateY(-50%);
 `;
 
@@ -286,12 +302,16 @@ const DivTemp = styled.div`
 `;
 
 const DivListBox = styled.div`
-  display: grid;
-  grid-template-columns: 49px 1fr 135px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  gap: 25px;
+  /* display: grid;
+  grid-template-columns: 30px 1fr 135px;
   grid-template-rows: 1fr;
-  grid-template-areas: "img content button";
-  width: 100%;
-  height: 133px;
+  grid-gap: 15px;
+  grid-template-areas: "img content button"; 
+  width: 100%;*/
   margin-top: 10px;
   background-color: #ffffff;
   &:hover {
@@ -303,7 +323,6 @@ const DivListContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 5px;
   & > * {
     margin: 8px 0;
   }
@@ -313,16 +332,17 @@ const StBtnDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 5px;
 `;
 const ButtonVisitForm = styled.button`
-  width: 126px;
-  height: 52px;
+  width: 100px;
+  height: 50px;
   background-color: #636fd7;
-  border-radius: 32px;
+  border-radius: 25px;
   color: #ffffff;
-  margin-right: 8px;
+  margin: 0 auto;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
 `;
 
 const DivCompanyName = styled.div`
@@ -404,4 +424,23 @@ const BtnMapButton = styled.button`
   font-size: 16px;
   line-height: 20px;
   cursor: pointer;
+`;
+
+const StOverlaySpan = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8%;
+  font-size: 12px;
+  font-weight: 700;
+`;
+const StOverlayArrow = styled.div`
+  background-color: #636fd7;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0 5px 5px 0;
+  padding: 0 8px;
+  color: #fff;
+  font-size: 14px;
 `;

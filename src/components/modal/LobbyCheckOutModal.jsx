@@ -74,7 +74,14 @@ const LobbyCheckOutModal = ({ onClose }) => {
               <input
                 value={phoneNum}
                 onChange={(e) => {
-                  setPhoneNum(e.target.value);
+                  let value = e.target.value.replace(/-/g, "");
+                  if (value.length === 11) {
+                    value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                  } else {
+                    value = value.slice(0, 11);
+                    value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                  }
+                  setPhoneNum(value);
                 }}
                 style={{
                   marginLeft: "50px",

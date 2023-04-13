@@ -38,7 +38,7 @@ const Lobby = () => {
           }}
           color="#57D4D4;"
         >
-          <StMainDiv>check-out</StMainDiv>
+          <StMainDiv>Check-out</StMainDiv>
           <StMainImg src={btn2} alt="Check-out"></StMainImg>
         </StMainMenu>
 
@@ -64,7 +64,7 @@ const Lobby = () => {
           }}
           color="#636FD7;"
         >
-          <StMainDiv>Qr-Check-in</StMainDiv>
+          <StMainDiv>QR Check-in</StMainDiv>
           <StMainImg src={btn3} alt="Check-in"></StMainImg>
         </StMainMenu>
 
@@ -75,7 +75,7 @@ const Lobby = () => {
           }}
           color="#3DB7B7;"
         >
-          <StMainDiv>Qr-Check-out</StMainDiv>
+          <StMainDiv>QR Check-out</StMainDiv>
           <StMainImg src={btn3} alt="Check-out"></StMainImg>
         </StMainMenu>
         {showQrModalCheckIn === true ? (
@@ -112,6 +112,30 @@ const StMain = styled.div`
     padding: 0;
   }
 `;
+const StMainDiv = styled.div`
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
+`;
+
+const StMainImg = styled.img`
+  margin-top: 25px;
+  transition: all 0.2s ease-in-out;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 15px;
+  }
+`;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
@@ -121,6 +145,15 @@ const StMainMenu = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  cursor: pointer;
+  &:hover {
+    ${StMainDiv} {
+      transform: scale(1.2);
+    }
+    ${StMainImg} {
+      transform: scale(1.2);
+    }
+  }
   flex-wrap: wrap;
   width: 32.5vw;
   @media (max-width: 1024px) {
@@ -132,28 +165,5 @@ const StMainMenu = styled.div`
 
   @media (max-width: 480px) {
     width: 100vw;
-  }
-`;
-
-const StMainDiv = styled.div`
-  color: white;
-  font-size: 32px;
-  font-weight: 700;
-  @media (max-width: 768px) {
-    font-size: 28px;
-  }
-  @media (max-width: 480px) {
-    font-size: 24px;
-  }
-`;
-
-const StMainImg = styled.img`
-  margin-top: 25px;
-  @media (max-width: 768px) {
-    margin-top: 20px;
-  }
-
-  @media (max-width: 480px) {
-    margin-top: 15px;
   }
 `;

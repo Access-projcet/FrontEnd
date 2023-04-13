@@ -18,6 +18,7 @@ const useStyles = makeStyles({
     borderRadius: 30,
     "& .MuiOutlinedInput-root": {
       borderRadius: "30px",
+      // height: "50px",
 
       "&.Mui-focused fieldset": {
         borderColor: "#636FD7",
@@ -26,6 +27,9 @@ const useStyles = makeStyles({
         color: "#636FD7",
       },
     },
+    // "& .MuiInputBase-input": {
+    //   height: "50px",
+    // },
   },
 });
 
@@ -41,7 +45,10 @@ export default function GuestLoginForm() {
     onSuccess: (data) => {
       console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
+      localStorage.setItem(
+        "REFRESH_TOKEN",
+        data.headers.refreshtoken.split(" ")[1]
+      );
       localStorage.setItem("name", data.data.data.name);
       localStorage.setItem("usertype", menu);
       navigate("/guest/main");
@@ -226,7 +233,6 @@ const DivLoginContainer = styled.div`
   align-items: center;
   animation: ${fadeIn} 1s linear;
   justify-content: space-around;
-
 `;
 const StLoginBtn = styled.div`
   position: relative;
