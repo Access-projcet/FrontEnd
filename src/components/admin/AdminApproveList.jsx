@@ -28,8 +28,11 @@ export default function AdminApproveList() {
 
   const adminModifyMutation = useMutation(adminModify, {
     onSuccess: (data) => {
-      console.log("succecc", data);
-      Swal.fire("성공", "방문기록이 수정되었습니다.", "success");
+      console.log("succecc", data.config.data);
+      JSON.parse(data.config.data).status === "2"
+        ? Swal.fire("승인", "방문을 승인하셨습니다.", "success")
+        : Swal.fire("거절", "방문을 거절하셨습니다.", "error");
+
       refetch();
     },
     onError: (error) => {
@@ -62,7 +65,7 @@ export default function AdminApproveList() {
       {
         accessorKey: "place",
         header: "방문장소",
-        size: 100,
+        size: 50,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "Place" },
       },
       {
@@ -74,7 +77,7 @@ export default function AdminApproveList() {
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 150,
+        size: 50,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "purpose" },
       },
       {
@@ -97,7 +100,7 @@ export default function AdminApproveList() {
       {
         accessorKey: "status",
         header: "상태",
-        size: 50,
+        size: 60,
         filterVariant: "select",
         filterSelectOptions: ["1", "2", "3", "4"],
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
@@ -124,7 +127,14 @@ export default function AdminApproveList() {
       })
       .catch((err) => console.log(err));
   };
-
+  const muiTableCellProps = {
+    sx: {
+      padding: "10px",
+      textAlign: "center",
+      verticalAlign: "middle",
+      borderBottom: "1px solid rgba(224, 224, 224, 1)",
+    },
+  };
   return (
     <>
       <Navbar />
@@ -147,6 +157,24 @@ export default function AdminApproveList() {
             initialState={{
               showColumnFilters: false,
             }}
+            renderRow={(row, index) => {
+              const rowProps = {
+                style: {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                },
+                key: index,
+              };
+              return (
+                <tr {...row.getRowProps(rowProps)}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  ))}
+                </tr>
+              );
+            }}
+            muiTableCellProps={muiTableCellProps}
             isMultiSortEvent={() => true}
             filterFns={{
               customFilterFn: (row, id, filterValue) => {
@@ -154,7 +182,6 @@ export default function AdminApproveList() {
               },
             }}
             muiTableHeadCellProps={{
-              //simple styling with the `sx` prop, works just like a style prop in this example
               sx: {
                 fontWeight: "bold",
                 fontSize: "15px",
@@ -171,7 +198,7 @@ export default function AdminApproveList() {
                 : undefined
             }
             renderTopToolbarCustomActions={() => (
-              <Box sx={{ display: "flex", gap: "1rem" }}>
+              <Box sx={{ display: "flex" }}>
                 <Tooltip arrow title="Refresh Data">
                   <IconButton onClick={() => refetch()}>
                     <RefreshIcon />
@@ -187,7 +214,7 @@ export default function AdminApproveList() {
             enableRowActions
             positionActionsColumn="last"
             renderRowActions={({ row }) => (
-              <Box sx={{ display: "flex", gap: "1rem" }}>
+              <Box sx={{ display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
                 <Tooltip arrow placement="left" title="승인">
                   <IconButton
                     color="success"
@@ -196,9 +223,10 @@ export default function AdminApproveList() {
                     }}
                     sx={{ fontSize: "14px" }}
                   >
-                    <span>승인</span>
+                    <StSpanAlert>승인</StSpanAlert>
                   </IconButton>
                 </Tooltip>
+                <span>|</span>
                 <Tooltip arrow placement="right" title="거절">
                   <IconButton
                     color="error"
@@ -207,7 +235,7 @@ export default function AdminApproveList() {
                     }}
                     sx={{ fontSize: "14px" }}
                   >
-                    <span>거절</span>
+                    <StSpanAlert>거절</StSpanAlert>
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -249,3 +277,9 @@ const StDashBoardGnb = styled.div`
   margin: 0 auto;
 `;
 const StDashBoardTitleArea = styled.div``;
+
+const StSpanAlert = styled.span`
+  border: 1px solid black;
+  border-radius: 10%;
+  padding: 1% 3%;
+`;

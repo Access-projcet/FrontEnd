@@ -66,8 +66,8 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const dateTimeStart = new Date(`${dateToString(startDate)}T${startTime}:00`).toISOString();
-    const dateTimeEnd = new Date(`${dateToString(endDate)}T${endTime}:00`).toISOString();
+    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`.toISOString();
+    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`.toISOString();
     const confirmForm = {
       location,
       place,

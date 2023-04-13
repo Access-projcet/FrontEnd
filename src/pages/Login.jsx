@@ -126,7 +126,7 @@ export default Login;
 const StLogo = styled.img`
   position: absolute;
   left: 50%;
-  top: 200px;
+  top: 50px;
   z-index: 0;
   transform: translate(-50%, -50%);
 `;
@@ -139,6 +139,9 @@ const StMainBackground = styled.img`
   height: 100vh;
   transform: translate(-50%, -50%);
   object-fit: cover;
+  /* @media screen (min-width: 768px) {
+    top: 20%;
+  } */
 `;
 const DivLoginContainer = styled.div`
   position: absolute;

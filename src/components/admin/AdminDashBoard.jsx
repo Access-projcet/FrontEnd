@@ -255,7 +255,7 @@ export default SimpleLineChart;
 
 const StAdminMainDiv = styled.div``;
 const StDashBoardGnb = styled.div`
-  padding: 2%;
+  padding: 1%;
   display: flex;
   justify-content: space-between;
   align-items: center;
