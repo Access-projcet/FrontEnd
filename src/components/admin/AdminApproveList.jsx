@@ -21,7 +21,7 @@ export default function AdminApproveList() {
     {
       keepPreviousData: true,
       cacheTime: 0,
-    },
+    }
   );
 
   const adminModifyMutation = useMutation(adminModify, {
@@ -50,6 +50,9 @@ export default function AdminApproveList() {
       id: row.original.id,
       status: "3",
     });
+  };
+  const ColoredText = (value) => {
+    return <span style={{ color: "red" }}>{value}</span>;
   };
 
   const columns = useMemo(
@@ -100,22 +103,21 @@ export default function AdminApproveList() {
         header: "상태",
         size: 60,
         filterVariant: "select",
-        filterSelectOptions: ["1", "2", "3", "4"],
+        filterSelectOptions: ["승인", "대기", "거절", "완료"],
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    [],
+    []
   );
 
   const HandlerExcel = () => {
     const date = new Date();
-    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
-      .getDate()
+    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1)
       .toString()
-      .padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}시${date
-      .getMinutes()
+      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}_${date
+      .getHours()
       .toString()
-      .padStart(2, "0")}분`;
+      .padStart(2, "0")}시${date.getMinutes().toString().padStart(2, "0")}분`;
     DownLoadExcel()
       .then((res) => {
         const blob = new Blob([res.data], {
@@ -166,12 +168,33 @@ export default function AdminApproveList() {
               },
             }}
             muiTableHeadCellProps={{
+              align: "center",
+              //simple styling with the `sx` prop, works just like a style prop in this example
               sx: {
                 fontSize: "12px",
                 backgroundColor: `${color.tableHeader}`,
                 color: `${color.textWhite}`,
+                marginLeft: "30px",
               },
             }}
+            muiTableBodyCellProps={({ cell, column }) => ({
+              style: {
+                color:
+                  column.id === "status"
+                    ? cell.getValue() === "대기"
+                      ? "blue"
+                      : cell.getValue() === "승인"
+                      ? "green"
+                      : cell.getValue() === "거절"
+                      ? "red"
+                      : cell.getValue() === "완료"
+                      ? "black"
+                      : "black"
+                    : "black",
+                fontWeight: "bold",
+                textAlign: "center",
+              },
+            })}
             muiToolbarAlertBannerProps={
               isError
                 ? {
@@ -197,7 +220,14 @@ export default function AdminApproveList() {
             enableRowActions
             positionActionsColumn="last"
             renderRowActions={({ row }) => (
-              <Box sx={{ display: "flex", gap: "1rem", justifyContent: "center", alignItems: "center" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Tooltip arrow placement="left" title="승인">
                   <IconButton
                     color="success"
@@ -262,7 +292,9 @@ const StDashBoardGnb = styled.div`
 const StDashBoardTitleArea = styled.div``;
 
 const StSpanAlert = styled.span`
-  /* border: 1px solid black;
+
+  width: 40px;
+  border: 1px solid black;
   border-radius: 10%;
   padding: 1% 3%; */
   font-weight: 900;
