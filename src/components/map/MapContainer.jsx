@@ -44,13 +44,16 @@ export default function MapContainer5() {
       return;
     }
     const filteredResults = data.data.filter((e) => {
-      const companyName = e.companyName || "";
-      const companyAddress = e.companyAddress || "";
-      const companyPhoneNum = e.companyPhoneNum || "";
+
+      const companyName = (e.companyName || "").toLowerCase(); // 검색어와 항목의 값을 모두 소문자로 변환
+      const companyAddress = (e.companyAddress || "").toLowerCase();
+      const companyPhoneNum = (e.companyPhoneNum || "").toLowerCase();
+      const targetLowerCase = target.toLowerCase(); // 검색어도 소문자로 변환
       return (
-        companyName.includes(target) ||
-        companyAddress.includes(target) ||
-        companyPhoneNum.includes(target)
+        companyName.includes(targetLowerCase) ||
+        companyAddress.includes(targetLowerCase) ||
+        companyPhoneNum.includes(targetLowerCase)
+
       );
     });
     setSearchResults(filteredResults);
