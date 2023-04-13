@@ -191,7 +191,6 @@ export default function AdminApproveList() {
                 fontSize: "15px",
                 backgroundColor: `${color.tableHeader}`,
                 color: `${color.textWhite}`,
-                marginLeft: "30px",
               },
             }}
             muiTableBodyCellProps={({ cell, column }) => ({
@@ -221,7 +220,14 @@ export default function AdminApproveList() {
                 : undefined
             }
             renderTopToolbarCustomActions={() => (
-              <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
                 <Tooltip arrow title="Refresh Data">
                   <IconButton onClick={() => refetch()}>
                     <RefreshIcon />
@@ -236,6 +242,11 @@ export default function AdminApproveList() {
             )}
             enableRowActions
             positionActionsColumn="last"
+            displayColumnDefOptions={{
+              "mrt-row-actions": {
+                header: "승인/거절", //change header text
+              },
+            }}
             renderRowActions={({ row }) => (
               <Box
                 sx={{
