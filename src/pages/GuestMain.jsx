@@ -43,8 +43,8 @@ const GuestMain = () => {
             <StMainDiv>내 방문 이력 보기</StMainDiv>
             <StMainImg src={btn2} alt="내 방문 이력 보기"></StMainImg>
           </StMainMenu2>
-          <StMainMenu3 color="#3DB7B7">
-            <StQrBtn onClick={handleGenerateQrCode}>QR 코드 발급</StQrBtn>
+          <StMainMenu3 onClick={handleGenerateQrCode} color="#3DB7B7">
+            <StMainDiv>QR 코드 발급</StMainDiv>
             <StMainImg src={btn3} alt="QR발급하기"></StMainImg>
           </StMainMenu3>
         </StMainMenuu>
@@ -84,25 +84,50 @@ export default GuestMain;
 
 const StMain = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: 92vh;
+  margin: 0 auto;
+  padding: 0 11vw;
+  @media (max-width: 1024px) {
+    padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    height: auto;
+  }
 `;
+
 const StMainDiv = styled.div`
   color: white;
-  font-size: 28px;
+  font-size: 1.8vw;
   font-weight: 700;
   transition: all 0.2s ease-in-out;
+  @media (max-width: 768px) {
+    font-size: 3vw;
+  }
+  @media (max-width: 480px) {
+    font-size: 22px;
+  }
 `;
 
 const StMainImg = styled.img`
   margin-top: 25px;
   transition: all 0.2s ease-in-out;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 15px;
+  }
 `;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 60vh;
+  width: 32.5vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -117,10 +142,22 @@ const StMainMenu = styled.div`
       transform: scale(1.2);
     }
   }
+  @media (max-width: 1024px) {
+    width: 40vw;
+  }
+  @media (max-width: 768px) {
+    width: 40vw;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    flex: 2;
+    height: auto;
+    padding: 10vw 0;
+  }
 `;
 const StMainMenuu = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 60vh;
+  width: 32.5vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -130,7 +167,7 @@ const StMainMenuu = styled.div`
 `;
 const StMainMenu2 = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 60vh;
+  width: 32.5vw;
   height: 50%;
   display: flex;
   flex-direction: column;
@@ -144,7 +181,20 @@ const StMainMenu2 = styled.div`
       transform: scale(1.2);
     }
   }
+  @media (max-width: 1024px) {
+    width: 40vw;
+  }
+  @media (max-width: 768px) {
+    width: 40vw;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    flex: 2;
+    height: auto;
+    padding: 10vw 0;
+  }
 `;
+
 const StQrBtn = styled.button`
   color: white;
   font-size: 32px;
@@ -156,7 +206,7 @@ const StQrBtn = styled.button`
 
 const StMainMenu3 = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 60vh;
+  width: 32.5vw;
   height: 50%;
   display: flex;
   flex-direction: column;
@@ -170,6 +220,18 @@ const StMainMenu3 = styled.div`
     ${StMainImg} {
       transform: scale(1.2);
     }
+  }
+  @media (max-width: 1024px) {
+    width: 40vw;
+  }
+  @media (max-width: 768px) {
+    width: 40vw;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+    flex: 2;
+    height: auto;
+    padding: 10vw 0;
   }
 `;
 
