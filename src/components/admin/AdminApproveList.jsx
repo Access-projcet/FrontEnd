@@ -184,6 +184,7 @@ export default function AdminApproveList() {
               },
             }}
             muiTableHeadCellProps={{
+              align: "center",
               //simple styling with the `sx` prop, works just like a style prop in this example
               sx: {
                 fontWeight: "bold",
@@ -308,6 +309,7 @@ const StDashBoardGnb = styled.div`
 const StDashBoardTitleArea = styled.div``;
 
 const StSpanAlert = styled.span`
+  width: 40px;
   border: 1px solid black;
   border-radius: 10%;
   padding: 1% 3%;
