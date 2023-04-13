@@ -36,7 +36,7 @@ const AdminSignUp = () => {
   const [businessNum, setBusinessNum] = useState("");
   const [companyToken, setCompanyToken] = useState("");
   const [password, setPassword] = useState("");
-  const [checkPassword, setCheckPassword] = React.useState("");
+  const [checkPassword, setCheckPassword] = useState("");
   const [name, setName] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const queryClient = useQueryClient();
@@ -120,7 +120,16 @@ const AdminSignUp = () => {
             label="사업자 등록번호"
             name="businessNum"
             value={businessNum}
-            onChange={(e) => setBusinessNum(e.target.value)}
+            onChange={(e) => {
+              let value = e.target.value.replace(/-/g, "");
+              if (value.length === 10) {
+                value = value.replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
+              } else {
+                value = value.slice(0, 10);
+                value = value.replace(/(\d{3})(\d{2})(\d{5})/, "$1-$2-$3");
+              }
+              setBusinessNum(value);
+            }}
             className={classes.root}
             sx={{
               "& label": {
@@ -348,7 +357,16 @@ const AdminSignUp = () => {
             label="전화번호"
             name="phoneNum"
             value={phoneNum}
-            onChange={(e) => setPhoneNum(e.target.value)}
+            onChange={(e) => {
+              let value = e.target.value.replace(/-/g, "");
+              if (value.length === 11) {
+                value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+              } else {
+                value = value.slice(0, 11);
+                value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+              }
+              setPhoneNum(value);
+            }}
             className={classes.root}
             sx={{
               "& label": {

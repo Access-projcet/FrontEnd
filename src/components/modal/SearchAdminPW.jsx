@@ -157,7 +157,16 @@ function SearchAdminPw({ onClose }) {
               label="전화번호"
               name="phoneNum"
               value={phoneNum}
-              onChange={(e) => setPhoneNum(e.target.value)}
+              onChange={(e) => {
+                let value = e.target.value.replace(/-/g, "");
+                if (value.length === 11) {
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                } else {
+                  value = value.slice(0, 11);
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                }
+                setPhoneNum(value);
+              }}
               required
               fullWidth
               className={classes.root}
@@ -218,11 +227,11 @@ function SearchAdminPw({ onClose }) {
               }}
               error={
                 email.trim() !== "" &&
-                !/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email)
+                !/^[A-Za-z0-9_-]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/.test(email)
               }
               helperText={
                 email.trim() !== "" &&
-                !/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/.test(email)
+                !/^[A-Za-z0-9_-]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/.test(email)
                   ? "이메일형식이 올바르지 않습니다"
                   : " "
               }
