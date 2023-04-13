@@ -12,8 +12,6 @@ const ConfirmForm = ({ onClose, company }) => {
   const [place, setPlace] = useState("");
   const [target, setTarget] = useState("");
   const [purpose, setPurpose] = useState("");
-  // const [startDate, setStartDate] = useState("");
-  // const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [visitor, setVisitor] = useState("");
@@ -46,7 +44,8 @@ const ConfirmForm = ({ onClose, company }) => {
   });
   const sendCodeHandler = () => {
     const info = {
-      imgUrl: "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttp://localhost:3000/",
+      imgUrl:
+        "방문신청이 완료되었습니다. \n다음주소에서 QR코드를 확인해주세요. \nhttps://visitus.vercel.app/",
     };
     mutation2.mutate(info);
   };
@@ -66,8 +65,8 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`
-    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`
+    const dateTimeStart = `${dateToString(startDate)}T${startTime}:00`;
+    const dateTimeEnd = `${dateToString(endDate)}T${endTime}:00`;
     const confirmForm = {
       location,
       place,
@@ -183,7 +182,7 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-                      color: "#D2D2D2",
+                      // color: "#D2D2D2",
                     }}
                   />
                 }
@@ -203,7 +202,14 @@ const ConfirmForm = ({ onClose, company }) => {
                 value={startTime}
                 placeholder="00:00"
                 onChange={(e) => {
-                  setStartTime(e.target.value);
+                  let value = e.target.value.replace(/-/g, "");
+                  if (value.length === 4) {
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  } else {
+                    value = value.slice(0, 5);
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  }
+                  setStartTime(value);
                 }}
               ></StInput>
             </div>
@@ -232,7 +238,7 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-                      color: "#D2D2D2",
+                      // color: "#D2D2D2",
                     }}
                   />
                 }
@@ -253,14 +259,24 @@ const ConfirmForm = ({ onClose, company }) => {
                 value={endTime}
                 placeholder="00:00"
                 onChange={(e) => {
-                  setEndTime(e.target.value);
+                  let value = e.target.value.replace(/-/g, "");
+                  if (value.length === 4) {
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  } else {
+                    value = value.slice(0, 5);
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  }
+                  setEndTime(value);
                 }}
               ></StInput>
             </div>
           </TimeTable1>
 
           <Msg>
-            <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40, 2023/03/31, 14:00</p>
+            <p>
+              * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
+              2023/03/31, 01:00
+            </p>
           </Msg>
         </StTimeWrapper>
 
@@ -297,7 +313,14 @@ const ConfirmForm = ({ onClose, company }) => {
               id="phoneNum"
               value={phoneNum}
               onChange={(e) => {
-                setPhoneNum(e.target.value);
+                let value = e.target.value.replace(/-/g, "");
+                if (value.length === 11) {
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                } else {
+                  value = value.slice(0, 11);
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                }
+                setPhoneNum(value);
               }}
               placeholder="전화번호를 입력하세요"
             />

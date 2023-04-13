@@ -139,6 +139,9 @@ const StMainBackground = styled.img`
   height: 100vh;
   transform: translate(-50%, -50%);
   object-fit: cover;
+  /* @media screen (min-width: 768px) {
+    top: 20%;
+  } */
 `;
 const DivLoginContainer = styled.div`
   /* position: absolute;
