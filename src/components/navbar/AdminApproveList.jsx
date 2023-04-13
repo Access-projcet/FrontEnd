@@ -62,6 +62,10 @@ export default function AdminApproveList() {
     });
   };
 
+  const ColoredText = (value) => {
+    return <span style={{ color: "red" }}>{value}</span>;
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -142,11 +146,19 @@ export default function AdminApproveList() {
             //simple styling with the `sx` prop, works just like a style prop in this example
             sx: {
               fontWeight: "bold",
-              fontSize: "15px",
+              fontSize: "30px",
               backgroundColor: `${color.tableHeader}`,
               color: `${color.textWhite}`,
             },
           }}
+          muiTableBodyCellProps={({ column }) => ({
+            //simple styling with the `sx` prop, works just like a style prop in this example
+            sx: {
+              fontSize: "20px",
+              color: `red`,
+              boxShadow: column.getIsPinned() ? "0 0 0 2px red" : "none",
+            },
+          })}
           muiToolbarAlertBannerProps={
             isError
               ? {
