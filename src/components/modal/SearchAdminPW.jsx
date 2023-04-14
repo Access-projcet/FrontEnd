@@ -258,7 +258,7 @@ function SearchAdminPw({ onClose }) {
 export default SearchAdminPw;
 
 const InputForm = styled.div`
-padding: 0% 12%;
+  padding: 0% 12%;
   align-items: center;
   margin-top: -20px;
   margin-bottom: 10px;
@@ -267,7 +267,7 @@ padding: 0% 12%;
 const DivLoginContainer = styled.div`
   position: absolute;
 
-  top: 15%;
+  top: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -291,5 +291,4 @@ const StForm = styled.form`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-
 `;
