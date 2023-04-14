@@ -125,7 +125,7 @@ export default function AdminApproveList() {
         const blob = new Blob([res.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
-        saveAs(blob, `${dateString}.csv`);
+        saveAs(blob, `${dateString}.xlsx`);
       })
       .catch((err) => console.log(err));
   };
