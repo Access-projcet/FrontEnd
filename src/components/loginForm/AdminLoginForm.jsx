@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import SearchAdminId from "../modal/SearchAdminID";
 import SearchAdminPw from "../modal/SearchAdminPW";
 import Swal from "sweetalert2";
+import { Checkbox, FormControlLabel } from "@mui/material";
+
 //mui custom css
 const useStyles = makeStyles({
   root: {
@@ -35,11 +37,15 @@ export default function AdminLoginForm() {
   const [password, setPassword] = useState("");
   const [showIDModal, setShowIDModal] = useState(false);
   const [showPWModal, setShowPWModal] = useState(false);
+  const [showPW, setShowPW] = useState(false);
   const classes = useStyles();
   const mutation = useMutation(loginBusiness, {
     onSuccess: (data) => {
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
-      localStorage.setItem("REFRESH_TOKEN", data.headers.refreshtoken.split(" ")[1]);
+      localStorage.setItem(
+        "REFRESH_TOKEN",
+        data.headers.refreshtoken.split(" ")[1]
+      );
       localStorage.setItem("name", data.data.data.name);
       if (data.data.data.name.includes("LobbyId")) {
         navigate("/lobby");
@@ -102,8 +108,8 @@ export default function AdminLoginForm() {
             <TextField
               margin="normal"
               label="비밀번호"
-              type="password"
-              autoComplete="current-password"
+              type={showPW ? "tel" : "password"}
+              autoComplete={showPW ? "off" : "current-password"}
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -127,7 +133,23 @@ export default function AdminLoginForm() {
                 },
               }}
             />
+            <StShowPW>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="allowExtraEmails"
+                    color="primary"
+                    required
+                    onClick={() => {
+                      setShowPW(!showPW);
+                    }}
+                  />
+                }
+                label="비밀번호 표시"
+              />
+            </StShowPW>
           </InputForm>
+
           <StLoginBtn>
             <Button
               className={classes.button}
@@ -259,4 +281,8 @@ const LoginFindForm = styled.div`
   margin-top: -20px;
   margin-bottom: 30px;
   gap: 30px;
+`;
+
+const StShowPW = styled.div`
+  margin-left: 10px;
 `;
