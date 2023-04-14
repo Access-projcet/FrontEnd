@@ -125,7 +125,6 @@ function SearchAdminPw({ onClose }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              autoFocus
               fullWidth
               className={classes.root}
               sx={{

@@ -39,6 +39,8 @@ const AdminSignUp = () => {
   const [checkPassword, setCheckPassword] = useState("");
   const [name, setName] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
+  const [showPW, setShowPW] = useState(false);
+  const [showCheckPW, setShowCheckPW] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -87,6 +89,7 @@ const AdminSignUp = () => {
             autoFocus
             className={classes.root}
             sx={{
+              marginTop: "-20px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -119,6 +122,7 @@ const AdminSignUp = () => {
             id="businessNum"
             label="사업자 등록번호"
             name="businessNum"
+            type="tel"
             value={businessNum}
             onChange={(e) => {
               let value = e.target.value.replace(/-/g, "");
@@ -132,6 +136,7 @@ const AdminSignUp = () => {
             }}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -174,6 +179,7 @@ const AdminSignUp = () => {
             onChange={(e) => setCompanyToken(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -209,6 +215,7 @@ const AdminSignUp = () => {
             onChange={(e) => setUserId(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -242,12 +249,13 @@ const AdminSignUp = () => {
             fullWidth
             name="password"
             label="비밀번호"
-            type="password"
+            type={showPW ? "tel" : "password"}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -279,17 +287,33 @@ const AdminSignUp = () => {
               },
             }}
           />
+          {/* <StShowPW>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="allowExtraEmails"
+                  color="primary"
+                  required
+                  onClick={() => {
+                    setShowPW(!showPW);
+                  }}
+                />
+              }
+              label="비밀번호 표시"
+            />
+          </StShowPW> */}
           <TextField
             required
             fullWidth
             name="checkPassword"
             label="비밀번호 확인"
-            type="password"
+            type={showCheckPW ? "tel" : "password"}
             id="checkPassword"
             value={checkPassword}
             onChange={(e) => setCheckPassword(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -317,6 +341,21 @@ const AdminSignUp = () => {
               },
             }}
           />
+          {/* <StShowCheckPW>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="allowExtraEmails"
+                  color="primary"
+                  required
+                  onClick={() => {
+                    setShowCheckPW(!showCheckPW);
+                  }}
+                />
+              }
+              label="비밀번호 표시"
+            />
+          </StShowCheckPW> */}
           <TextField
             name="name"
             required
@@ -327,6 +366,7 @@ const AdminSignUp = () => {
             onChange={(e) => setName(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -369,6 +409,7 @@ const AdminSignUp = () => {
             }}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -471,6 +512,7 @@ const StForm = styled.form`
 `;
 const StLoginBtn = styled.div`
   position: relative;
+  margin-top: -10px;
 `;
 const StloginImg = styled.img`
   position: absolute;
@@ -490,4 +532,14 @@ const StAlready = styled.button`
   background-color: transparent;
   border: 0;
   cursor: pointer;
+`;
+
+const StShowPW = styled.div`
+  margin-top: -25px;
+  margin-left: 10px;
+`;
+
+const StShowCheckPW = styled.div`
+  margin-top: -25px;
+  margin-left: 10px;
 `;

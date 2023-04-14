@@ -182,6 +182,7 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
+                      borderRadius: "5px",
                       // color: "#D2D2D2",
                     }}
                   />
@@ -197,9 +198,11 @@ const ConfirmForm = ({ onClose, company }) => {
                   height: "45px",
                   fontSize: "15px",
                   border: "1px solid #D2D2D2",
+                  borderRadius: "5px",
                 }}
                 id="startTime"
                 value={startTime}
+                type="tel"
                 placeholder="00:00"
                 onChange={(e) => {
                   let value = e.target.value.replace(/-/g, "");
@@ -238,6 +241,7 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
+                      borderRadius: "5px",
                       // color: "#D2D2D2",
                     }}
                   />
@@ -254,9 +258,11 @@ const ConfirmForm = ({ onClose, company }) => {
                   height: "45px",
                   fontSize: "15px",
                   border: "1px solid #D2D2D2",
+                  borderRadius: "5px",
                 }}
                 id="endTime"
                 value={endTime}
+                type="tel"
                 placeholder="00:00"
                 onChange={(e) => {
                   let value = e.target.value.replace(/-/g, "");
@@ -311,6 +317,7 @@ const ConfirmForm = ({ onClose, company }) => {
                 border: "1px solid #D2D2D2",
               }}
               id="phoneNum"
+              type="tel"
               value={phoneNum}
               onChange={(e) => {
                 let value = e.target.value.replace(/-/g, "");
