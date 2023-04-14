@@ -163,7 +163,16 @@ const Navbar = () => {
                   refetch={refetch}
                 />
               )}
-              {localStorage.getItem("name")}
+              {menu === "guest" ? (
+                <Link to={"/change_pw/guest"}>
+                  <StLogOut>{localStorage.getItem("name")}</StLogOut>
+                </Link>
+              ) : (
+                <Link to={"/change_pw/admin"}>
+                  <StLogOut>{localStorage.getItem("name")}</StLogOut>
+                </Link>
+              )}
+
               <StNameDes>님 반갑습니다</StNameDes>
             </StName>
 
@@ -173,19 +182,6 @@ const Navbar = () => {
 
                 <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
               </Link>
-              {menu === "guest" ? (
-                <Link to={"/change_pw/guest"}>
-                  <StLogOut>
-                    <SettingsIcon />
-                  </StLogOut>
-                </Link>
-              ) : (
-                <Link to={"/change_pw/admin"}>
-                  <StLogOut>
-                    <SettingsIcon />
-                  </StLogOut>
-                </Link>
-              )}
             </StLogOutContainer>
           </StUser>
         </StNavbarContainer>
@@ -274,6 +270,7 @@ const StNotification = styled.button`
   font-size: 16px;
   font-weight: 800;
   margin-right: 5px;
+  top: 5px;
 `;
 const StNotificationCnt = styled.div`
   position: absolute;

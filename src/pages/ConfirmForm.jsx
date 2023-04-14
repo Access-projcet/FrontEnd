@@ -8,7 +8,6 @@ import styled from "styled-components";
 import "../App.css";
 
 const ConfirmForm = ({ onClose, company }) => {
-  const [location, setLocation] = useState(company.companyName);
   const [place, setPlace] = useState("");
   const [target, setTarget] = useState("");
   const [purpose, setPurpose] = useState("");
@@ -20,6 +19,8 @@ const ConfirmForm = ({ onClose, company }) => {
   //datepicker 사용
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  const location = company.companyName;
 
   const dateToString = (date) => {
     return (
@@ -52,7 +53,6 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const mutation = useMutation(submitConfirmForm, {
     onSuccess: (response) => {
-      // console.log(response);
       queryClient.invalidateQueries("user");
       alert("방문신청이 완료되었습니다.");
       onClose();
@@ -125,7 +125,7 @@ const ConfirmForm = ({ onClose, company }) => {
           />
         </Main1>
         <Main2>
-          <label htmlFor="target">찾아갈분</label>
+          <label htmlFor="target">찾아갈 분</label>
           <StInput
             style={{
               marginLeft: "10px",
@@ -165,7 +165,14 @@ const ConfirmForm = ({ onClose, company }) => {
         <StTimeWrapper>
           <TimeTable1>
             <div>
-              <label htmlFor="startDate">방문 날짜 </label>
+              <label
+                htmlFor="startDate"
+                style={{
+                  marginLeft: "-5px",
+                }}
+              >
+                방문 날짜{" "}
+              </label>
               <DatePicker
                 locale={ko}
                 dateFormat="yyyy/MM/dd"
@@ -176,13 +183,13 @@ const ConfirmForm = ({ onClose, company }) => {
                   <StInput
                     style={{
                       paddingLeft: "10px",
-                      marginLeft: "10px",
+                      marginLeft: "15px",
                       marginRight: "30px",
                       width: "116px",
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-                      // color: "#D2D2D2",
+                      borderRadius: "5px",
                     }}
                   />
                 }
@@ -197,9 +204,11 @@ const ConfirmForm = ({ onClose, company }) => {
                   height: "45px",
                   fontSize: "15px",
                   border: "1px solid #D2D2D2",
+                  borderRadius: "5px",
                 }}
                 id="startTime"
                 value={startTime}
+                type="tel"
                 placeholder="00:00"
                 onChange={(e) => {
                   let value = e.target.value.replace(/-/g, "");
@@ -238,6 +247,7 @@ const ConfirmForm = ({ onClose, company }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
+                      borderRadius: "5px",
                     }}
                   />
                 }
@@ -253,9 +263,11 @@ const ConfirmForm = ({ onClose, company }) => {
                   height: "45px",
                   fontSize: "15px",
                   border: "1px solid #D2D2D2",
+                  borderRadius: "5px",
                 }}
                 id="endTime"
                 value={endTime}
+                type="tel"
                 placeholder="00:00"
                 onChange={(e) => {
                   let value = e.target.value.replace(/-/g, "");
@@ -310,6 +322,7 @@ const ConfirmForm = ({ onClose, company }) => {
                 border: "1px solid #D2D2D2",
               }}
               id="phoneNum"
+              type="tel"
               value={phoneNum}
               onChange={(e) => {
                 let value = e.target.value.replace(/-/g, "");
@@ -363,6 +376,7 @@ const MainWrapper = styled.div`
   font-size: 16px;
   height: calc(100% - 106px);
   border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 `;
 
 const Main1 = styled.div`
@@ -393,6 +407,7 @@ const TimeTable1 = styled.div`
   /* display: flex; */
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 const TimeTable2 = styled.div`
   /* display: flex; */

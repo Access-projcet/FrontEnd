@@ -195,14 +195,14 @@ const StMainMenu2 = styled.div`
   }
 `;
 
-const StQrBtn = styled.button`
-  color: white;
-  font-size: 32px;
-  font-weight: 700;
-  background-color: transparent;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-`;
+// const StQrBtn = styled.button`
+//   color: white;
+//   font-size: 32px;
+//   font-weight: 700;
+//   background-color: transparent;
+//   transition: all 0.2s ease-in-out;
+//   cursor: pointer;
+// `;
 
 const StMainMenu3 = styled.div`
   background-color: ${(props) => props.color || "blue"};
@@ -214,7 +214,7 @@ const StMainMenu3 = styled.div`
   align-items: center;
   cursor: pointer;
   &:hover {
-    ${StQrBtn} {
+    ${StMainDiv} {
       transform: scale(1.2);
     }
     ${StMainImg} {
