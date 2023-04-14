@@ -44,7 +44,6 @@ const LobbyCheckInModal = ({ onClose }) => {
     const check = {
       name: visitor,
       phoneNum,
-      // 현재시간
     };
     mutation.mutate(check);
   };
@@ -67,12 +66,16 @@ const LobbyCheckInModal = ({ onClose }) => {
                   width: "200px",
                   height: "30px",
                   fontSize: "20px",
+                  borderRadius: "5px",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
                 }}
               />
             </Input1>
             <Input2>
               전화번호
               <input
+                type="tel"
                 value={phoneNum}
                 onChange={(e) => {
                   let value = e.target.value.replace(/-/g, "");
@@ -89,6 +92,9 @@ const LobbyCheckInModal = ({ onClose }) => {
                   width: "200px",
                   height: "30px",
                   fontSize: "20px",
+                  borderRadius: "5px",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
                 }}
               />
             </Input2>
