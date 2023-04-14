@@ -139,7 +139,6 @@ export default function AdminLoginForm() {
                   <Checkbox
                     value="allowExtraEmails"
                     color="primary"
-                    required
                     onClick={() => {
                       setShowPW(!showPW);
                     }}
@@ -243,9 +242,9 @@ const fadeIn = keyframes`
 `;
 
 const DivLoginContainer = styled.div`
-width: 70%;
-margin-top: 10%;
-padding: 10%;
+  width: 70%;
+  margin-top: 10%;
+  padding: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;

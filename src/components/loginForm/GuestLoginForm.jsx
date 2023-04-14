@@ -141,7 +141,6 @@ export default function GuestLoginForm() {
                   <Checkbox
                     value="allowExtraEmails"
                     color="primary"
-                    required
                     onClick={() => {
                       setShowPW(!showPW);
                     }}

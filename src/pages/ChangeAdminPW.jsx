@@ -8,6 +8,7 @@ import mainLogo from "../utils/img/VISITUS_logo@2x.png";
 import { useNavigate } from "react-router-dom";
 import { ChangeAdminPW } from "../api/api";
 import HomeIcon from "@mui/icons-material/Home";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -30,6 +31,9 @@ function ChangeGuestPw() {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
+  const [showPW, setShowPW] = useState(false);
+  const [showNewPW, setShowNewPW] = useState(false);
+  const [showCheckPW, setShowCheckPW] = useState(false);
   const navigate = useNavigate();
 
   const classes = useStyles();
@@ -72,6 +76,7 @@ function ChangeGuestPw() {
           <StForm onSubmit={onSubmitHandler}>
             <h2>비밀번호 변경</h2>
             <HomeIcon
+              fontSize="large"
               type="button"
               onClick={() => {
                 navigate("/");
@@ -80,7 +85,7 @@ function ChangeGuestPw() {
                 cursor: "pointer",
                 position: "absolute",
                 top: "25px",
-                left: "50px",
+                left: "40px",
               }}
             />
             <InputForm>
@@ -88,7 +93,7 @@ function ChangeGuestPw() {
                 margin="normal"
                 label="현재 비밀번호"
                 name="password"
-                type="password"
+                type={showPW ? "tel" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -96,6 +101,7 @@ function ChangeGuestPw() {
                 fullWidth
                 className={classes.root}
                 sx={{
+                  marginTop: "-50px",
                   "& label": {
                     "&.Mui-focused": {
                       color: "#49CDB5",
@@ -131,15 +137,28 @@ function ChangeGuestPw() {
                   },
                 }}
               />
+              <StShowPW>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="allowExtraEmails"
+                      color="primary"
+                      onClick={() => {
+                        setShowPW(!showPW);
+                      }}
+                    />
+                  }
+                  label="비밀번호 표시"
+                />
+              </StShowPW>
               <TextField
                 margin="normal"
                 label="새 비밀번호"
-                type="password"
+                type={showNewPW ? "tel" : "password"}
                 name="newPassword"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
-                autoFocus
                 fullWidth
                 className={classes.root}
                 sx={{
@@ -178,10 +197,24 @@ function ChangeGuestPw() {
                   },
                 }}
               />
+              {/* <StShowPW>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="allowExtraEmails"
+                      color="primary"
+                      onClick={() => {
+                        setShowNewPW(!showNewPW);
+                      }}
+                    />
+                  }
+                  label="비밀번호 표시"
+                />
+              </StShowPW> */}
               <TextField
                 margin="normal"
                 label="새 비밀번호 확인"
-                type="password"
+                type={showCheckPW ? "tel" : "password"}
                 name="checkPassword"
                 value={checkPassword}
                 onChange={(e) => setCheckPassword(e.target.value)}
@@ -218,6 +251,20 @@ function ChangeGuestPw() {
                   },
                 }}
               />
+              <StShowPW>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="allowExtraEmails"
+                      color="primary"
+                      onClick={() => {
+                        setShowCheckPW(!showCheckPW);
+                      }}
+                    />
+                  }
+                  label="비밀번호 표시"
+                />
+              </StShowPW>
             </InputForm>
             <StCheckBtn>확인</StCheckBtn>
           </StForm>
@@ -240,7 +287,7 @@ const StContainer = styled.div`
 const StLogo = styled.img`
   position: absolute;
   left: 50%;
-  top: 5vw;
+  top: 12%;
   z-index: 0;
   transform: translate(-50%, -50%);
 `;
@@ -252,10 +299,10 @@ const StMainBackground = styled.img`
   width: 100%;
   height: 100vh;
   transform: translate(-50%, -50%);
+  object-fit: cover;
 `;
 
 const InputForm = styled.div`
-  position: relative;
   margin: 70px;
   align-items: center;
   /* margin-top: -20px; */
@@ -263,9 +310,9 @@ const InputForm = styled.div`
 `;
 
 const DivLoginContainer = styled.div`
-  position: relative;
+  position: fixed;
   width: 30%;
-  height: 600px;
+  height: 65%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -275,7 +322,6 @@ const DivLoginContainer = styled.div`
 `;
 
 const StCheckBtn = styled.button`
-  position: relative;
   background-color: #49cdb5;
   border-radius: 35px;
   width: 120px;
@@ -287,11 +333,15 @@ const StCheckBtn = styled.button`
 `;
 
 const StForm = styled.form`
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   padding-top: -40px;
   gap: 10px;
+`;
+
+const StShowPW = styled.div`
+  margin-top: -22px;
+  margin-left: 10px;
 `;
