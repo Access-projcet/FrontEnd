@@ -5,6 +5,8 @@ import SaveIcon from "@mui/icons-material/Save";
 import MaterialReactTable from "material-react-table";
 import { useQuery, useMutation } from "react-query";
 import styled from "styled-components";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import { saveAs } from "file-saver";
 import Swal from "sweetalert2";
 import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
@@ -133,9 +135,6 @@ export default function AdminApproveList() {
       textAlign: "center",
       verticalAlign: "middle",
       borderBottom: "1px solid rgba(224, 224, 224, 1)",
-      fontWeight: "900",
-      fontSize: "24px",
-      className: "bold",
     },
   };
   return (
@@ -160,6 +159,23 @@ export default function AdminApproveList() {
             initialState={{
               showColumnFilters: false,
             }}
+            renderRow={(row, index) => {
+              const rowProps = {
+                style: {
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                },
+                key: index,
+              };
+              return (
+                <tr {...row.getRowProps(rowProps)}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  ))}
+                </tr>
+              );
+            }}
             muiTableCellProps={muiTableCellProps}
             isMultiSortEvent={() => true}
             filterFns={{
@@ -171,10 +187,10 @@ export default function AdminApproveList() {
               align: "center",
               //simple styling with the `sx` prop, works just like a style prop in this example
               sx: {
-                fontSize: "12px",
+                fontWeight: "bold",
+                fontSize: "15px",
                 backgroundColor: `${color.tableHeader}`,
                 color: `${color.textWhite}`,
-                marginLeft: "30px",
               },
             }}
             muiTableBodyCellProps={({ cell, column }) => ({
@@ -204,7 +220,14 @@ export default function AdminApproveList() {
                 : undefined
             }
             renderTopToolbarCustomActions={() => (
-              <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
                 <Tooltip arrow title="Refresh Data">
                   <IconButton onClick={() => refetch()}>
                     <RefreshIcon />
@@ -219,6 +242,11 @@ export default function AdminApproveList() {
             )}
             enableRowActions
             positionActionsColumn="last"
+            displayColumnDefOptions={{
+              "mrt-row-actions": {
+                header: "승인/거절", //change header text
+              },
+            }}
             renderRowActions={({ row }) => (
               <Box
                 sx={{
@@ -292,10 +320,8 @@ const StDashBoardGnb = styled.div`
 const StDashBoardTitleArea = styled.div``;
 
 const StSpanAlert = styled.span`
-
   width: 40px;
   border: 1px solid black;
   border-radius: 10%;
-  padding: 1% 3%; */
-  font-weight: 900;
+  padding: 1% 3%;
 `;
