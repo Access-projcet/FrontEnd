@@ -110,7 +110,7 @@ const ModalWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   border-radius: 11px;
-  border: 5px solid #829cf6;
+  border: 5px solid #57D4D4;
 `;
 
 const ModalInner = styled.div`
@@ -143,6 +143,6 @@ const Header = styled.div`
 const QrLine = styled.div`
   width: 200px;
   height: 200px;
-  border: 10px dashed #829cf6;
+  border: 10px dashed #57D4D4;
   position: absolute;
 `;

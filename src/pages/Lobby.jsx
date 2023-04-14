@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/navbar/Navbar";
-import btn1 from "../utils/img/방문_icon@2x.png";
-import btn2 from "../utils/img/퇴장_icon@2x.png";
-import btn3 from "../utils/img/icon-QR.png";
+import btn1 from "../utils/img/방문_icon.png";
+import btn2 from "../utils/img/퇴장_icon.png";
+import btn3 from "../utils/img/icon_QR (1).png";
 import LobbyCheckInModal from "../components/modal/LobbyCheckInModal";
 import LobbyCheckOutModal from "../components/modal/LobbyCheckOutModal";
 import QrReaderRebuilding from "../components/modal/QrReaderRebuilding";
@@ -104,28 +104,66 @@ const StMain = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 94vh;
+  height: 92vh;
   margin: 0 auto;
-  width: 80%;
+  padding: 0 11vw;
+
+  @media (max-width: 1024px) {
+    padding: 0;
+  }
+`;
+const StMainDiv = styled.div`
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
+`;
+
+const StMainImg = styled.img`
+  margin-top: 25px;
+  transition: all 0.2s ease-in-out;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 15px;
+  }
 `;
 
 const StMainMenu = styled.div`
   background-color: ${(props) => props.color || "blue"};
-  width: 60vh;
   height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-`;
+  cursor: pointer;
+  &:hover {
+    ${StMainDiv} {
+      transform: scale(1.2);
+    }
+    ${StMainImg} {
+      transform: scale(1.2);
+    }
+  }
+  flex-wrap: wrap;
+  width: 32.5vw;
+  @media (max-width: 1024px) {
+    width: 40vw;
+  }
+  @media (max-width: 768px) {
+    width: 40vw;
+  }
 
-const StMainDiv = styled.div`
-  color: white;
-  font-size: 32px;
-  font-weight: 700;
-`;
-
-const StMainImg = styled.img`
-  margin-top: 25px;
+  @media (max-width: 480px) {
+    width: 100vw;
+  }
 `;

@@ -20,6 +20,7 @@ const useStyles = makeStyles({
     borderRadius: 30,
     "& .MuiOutlinedInput-root": {
       borderRadius: "30px",
+      // height: "50px",
 
       "&.Mui-focused fieldset": {
         borderColor: "#636FD7",
@@ -28,6 +29,9 @@ const useStyles = makeStyles({
         color: "#636FD7",
       },
     },
+    // "& .MuiInputBase-input": {
+    //   height: "50px",
+    // },
   },
 });
 
@@ -158,7 +162,7 @@ export default function GuestLoginForm() {
                 mb: 2,
                 background: "#636FD7",
                 borderRadius: 30,
-                height: "60px",
+                height: 50,
                 "&:hover": {
                   background: "#636FD7",
                 },
@@ -197,7 +201,7 @@ export default function GuestLoginForm() {
                 mb: 2,
                 background: "#686868",
                 borderRadius: 30,
-                height: "60px",
+                height: 50,
                 "&:hover": {
                   background: "#686868",
                 },
@@ -239,9 +243,9 @@ const fadeIn = keyframes`
 `;
 
 const DivLoginContainer = styled.div`
-  width: 500px;
-  height: 500px;
-  margin-top: 40px;
+  width: 70%;
+  margin-top: 10%;
+  padding: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;

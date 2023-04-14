@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
@@ -21,6 +21,7 @@ import { getNotifications } from "../../api/api";
 const Navbar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["ACCESS_TOKEN"]);
   const navigate = useNavigate();
+  const location = useLocation();
   const menu = localStorage.getItem("usertype");
   const [message, setMessage] = useState("not yet");
   const [showNotification, setShowNotification] = useState(false);
@@ -44,15 +45,12 @@ const Navbar = () => {
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(
-      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      }
-    );
+    const eventSource = new EventSourcePolyfill(`${process.env.REACT_APP_SERVER_URL}/subscribe/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
 
     eventSource.onopen = () => {
       console.log("최초 오픈!");
@@ -131,15 +129,23 @@ const Navbar = () => {
           {menu === "guest" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi onClick={navigateMap}>맵보러가기</StMenuLi>
-                <StMenuLi onClick={navigateMyPage}>내가 신청한 목록</StMenuLi>
+                <StMenuLi active={location.pathname === "/guest/company"} onClick={navigateMap}>
+                  맵보러가기
+                </StMenuLi>
+                <StMenuLi active={location.pathname === "/guest/mypage"} onClick={navigateMyPage}>
+                  내가 신청한 목록
+                </StMenuLi>
               </StMenuUl>
             </StMenuDiv>
           ) : menu === "admin" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi onClick={navigateDashBoard}>출입현황</StMenuLi>
-                <StMenuLi onClick={navigateApproveList}>승인현황</StMenuLi>
+                <StMenuLi active={location.pathname === "/admin/dashboard"} onClick={navigateDashBoard}>
+                  출입현황
+                </StMenuLi>
+                <StMenuLi active={location.pathname === "/admin/approvelist"} onClick={navigateApproveList}>
+                  승인현황
+                </StMenuLi>
               </StMenuUl>
             </StMenuDiv>
           ) : null}
@@ -147,9 +153,7 @@ const Navbar = () => {
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
-                {notificationCnt > 0 && (
-                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
-                )}
+                {notificationCnt > 0 && <StNotificationCnt>{notificationCnt}</StNotificationCnt>}
               </StNotification>
               {showNotification && (
                 <NotificationModal
@@ -176,11 +180,7 @@ const Navbar = () => {
               <Link to={"/"}>
                 <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
 
-                <StLogOutImg
-                  src={logout}
-                  alt="logoutImg"
-                  onClick={logoutBtn}
-                ></StLogOutImg>
+                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
               </Link>
             </StLogOutContainer>
           </StUser>
@@ -195,11 +195,11 @@ export default Navbar;
 const StNavBar = styled.div`
   background-color: #636fd7;
   width: 100%;
-  min-height: 6vh;
+  min-height: 8vh;
 `;
 const StNavbarContainer = styled.div`
   width: 75%;
-  min-height: 6vh;
+  min-height: 8vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -218,7 +218,7 @@ const StUser = styled.div`
 `;
 const StName = styled.div`
   color: white;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
   display: flex;
   align-items: center;
@@ -226,7 +226,7 @@ const StName = styled.div`
 const StNameDes = styled.div`
   color: white;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 400;
 `;
 const StLogOutContainer = styled.div`
   display: flex;
@@ -237,27 +237,13 @@ const StLogOutContainer = styled.div`
 const StLogOut = styled.button`
   color: white;
   font-size: 16px;
-  font-weight: 800;
   background-color: transparent;
   cursor: pointer;
 `;
 const StLogOutImg = styled.img``;
 
 const StMenuDiv = styled.div`
-  @media screen and (max-width: 1500px) {
-    transform: none;
-  }
-  @media screen and (min-width: 1500px) {
-    transform: translateX(-40%);
-  }
-
-  @media screen and (min-width: 1700px) {
-    transform: translateX(-60%);
-  }
-
-  @media screen and (min-width: 1900px) {
-    transform: translateX(-80%);
-  }
+  transform: translateX(-11vw);
 `;
 
 const StMenuUl = styled.ul`
@@ -268,10 +254,11 @@ const StMenuUl = styled.ul`
   cursor: pointer;
 `;
 const StMenuLi = styled.li`
-  color: white;
-  font-size: 18;
-  font-weight: 700;
-  margin: 0 20px;
+  color: ${(props) => (props.active ? "white" : "#e0e0e0")};
+  font-size: 16px;
+  font-weight: ${(props) => (props.active ? "900" : "400")};
+  margin: 0 10px;
+  cursor: pointer;
 `;
 
 const StNotification = styled.button`

@@ -86,6 +86,7 @@ export default function SignUp() {
                   color: "#636FD7",
                 },
               },
+              
             }}
             InputLabelProps={{
               sx: {
@@ -100,6 +101,7 @@ export default function SignUp() {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -137,6 +139,7 @@ export default function SignUp() {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -179,6 +182,7 @@ export default function SignUp() {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -217,6 +221,7 @@ export default function SignUp() {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -266,6 +271,7 @@ export default function SignUp() {
             FormHelperTextProps={{
               sx: {
                 color: "red",
+                fontSize: "10px",
               },
             }}
           />
@@ -286,7 +292,7 @@ export default function SignUp() {
                 mb: 2,
                 background: "#636FD7",
                 borderRadius: 30,
-                height: "60px",
+                height: 50,
                 "&:hover": {
                   background: "#636FD7",
                 },
@@ -323,8 +329,8 @@ const fadeIn = keyframes`
 `;
 
 const DivLoginContainer = styled.div`
-  width: 500px;
-  margin-top: 40px;
+width: 70%;
+padding: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -334,8 +340,9 @@ const DivLoginContainer = styled.div`
 const StForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 500px;
+  width: 400px;
+  box-sizing: border-box;
+  gap: 8px;
 `;
 const StLoginBtn = styled.div`
   position: relative;

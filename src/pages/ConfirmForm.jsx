@@ -183,7 +183,6 @@ const ConfirmForm = ({ onClose, company }) => {
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
                       borderRadius: "5px",
-                      // color: "#D2D2D2",
                     }}
                   />
                 }
@@ -242,7 +241,6 @@ const ConfirmForm = ({ onClose, company }) => {
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
                       borderRadius: "5px",
-                      // color: "#D2D2D2",
                     }}
                   />
                 }

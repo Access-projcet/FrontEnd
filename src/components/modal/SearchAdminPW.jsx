@@ -89,6 +89,7 @@ function SearchAdminPw({ onClose }) {
               fullWidth
               className={classes.root}
               sx={{
+                height: 60,
                 "& label": {
                   "&.Mui-focused": {
                     color: "#49CDB5",
@@ -128,6 +129,8 @@ function SearchAdminPw({ onClose }) {
               fullWidth
               className={classes.root}
               sx={{
+                height: 60,
+
                 "& label": {
                   "&.Mui-focused": {
                     color: "#49CDB5",
@@ -170,6 +173,8 @@ function SearchAdminPw({ onClose }) {
               fullWidth
               className={classes.root}
               sx={{
+                height: 60,
+
                 "& label": {
                   "&.Mui-focused": {
                     color: "#49CDB5",
@@ -209,6 +214,8 @@ function SearchAdminPw({ onClose }) {
               fullWidth
               className={classes.root}
               sx={{
+                height: 60,
+
                 "& label": {
                   "&.Mui-focused": {
                     color: "#49CDB5",
@@ -251,7 +258,7 @@ function SearchAdminPw({ onClose }) {
 export default SearchAdminPw;
 
 const InputForm = styled.div`
-  margin: 70px;
+padding: 0% 12%;
   align-items: center;
   margin-top: -20px;
   margin-bottom: 10px;
@@ -259,8 +266,7 @@ const InputForm = styled.div`
 
 const DivLoginContainer = styled.div`
   position: absolute;
-  width: 547px;
-  height: 500px;
+
   top: 15%;
   display: flex;
   flex-direction: column;
@@ -285,6 +291,5 @@ const StForm = styled.form`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-top: -40px;
-  gap: 10px;
+
 `;

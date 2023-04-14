@@ -109,7 +109,7 @@ export default SignUp;
 const StLogo = styled.img`
   position: absolute;
   left: 50%;
-  top: 200px;
+  top: 7%;
   z-index: 0;
   transform: translate(-50%, -50%);
 `;
@@ -136,21 +136,18 @@ const DivLoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* background: url(${mainImg}) no-repeat;
-  background-size: 100%;
-  background-position: center; */
+
 `;
 
 const DivLoginBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 550px;
-  width: 25vw;
-  background-color: white;
-  border-radius: 30px;
-  overflow: hidden;
-  padding-bottom: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+background-color: white;
+border-radius: 30px;
+overflow: hidden;
+position: relative;
+min-width: 446px;
 `;
 const DivLoginType = styled.div`
   width: 100%;

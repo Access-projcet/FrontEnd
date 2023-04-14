@@ -35,6 +35,7 @@ const SimpleLineChart = () => {
     refetchOnWindowFocus: false,
     keepPreviousData: true,
   });
+
   const [dataToDisplay, setDataToDisplay] = useState(data?.data);
 
   const dataList = data?.data
@@ -145,7 +146,7 @@ const SimpleLineChart = () => {
       <StAdminMainDiv>
         <StDashBoardGnb>
           <StDashBoardTitleArea>
-            <h2>출입 관리 그래프</h2>
+            <h2>출입관리그래프</h2>
             {/* <p>월별, 일별, 시간대별 출입현황을 조회할 수 있습니다.</p> */}
           </StDashBoardTitleArea>
           {/* <StDashBoardBtnArea>
@@ -191,7 +192,7 @@ const SimpleLineChart = () => {
             getEnteringPeopleData?.data?.map((item) => ({
               ...item,
               inTime: item.inTime.split("T")[1],
-              outTime: item.outTime.split("T")[1],
+              outTime: item.outTime ? item.outTime.split("T")[1] : " ",
             })) ?? []
           } //data is undefined on first render
           initialState={{
@@ -255,7 +256,7 @@ export default SimpleLineChart;
 
 const StAdminMainDiv = styled.div``;
 const StDashBoardGnb = styled.div`
-  padding: 2%;
+  padding: 1%;
   display: flex;
   justify-content: space-between;
   align-items: center;
