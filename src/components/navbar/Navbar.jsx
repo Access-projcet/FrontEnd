@@ -87,9 +87,11 @@ const Navbar = () => {
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
     localStorage.removeItem("usertype");
+  };
+  const logoutHandler = () => {
+    logoutBtn();
     navigate("/");
   };
-
   const HandlerMain = (e) => {
     e.stopPropagation();
     menu === "guest" ? navigate("/guest/main") : navigate("/admin/main");
@@ -169,7 +171,7 @@ const Navbar = () => {
 
             <StLogOutContainer>
               <Link to={"/"}>
-                <StLogOut onClick={logoutBtn}>LOGOUT</StLogOut>
+                <StLogOut onClick={logoutHandler}>LOGOUT</StLogOut>
 
                 <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
               </Link>
