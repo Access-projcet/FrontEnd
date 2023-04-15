@@ -109,13 +109,13 @@ const SimpleLineChart = () => {
       {
         accessorKey: "place",
         header: "방문장소",
-        size: 100,
+        size: 50,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "Place" },
       },
       {
         accessorKey: "purpose",
         header: "목적",
-        size: 200,
+        size: 50,
         muiTableHeadCellFilterTextFieldProps: { placeholder: "Purpose" },
       },
       {
@@ -137,7 +137,7 @@ const SimpleLineChart = () => {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "Out Time" },
       },
     ],
-    []
+    [],
   );
 
   return (
@@ -173,102 +173,90 @@ const SimpleLineChart = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey="총 신청 수"
-                stroke="#8884d8"
-                strokeWidth={3}
-              />
-              <Line
-                type="monotone"
-                dataKey="총 승인 수"
-                stroke="#82ca9d"
-                strokeWidth={3}
-              />
-              <Line
-                type="monotone"
-                dataKey="총 출입 수"
-                stroke="#15c4fe"
-                strokeWidth={3}
-              />
+              <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" strokeWidth={3} />
+              <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" strokeWidth={3} />
+              <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </StContainer>
       </StAdminMainDiv>
-      <StDashBoardGnb>
-        <StDashBoardTitleArea>
-          <h2>출입현황표</h2>
-        </StDashBoardTitleArea>
-      </StDashBoardGnb>
-      <DivTable>
-        <MaterialReactTable
-          columns={columns}
-          data={
-            getEnteringPeopleData?.data?.map((item) => ({
-              ...item,
-              inTime: item.inTime.split("T")[1],
-              outTime: item.outTime ? item.outTime.split("T")[1] : " ",
-            })) ?? []
-          } //data is undefined on first render
-          initialState={{
-            showColumnFilters: false,
-          }}
-          isMultiSortEvent={() => true}
-          filterFns={{
-            customFilterFn: (row, id, filterValue) => {
-              return row.getValue(id) === filterValue;
-            },
-          }}
-          muiTableHeadCellProps={{
-            //simple styling with the `sx` prop, works just like a style prop in this example
-            sx: {
-              fontWeight: "bold",
-              fontSize: "15px",
-              backgroundColor: `${color.tableHeader}`,
-              color: `${color.textWhite}`,
-            },
-          }}
-          muiTableBodyCellProps={() => ({
-            style: {
-              fontWeight: "bold",
-              // textAlign: "center",
-            },
-          })}
-          muiToolbarAlertBannerProps={
-            isError
-              ? {
-                  color: "error",
-                  children: "Error loading data",
-                }
-              : undefined
-          }
-          renderTopToolbarCustomActions={() => (
-            <Tooltip arrow title="Refresh Data">
-              <IconButton onClick={() => refetch()}>
-                <RefreshIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-          enableRowActions
-          positionActionsColumn="last"
-          renderRowActions={({ row }) => (
-            <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Tooltip arrow placement="left" title="Edit">
-                <IconButton></IconButton>
+      <DivApprove>
+        <StDashBoardGnb>
+          <StDashBoardTitleArea>
+            <h2>출입현황표</h2>
+          </StDashBoardTitleArea>
+        </StDashBoardGnb>
+
+        <DivTable>
+          <MaterialReactTable
+            columns={columns}
+            data={
+              getEnteringPeopleData?.data?.map((item) => ({
+                ...item,
+                inTime: item.inTime.split("T")[1],
+                outTime: item.outTime ? item.outTime.split("T")[1] : " ",
+              })) ?? []
+            } //data is undefined on first render
+            initialState={{
+              showColumnFilters: false,
+            }}
+            isMultiSortEvent={() => true}
+            filterFns={{
+              customFilterFn: (row, id, filterValue) => {
+                return row.getValue(id) === filterValue;
+              },
+            }}
+            muiTableHeadCellProps={{
+              //simple styling with the `sx` prop, works just like a style prop in this example
+              sx: {
+                fontWeight: "bold",
+                fontSize: "15px",
+                backgroundColor: `${color.tableHeader}`,
+                color: `${color.textWhite}`,
+              },
+            }}
+            muiTableBodyCellProps={() => ({
+              style: {
+                fontWeight: "bold",
+                // textAlign: "center",
+              },
+            })}
+            muiToolbarAlertBannerProps={
+              isError
+                ? {
+                    color: "error",
+                    children: "Error loading data",
+                  }
+                : undefined
+            }
+            renderTopToolbarCustomActions={() => (
+              <Tooltip arrow title="Refresh Data">
+                <IconButton onClick={() => refetch()}>
+                  <RefreshIcon />
+                </IconButton>
               </Tooltip>
-              <Tooltip arrow placement="right" title="Delete">
-                <IconButton color="error"></IconButton>
-              </Tooltip>
-            </Box>
-          )}
-          rowCount={data?.meta?.totalRowCount ?? 0}
-          state={{
-            isLoading,
-            showAlertBanner: isError,
-            showProgressBars: isFetching,
-          }}
-        />
-      </DivTable>
+            )}
+            enableRowActions
+            positionActionsColumn="last"
+            renderRowActions={({ row }) => (
+              <Box sx={{ display: "flex", gap: "1rem" }}>
+                <Tooltip arrow placement="left" title="Edit">
+                  <IconButton></IconButton>
+                </Tooltip>
+                <Tooltip arrow placement="right" title="Delete">
+                  <IconButton color="error"></IconButton>
+                </Tooltip>
+              </Box>
+            )}
+            rowCount={data?.meta?.totalRowCount ?? 0}
+            state={{
+              isLoading,
+              showAlertBanner: isError,
+              showProgressBars: isFetching,
+            }}
+          />
+        </DivTable>
+      </DivApprove>
     </>
   );
 };
@@ -298,4 +286,14 @@ const StContainer = styled.div`
 const DivTable = styled.div`
   width: 70%;
   margin: 0 auto;
+`;
+
+const DivApprove = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  margin-top: 5%;
 `;

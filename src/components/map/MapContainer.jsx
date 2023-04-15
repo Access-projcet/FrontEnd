@@ -136,9 +136,7 @@ export default function MapContainer5() {
               <DivCompanycontent>{e.companyCallNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
-              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>
-                방문 신청
-              </ButtonVisitForm>
+              <ButtonVisitForm onClick={() => HandlerModalOn(e)}>방문 신청</ButtonVisitForm>
             </StBtnDiv>
           </DivListBox>
         ))}
@@ -172,18 +170,9 @@ export default function MapContainer5() {
                   option: imageOption,
                 }}
               ></MapMarker>
-              <CustomOverlayMap
-                position={{ lat: marker.lat, lng: marker.lng }}
-                yAnchor={2.0}
-              >
-                <div
-                  className="customoverlay"
-                  style={customOverlayStyle}
-                  onClick={() => handleMarkerClick(marker)}
-                >
-                  <StOverlaySpan className="title">
-                    {marker.companyName}
-                  </StOverlaySpan>
+              <CustomOverlayMap position={{ lat: marker.lat, lng: marker.lng }} yAnchor={2.0}>
+                <div className="customoverlay" style={customOverlayStyle} onClick={() => handleMarkerClick(marker)}>
+                  <StOverlaySpan className="title">{marker.companyName}</StOverlaySpan>
                   <StOverlayArrow>▶</StOverlayArrow>
                 </div>
               </CustomOverlayMap>
@@ -200,10 +189,7 @@ export default function MapContainer5() {
                 <DivMapInfo className="info">
                   <DivMapTitle>
                     {selectedMarker.companyName}
-                    <BtnClose
-                      onClick={() => setSelectedMarker(null)}
-                      title="닫기"
-                    />
+                    <BtnClose onClick={() => setSelectedMarker(null)} title="닫기" />
                   </DivMapTitle>
 
                   <StMapBodyContainer className="body">
@@ -316,6 +302,7 @@ const StImgSearch = styled.img`
   top: 50%;
   right: 10%;
   transform: translateY(-50%);
+  cursor: pointer;
 `;
 
 const DivTemp = styled.div`
@@ -376,6 +363,7 @@ const DivCompanycontent = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
+  cursor: default;
 `;
 
 const StImg = styled.img`
@@ -392,6 +380,7 @@ const DivMapWrapper = styled.div`
   background-color: #ffffff;
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  padding: 1%;
 `;
 
 const DivMapInfo = styled.div`
