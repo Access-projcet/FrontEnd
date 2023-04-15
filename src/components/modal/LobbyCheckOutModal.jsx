@@ -66,12 +66,16 @@ const LobbyCheckOutModal = ({ onClose }) => {
                   width: "200px",
                   height: "30px",
                   fontSize: "20px",
+                  borderRadius: "5px",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
                 }}
               />
             </Input1>
             <Input2>
               전화번호
               <input
+                type="tel"
                 value={phoneNum}
                 onChange={(e) => {
                   let value = e.target.value.replace(/-/g, "");
@@ -88,6 +92,9 @@ const LobbyCheckOutModal = ({ onClose }) => {
                   width: "200px",
                   height: "30px",
                   fontSize: "20px",
+                  borderRadius: "5px",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
                 }}
               />
             </Input2>

@@ -7,22 +7,24 @@ import Swal from "sweetalert2";
 import { ko } from "date-fns/esm/locale";
 
 export const ModifyForm = ({ onClose, data }) => {
-  console.log(data);
-  const [location, setLocation] = useState(data.location);
   const [place, setPlace] = useState(data.place);
   const [target, setTarget] = useState(data.target);
   const [purpose, setPurpose] = useState(data.purpose);
-  // const [startDate, setStartDate] = useState("");
-  // const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState(data.startTime.split("T")[1]);
   const [endTime, setEndTime] = useState(data.endTime.split("T")[1]);
   const [visitor, setVisitor] = useState(data.visitor);
   const [phoneNum, setPhoneNum] = useState(data.phoneNum);
 
   //datepicker 사용
-  const [startDate, setStartDate] = useState(new Date(data.startDate.split(" ")[0]));
+  const [startDate, setStartDate] = useState(
+    new Date(data.startDate.split(" ")[0])
+  );
   const [endDate, setEndDate] = useState(new Date(data.endDate.split(" ")[0]));
+
+  const location = data.location;
+
   const queryClient = useQueryClient();
+
   const dateToString = (date) => {
     return (
       date.getFullYear() +
@@ -81,23 +83,14 @@ export const ModifyForm = ({ onClose, data }) => {
           >
             방문지역
           </label>
-          <input
+          <div
             style={{
               marginLeft: "10px",
-              marginRight: "75px",
-              width: "82%",
-              height: "45px",
               fontSize: "18px",
-              border: "none",
-              backgroundColor: "transparent",
             }}
-            id="location"
-            value={location}
-            onChange={(e) => {
-              setLocation(e.target.value);
-            }}
-            readOnly
-          />
+          >
+            {location}
+          </div>
 
           <label htmlFor="place">방문장소</label>
           <StInput
@@ -158,7 +151,14 @@ export const ModifyForm = ({ onClose, data }) => {
         <StTimeWrapper>
           <TimeTable1>
             <div>
-              <label htmlFor="startDate">방문 날짜 </label>
+              <label
+                htmlFor="startDate"
+                style={{
+                  marginLeft: "-5px",
+                }}
+              >
+                방문 날짜{" "}
+              </label>
               <DatePicker
                 locale={ko}
                 dateFormat="yyyy/MM/dd"
@@ -166,17 +166,16 @@ export const ModifyForm = ({ onClose, data }) => {
                 onChange={(date) => setStartDate(date)}
                 minDate={new Date()}
                 customInput={
-                  <input
+                  <StInput
                     style={{
                       paddingLeft: "10px",
-                      marginLeft: "10px",
+                      marginLeft: "15px",
                       marginRight: "30px",
                       width: "116px",
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-
-                      color: "#D2D2D2",
+                      borderRadius: "5px",
                     }}
                   />
                 }
@@ -192,12 +191,21 @@ export const ModifyForm = ({ onClose, data }) => {
                   height: "45px",
                   fontSize: "15px",
                   border: "1px solid #D2D2D2",
+                  borderRadius: "5px",
                 }}
                 id="startTime"
                 value={startTime}
+                type="tel"
                 placeholder="00:00"
                 onChange={(e) => {
-                  setStartTime(e.target.value);
+                  let value = e.target.value.replace(/-/g, "");
+                  if (value.length === 4) {
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  } else {
+                    value = value.slice(0, 5);
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  }
+                  setStartTime(value);
                 }}
               ></StInput>
             </div>
@@ -226,7 +234,7 @@ export const ModifyForm = ({ onClose, data }) => {
                       height: "45px",
                       fontSize: "15px",
                       border: "1px solid #D2D2D2",
-                      color: "#D2D2D2",
+                      borderRadius: "5px",
                     }}
                   />
                 }
@@ -242,19 +250,31 @@ export const ModifyForm = ({ onClose, data }) => {
                   height: "45px",
                   fontSize: "15px",
                   border: "1px solid #D2D2D2",
+                  borderRadius: "5px",
                 }}
                 id="endTime"
                 value={endTime}
+                type="tel"
                 placeholder="00:00"
                 onChange={(e) => {
-                  setEndTime(e.target.value);
+                  let value = e.target.value.replace(/-/g, "");
+                  if (value.length === 4) {
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  } else {
+                    value = value.slice(0, 5);
+                    value = value.replace(/(\d{2})(\d{2})/, "$1:$2");
+                  }
+                  setEndTime(value);
                 }}
               ></StInput>
             </div>
           </TimeTable1>
 
           <Msg>
-            <p>* 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40, 2023/03/31, 14:00</p>
+            <p>
+              * 시간은 24시간 기준으로 입력해주세요. 예시 2023/03/30, 13:40,
+              2023/03/31, 01:00
+            </p>
           </Msg>
         </StTimeWrapper>
 
@@ -289,9 +309,17 @@ export const ModifyForm = ({ onClose, data }) => {
                 border: "1px solid #D2D2D2",
               }}
               id="phoneNum"
+              type="tel"
               value={phoneNum}
               onChange={(e) => {
-                setPhoneNum(e.target.value);
+                let value = e.target.value.replace(/-/g, "");
+                if (value.length === 11) {
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                } else {
+                  value = value.slice(0, 11);
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                }
+                setPhoneNum(value);
               }}
               placeholder="전화번호를 입력하세요"
             />
@@ -446,6 +474,9 @@ const StInput = styled.input`
   padding-left: 10px;
   &::placeholder {
     color: #d2d2d2;
+  }
+  &:focus {
+    outline: none;
   }
 `;
 

@@ -36,7 +36,8 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
-
+  const [showPW, setShowPW] = useState(false);
+  const [showCheckPW, setShowCheckPW] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -86,7 +87,6 @@ export default function SignUp() {
                   color: "#636FD7",
                 },
               },
-              
             }}
             InputLabelProps={{
               sx: {
@@ -148,7 +148,7 @@ export default function SignUp() {
             fullWidth
             name="password"
             label="비밀번호"
-            type="password"
+            type={showPW ? "tel" : "password"}
             id="password"
             className={classes.root}
             value={password}
@@ -186,12 +186,26 @@ export default function SignUp() {
               },
             }}
           />
+          <StShowPW>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="allowExtraEmails"
+                  color="primary"
+                  onClick={() => {
+                    setShowPW(!showPW);
+                  }}
+                />
+              }
+              label="비밀번호 표시"
+            />
+          </StShowPW>
           <TextField
             required
             fullWidth
             name="checkPassword"
             label="비밀번호 확인"
-            type="password"
+            type={showCheckPW ? "tel" : "password"}
             id="checkPassword"
             value={checkPassword}
             onChange={(e) => setCheckPassword(e.target.value)}
@@ -225,7 +239,20 @@ export default function SignUp() {
               },
             }}
           />
-
+          <StShowPW>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="allowExtraEmails"
+                  color="primary"
+                  onClick={() => {
+                    setShowCheckPW(!showCheckPW);
+                  }}
+                />
+              }
+              label="비밀번호 표시"
+            />
+          </StShowPW>
           <TextField
             required
             fullWidth
@@ -245,6 +272,7 @@ export default function SignUp() {
             }}
             className={classes.root}
             sx={{
+              marginBottom: "-20px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#636FD7",
@@ -276,6 +304,7 @@ export default function SignUp() {
             }}
           />
           <FormControlLabel
+            sx={{ marginLeft: "0px" }}
             control={
               <Checkbox value="allowExtraEmails" color="primary" required />
             }
@@ -329,8 +358,8 @@ const fadeIn = keyframes`
 `;
 
 const DivLoginContainer = styled.div`
-width: 70%;
-padding: 5%;
+  width: 70%;
+  padding: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -346,6 +375,7 @@ const StForm = styled.form`
 `;
 const StLoginBtn = styled.div`
   position: relative;
+  margin-top: -15px;
 `;
 const StloginImg = styled.img`
   position: absolute;
@@ -365,4 +395,9 @@ const StAlready = styled.button`
   background-color: transparent;
   border: 0;
   cursor: pointer;
+`;
+
+const StShowPW = styled.div`
+  margin-top: -22px;
+  margin-left: 10px;
 `;
