@@ -35,7 +35,6 @@ const Navbar = () => {
 
   const { data, refetch } = useQuery("notification", getNotifications, {
     onSuccess: (res) => {
-      console.log("알람 리스트 불러왔습니다.", res);
       const temp = res.filter((item) => !item.isRead).length;
       setNotificationCnt(temp);
     },
@@ -53,7 +52,6 @@ const Navbar = () => {
     });
 
     eventSource.onopen = () => {
-      console.log("최초 오픈!");
       setIsConnection(true);
     };
 
@@ -73,11 +71,9 @@ const Navbar = () => {
 
     eventSource.onerror = (e) => {
       // error log here
-      console.log("errorerorororo", e);
       // eventSource.close();
     };
     return () => {
-      console.log("SSE종료되었음!");
       eventSource.close();
     };
   }, [message, isConnection, refetch]);
@@ -106,7 +102,6 @@ const Navbar = () => {
   };
 
   const handleCloseNotification = () => {
-    console.log("눌림!");
     setShowNotification(false);
     queryClient.invalidateQueries("notification");
   };

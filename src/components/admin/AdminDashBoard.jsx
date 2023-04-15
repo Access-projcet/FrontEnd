@@ -66,9 +66,6 @@ const SimpleLineChart = () => {
   //   setDataToDisplay((prevData) => [...prevData], newDataList);
   // };
 
-  console.log(dataList);
-  console.log(getEnteringPeopleData?.data);
-
   const transformDataToMonthly = (dataList) => {};
   const transformDataToDaily = (dataList) => {};
   const transformDataByTimeOfDay = (dataList) => {};

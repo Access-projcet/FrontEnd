@@ -6,6 +6,7 @@ import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 import "../App.css";
+import Swal from "sweetalert2";
 
 const ConfirmForm = ({ onClose, company }) => {
   const [place, setPlace] = useState("");
@@ -36,11 +37,10 @@ const ConfirmForm = ({ onClose, company }) => {
 
   const mutation2 = useMutation(sendUrlCode, {
     onSuccess: (response) => {
-      // console.log(response);
       queryClient.invalidateQueries("user");
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("실패", error.response.data.message, "error");
     },
   });
   const sendCodeHandler = () => {
@@ -54,12 +54,12 @@ const ConfirmForm = ({ onClose, company }) => {
   const mutation = useMutation(submitConfirmForm, {
     onSuccess: (response) => {
       queryClient.invalidateQueries("user");
-      alert("방문신청이 완료되었습니다.");
+      Swal.fire("승인", "방문신청이 완료되었습니다.", "success");
       onClose();
       sendCodeHandler();
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("실패", error.response.data.message, "error");
     },
   });
 

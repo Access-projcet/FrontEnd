@@ -9,6 +9,7 @@ import NotInterestedIcon from "@mui/icons-material/NotInterested";
 
 import { adminVisit, adminModify } from "../api/api";
 import { color } from "../utils/styles/color";
+import Swal from "sweetalert2";
 
 export default function AdminApproveList() {
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
@@ -39,13 +40,11 @@ export default function AdminApproveList() {
 
   const adminModifyMutation = useMutation(adminModify, {
     onSuccess: (data) => {
-      console.log("succecc", data);
-      alert("방문기록 수정 성공");
+      Swal.fire("성공", "방문기록 수정 성공", "success");
       refetch();
     },
     onError: (error) => {
-      alert("방문기록 수정 실패");
-      console.log("mu error", error);
+      Swal.fire("실패", error.response.data.message, "error");
     },
   });
 

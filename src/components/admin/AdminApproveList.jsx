@@ -28,7 +28,6 @@ export default function AdminApproveList() {
 
   const adminModifyMutation = useMutation(adminModify, {
     onSuccess: (data) => {
-      console.log("succecc", data.config.data);
       JSON.parse(data.config.data).status === "2"
         ? Swal.fire("승인", "방문을 승인하셨습니다.", "success")
         : Swal.fire("거절", "방문을 거절하셨습니다.", "error");
@@ -36,8 +35,7 @@ export default function AdminApproveList() {
       refetch();
     },
     onError: (error) => {
-      alert("방문기록 수정 실패");
-      console.log("mu error", error);
+      Swal.fire("거절", "방문기록 수정 실패 ", error, "error");
     },
   });
 
@@ -48,7 +46,6 @@ export default function AdminApproveList() {
     });
   };
   const HandlerReject = (row) => {
-    console.log("reject", row);
     adminModifyMutation.mutate({
       id: row.original.id,
       status: "3",
@@ -125,7 +122,7 @@ export default function AdminApproveList() {
         });
         saveAs(blob, `${dateString}.xlsx`);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert("엑셀 다운로드 실패", err));
   };
 
   return (

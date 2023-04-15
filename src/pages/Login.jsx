@@ -22,14 +22,12 @@ const Login = () => {
 
   useEffect(() => {
     if (isToken) {
-      console.log("여기요;;");
       const usertype = localStorage.getItem("usertype");
       usertype === "guest" ? navigate("/guest/main") : navigate("/admin/main");
     }
   }, [isToken, navigate]);
 
   const HandleChangeTab = (e, newValue) => {
-    console.log(newValue);
     dispatch(setMenu(newValue));
   };
 

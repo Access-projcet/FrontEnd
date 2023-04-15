@@ -95,7 +95,6 @@ export default function MapContainer5() {
   };
 
   const handleMarkerClick = (marker) => {
-    console.log("mm", marker);
     setSelectedMarker(marker);
   };
 

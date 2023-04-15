@@ -29,7 +29,6 @@ const adminVisit = async (payload) => {
 };
 
 const adminModify = async (payload) => {
-  console.log(payload);
   return await instance.put(`/visit/admin/${payload.id}`, {
     status: payload.status,
   });

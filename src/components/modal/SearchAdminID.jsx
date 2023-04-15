@@ -5,6 +5,7 @@ import { TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
+import Swal from "sweetalert2";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -33,13 +34,12 @@ function SearchAdminId({ onClose }) {
   const queryClient = useQueryClient();
   const mutation = useMutation(SearchAdminID, {
     onSuccess: (response) => {
-      console.log(response.data.message);
-      alert("이메일로 아이디를 발송했습니다.");
+      Swal.fire("성공", "이메일로 아이디를 발송했습니다.", "success");
       queryClient.invalidateQueries("user");
       onClose();
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("실패", "요청 실패", "error");
     },
   });
 
@@ -51,11 +51,6 @@ function SearchAdminId({ onClose }) {
       phoneNum,
       email,
     };
-    console.log({
-      name,
-      phoneNum,
-      email,
-    });
 
     mutation.mutate(searchAdminID);
   };
@@ -211,7 +206,7 @@ function SearchAdminId({ onClose }) {
 export default SearchAdminId;
 
 const InputForm = styled.div`
-padding: 0% 12%;
+  padding: 0% 12%;
   align-items: center;
   margin-top: 10px;
 `;
