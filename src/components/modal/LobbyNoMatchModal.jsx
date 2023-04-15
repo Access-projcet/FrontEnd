@@ -6,7 +6,7 @@ const LobbyNoMatchModal = ({ onClose }) => {
     <>
       <StBox>
         <StTxtContainer>
-          <div>일치하는 방문 예약자가 없습니다.</div>
+          <div>일치하는 방문예약자가 없습니다.</div>
         </StTxtContainer>
         {/* <StCheckBtn onClick={onClose}>확인</StCheckBtn> */}
       </StBox>
