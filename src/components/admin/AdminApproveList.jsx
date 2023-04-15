@@ -48,13 +48,11 @@ export default function AdminApproveList() {
     });
   };
   const HandlerReject = (row) => {
+    console.log("reject", row);
     adminModifyMutation.mutate({
       id: row.original.id,
       status: "3",
     });
-  };
-  const ColoredText = (value) => {
-    return <span style={{ color: "red" }}>{value}</span>;
   };
 
   const columns = useMemo(
@@ -129,14 +127,7 @@ export default function AdminApproveList() {
       })
       .catch((err) => console.log(err));
   };
-  const muiTableCellProps = {
-    sx: {
-      padding: "10px",
-      textAlign: "center",
-      verticalAlign: "middle",
-      borderBottom: "1px solid rgba(224, 224, 224, 1)",
-    },
-  };
+
   return (
     <>
       <Navbar />
@@ -159,24 +150,6 @@ export default function AdminApproveList() {
             initialState={{
               showColumnFilters: false,
             }}
-            renderRow={(row, index) => {
-              const rowProps = {
-                style: {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                },
-                key: index,
-              };
-              return (
-                <tr {...row.getRowProps(rowProps)}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  ))}
-                </tr>
-              );
-            }}
-            muiTableCellProps={muiTableCellProps}
             isMultiSortEvent={() => true}
             filterFns={{
               customFilterFn: (row, id, filterValue) => {
@@ -247,40 +220,44 @@ export default function AdminApproveList() {
                 header: "승인/거절", //change header text
               },
             }}
-            renderRowActions={({ row }) => (
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: "1rem",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Tooltip arrow placement="left" title="승인">
-                  <IconButton
-                    color="success"
-                    onClick={() => {
-                      HandlerApprove(row);
-                    }}
-                    sx={{ fontSize: "14px" }}
-                  >
-                    <StSpanAlert>승인</StSpanAlert>
-                  </IconButton>
-                </Tooltip>
-                <span>|</span>
-                <Tooltip arrow placement="right" title="거절">
-                  <IconButton
-                    color="error"
-                    onClick={() => {
-                      HandlerReject(row);
-                    }}
-                    sx={{ fontSize: "14px" }}
-                  >
-                    <StSpanAlert>거절</StSpanAlert>
-                  </IconButton>
-                </Tooltip>
-              </Box>
-            )}
+            renderRowActions={({ row }) => {
+              if (row.original.status === "완료") return null;
+
+              return (
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "1rem",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Tooltip arrow placement="left" title="승인">
+                    <IconButton
+                      color="success"
+                      onClick={() => {
+                        HandlerApprove(row);
+                      }}
+                      sx={{ fontSize: "14px" }}
+                    >
+                      <StSpanPositiveAlert>승인</StSpanPositiveAlert>
+                    </IconButton>
+                  </Tooltip>
+                  <span>|</span>
+                  <Tooltip arrow placement="right" title="거절">
+                    <IconButton
+                      color="error"
+                      onClick={() => {
+                        HandlerReject(row);
+                      }}
+                      sx={{ fontSize: "14px" }}
+                    >
+                      <StSpanNegativeAlert>거절</StSpanNegativeAlert>
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              );
+            }}
             rowCount={data?.meta?.totalRowCount ?? 0}
             state={{
               isLoading,
@@ -306,7 +283,7 @@ const DivApprove = styled.div`
 `;
 
 const DivTable = styled.div`
-  width: 70%;
+  width: 75%;
   height: 100vh;
 `;
 const StDashBoardGnb = styled.div`
@@ -319,9 +296,19 @@ const StDashBoardGnb = styled.div`
 `;
 const StDashBoardTitleArea = styled.div``;
 
-const StSpanAlert = styled.span`
+const StSpanPositiveAlert = styled.span`
   width: 40px;
-  border: 1px solid black;
+  border: 1px solid green;
   border-radius: 10%;
   padding: 1% 3%;
+  color: green;
+`;
+
+const StSpanNegativeAlert = styled.span`
+  width: 40px;
+  border: 1px solid #ef0505;
+  border-radius: 10%;
+  padding: 1% 3%;
+  color: white;
+  background-color: #ef0505;
 `;

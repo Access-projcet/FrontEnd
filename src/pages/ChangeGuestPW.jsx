@@ -285,11 +285,16 @@ const StMainBackground = styled.img`
 `;
 
 const InputForm = styled.div`
+
+  min-width: 300px;
+  width: 25vw;
+  margin: 20px 20px;
   align-items: center;
-  width: 20vw;
+
 `;
 
 const DivLoginContainer = styled.div`
+  min-width: 500px;
   position: fixed;
   width: 30%;
   height: 65%;
@@ -318,6 +323,11 @@ const StForm = styled.form`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  padding-top: -40px;
+  gap: 10px;
+  width: 100%;
+
 `;
 
 const StShowPW = styled.div`

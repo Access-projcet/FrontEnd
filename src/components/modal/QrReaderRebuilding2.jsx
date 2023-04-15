@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import QrReader from "react-qr-scanner";
-import successAudioFile from "../../utils/audio/성공음성.wav";
-import failAudioFile from "../../utils/audio/실패음성.wav";
+import successAudioFile from "../../utils/audio/qr체크아웃 완료.mp3";
+import failAudioFile from "../../utils/audio/qr유효하지 않는 경우.mp3";
+import alreadySuccessAudioFile from "../../utils/audio/qr이미 체크아웃 완료.mp3";
 import { submitLobbyCheckOutQr } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,6 +12,7 @@ const QrReaderRebuilding2 = ({ onClose }) => {
   const [result, setResult] = useState("");
   const [successAudio] = useState(new Audio(successAudioFile));
   const [failAudio] = useState(new Audio(failAudioFile));
+  const [alreadySuccessAudio] = useState(new Audio(alreadySuccessAudioFile));
   const [showModal, setShowModal] = useState(false);
 
   const queryClient = useQueryClient();
@@ -22,14 +24,21 @@ const QrReaderRebuilding2 = ({ onClose }) => {
       onClose();
       setTimeout(() => {
         window.location.reload();
-      }, 2000);
+      }, 3000);
       setTimeout(() => {
         setResult("");
       }, 30000);
     },
     onError: (error) => {
-      failAudio.play();
-      onClose();
+      //400에러일 때 나오는 음성
+      if (error.response.data.statusCode === 400) {
+        failAudio.play();
+        onClose();
+        //402에러일 때 나오는 음성
+      } else if (error.response.data.statusCode === 402) {
+        alreadySuccessAudio.play();
+        onClose();
+      }
     },
   });
 
@@ -110,7 +119,7 @@ const ModalWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   border-radius: 11px;
-  border: 5px solid #57D4D4;
+  border: 5px solid #57d4d4;
 `;
 
 const ModalInner = styled.div`
@@ -143,6 +152,6 @@ const Header = styled.div`
 const QrLine = styled.div`
   width: 200px;
   height: 200px;
-  border: 10px dashed #57D4D4;
+  border: 10px dashed #57d4d4;
   position: absolute;
 `;
