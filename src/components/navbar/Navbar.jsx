@@ -45,15 +45,12 @@ const Navbar = () => {
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(
-      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        withCredentials: true,
-      }
-    );
+    const eventSource = new EventSourcePolyfill(`${process.env.REACT_APP_SERVER_URL}/subscribe/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
 
     eventSource.onopen = () => {
       console.log("최초 오픈!");
@@ -85,14 +82,15 @@ const Navbar = () => {
     };
   }, [message, isConnection, refetch]);
 
-  const logoutBtn = () => {
-    removeCookie("ACCESS_TOKEN");
+  const removeAllAccessTokenCookies = () => {
+    const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
+    cookies.filter((cookie) => cookie.startsWith("ACCESS_TOKEN")).map((cookie) => removeCookie(cookie.split("=")[0]));
     localStorage.removeItem("name");
     localStorage.removeItem("REFRESH_TOKEN");
     localStorage.removeItem("usertype");
   };
   const logoutHandler = () => {
-    logoutBtn();
+    removeAllAccessTokenCookies();
     navigate("/");
   };
   const HandlerMain = (e) => {
@@ -134,16 +132,10 @@ const Navbar = () => {
           {menu === "guest" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi
-                  active={location.pathname === "/guest/company"}
-                  onClick={navigateMap}
-                >
+                <StMenuLi active={location.pathname === "/guest/company"} onClick={navigateMap}>
                   맵보러가기
                 </StMenuLi>
-                <StMenuLi
-                  active={location.pathname === "/guest/mypage"}
-                  onClick={navigateMyPage}
-                >
+                <StMenuLi active={location.pathname === "/guest/mypage"} onClick={navigateMyPage}>
                   내가 신청한 목록
                 </StMenuLi>
               </StMenuUl>
@@ -151,16 +143,10 @@ const Navbar = () => {
           ) : menu === "admin" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi
-                  active={location.pathname === "/admin/dashboard"}
-                  onClick={navigateDashBoard}
-                >
+                <StMenuLi active={location.pathname === "/admin/dashboard"} onClick={navigateDashBoard}>
                   출입현황
                 </StMenuLi>
-                <StMenuLi
-                  active={location.pathname === "/admin/approvelist"}
-                  onClick={navigateApproveList}
-                >
+                <StMenuLi active={location.pathname === "/admin/approvelist"} onClick={navigateApproveList}>
                   승인현황
                 </StMenuLi>
               </StMenuUl>
@@ -170,9 +156,7 @@ const Navbar = () => {
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
-                {notificationCnt > 0 && (
-                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
-                )}
+                {notificationCnt > 0 && <StNotificationCnt>{notificationCnt}</StNotificationCnt>}
               </StNotification>
               {showNotification && (
                 <NotificationModal
@@ -199,11 +183,7 @@ const Navbar = () => {
               <Link to={"/"}>
                 <StLogOut onClick={logoutHandler}>LOGOUT</StLogOut>
 
-                <StLogOutImg
-                  src={logout}
-                  alt="logoutImg"
-                  onClick={logoutBtn}
-                ></StLogOutImg>
+                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutHandler}></StLogOutImg>
               </Link>
             </StLogOutContainer>
           </StUser>
@@ -276,6 +256,7 @@ const StMenuUl = styled.ul`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  padding: 0;
 `;
 const StMenuLi = styled.li`
   color: ${(props) => (props.active ? "white" : "#e0e0e0")};

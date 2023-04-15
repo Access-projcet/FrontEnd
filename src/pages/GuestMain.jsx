@@ -94,7 +94,7 @@ const StMain = styled.div`
     padding: 0;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 500px) {
     flex-direction: column;
     height: auto;
   }
@@ -148,7 +148,7 @@ const StMainMenu = styled.div`
   @media (max-width: 768px) {
     width: 40vw;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 500px) {
     width: 100vw;
     flex: 2;
     height: auto;
@@ -187,10 +187,9 @@ const StMainMenu2 = styled.div`
   @media (max-width: 768px) {
     width: 40vw;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 500px) {
     width: 100vw;
     flex: 2;
-    height: auto;
     padding: 10vw 0;
   }
 `;
@@ -227,10 +226,9 @@ const StMainMenu3 = styled.div`
   @media (max-width: 768px) {
     width: 40vw;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 500px) {
     width: 100vw;
     flex: 2;
-    height: auto;
     padding: 10vw 0;
   }
 `;
