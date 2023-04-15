@@ -306,9 +306,9 @@ const StSpanPositiveAlert = styled.span`
 
 const StSpanNegativeAlert = styled.span`
   width: 40px;
-  border: 1px solid red;
+  border: 1px solid #ef0505;
   border-radius: 10%;
   padding: 1% 3%;
   color: white;
-  background-color: red;
+  background-color: #ef0505;
 `;
