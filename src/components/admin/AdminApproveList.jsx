@@ -298,10 +298,10 @@ const StDashBoardTitleArea = styled.div``;
 
 const StSpanPositiveAlert = styled.span`
   width: 40px;
-  border: 1px solid #00aaee;
+  border: 1px solid green;
   border-radius: 10%;
   padding: 1% 3%;
-  color: #00aaee;
+  color: green;
 `;
 
 const StSpanNegativeAlert = styled.span`
