@@ -68,8 +68,8 @@ export default function MapContainer5() {
           id: e.id,
           companyName: e.companyName,
           companyAddress: e.companyAddress,
-          companyPhoneNum: e.companyPhoneNum,
-        })),
+          companyCallNum: e.companyCallNum,
+        }))
       );
     }
   }, [data]);
@@ -95,6 +95,7 @@ export default function MapContainer5() {
   };
 
   const handleMarkerClick = (marker) => {
+    console.log("mm", marker);
     setSelectedMarker(marker);
   };
 
@@ -104,7 +105,6 @@ export default function MapContainer5() {
   };
 
   const HandlerFocusMap = (e) => {
-    console.log("focus", e);
     setMapstate({
       center: { lat: e.x, lng: e.y },
       isPanto: true,
@@ -133,7 +133,7 @@ export default function MapContainer5() {
                 {e.companyName}
               </DivCompanyName>
               <DivCompanycontent>{e.companyAddress}</DivCompanycontent>
-              <DivCompanycontent>Tel : {e.companyCallNum}</DivCompanycontent>
+              <DivCompanycontent>{e.companyCallNum}</DivCompanycontent>
             </DivListContent>
             <StBtnDiv>
               <ButtonVisitForm onClick={() => HandlerModalOn(e)}>방문 신청</ButtonVisitForm>
@@ -191,14 +191,24 @@ export default function MapContainer5() {
                     {selectedMarker.companyName}
                     <BtnClose onClick={() => setSelectedMarker(null)} title="닫기" />
                   </DivMapTitle>
-                  {console.log(selectedMarker)}
-                  <StMapBody>
-                    <div>{selectedMarker.companyAddress}</div>
-                    <div>{selectedMarker.companyCallNum}</div>
-                  </StMapBody>
-                  <DivMapButton>
-                    <BtnMapButton onClick={() => HandlerModalOn(selectedMarker)}>방문 신청</BtnMapButton>
-                  </DivMapButton>
+
+                  <StMapBodyContainer className="body">
+                    <StMapBody>
+                      <StInfo className="ellipsis">
+                        {selectedMarker.companyAddress}
+                      </StInfo>
+                      <StInfo className="jibun ellipsis">
+                        {selectedMarker.companyCallNum}
+                      </StInfo>
+                    </StMapBody>
+                    <DivMapButton>
+                      <BtnMapButton
+                        onClick={() => HandlerModalOn(selectedMarker)}
+                      >
+                        방문 신청
+                      </BtnMapButton>
+                    </DivMapButton>
+                  </StMapBodyContainer>
                 </DivMapInfo>
               </DivMapWrapper>
               ;
@@ -397,7 +407,7 @@ const BtnClose = styled(CloseIcon)`
 `;
 
 const StMapBody = styled.div`
-  display: flex;
+  width: 100%;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -445,4 +455,14 @@ const StOverlayArrow = styled.div`
   padding: 0 8px;
   color: #fff;
   font-size: 14px;
+`;
+
+const StMapBodyContainer = styled.div`
+  width: 100%;
+`;
+
+const StInfo = styled.div`
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
