@@ -45,12 +45,15 @@ const Navbar = () => {
 
   useEffect(() => {
     const accessToken = getCookie("ACCESS_TOKEN");
-    const eventSource = new EventSourcePolyfill(`${process.env.REACT_APP_SERVER_URL}/subscribe/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      withCredentials: true,
-    });
+    const eventSource = new EventSourcePolyfill(
+      `${process.env.REACT_APP_SERVER_URL}/subscribe/`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     eventSource.onopen = () => {
       console.log("최초 오픈!");
@@ -131,10 +134,16 @@ const Navbar = () => {
           {menu === "guest" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi active={location.pathname === "/guest/company"} onClick={navigateMap}>
+                <StMenuLi
+                  active={location.pathname === "/guest/company"}
+                  onClick={navigateMap}
+                >
                   맵보러가기
                 </StMenuLi>
-                <StMenuLi active={location.pathname === "/guest/mypage"} onClick={navigateMyPage}>
+                <StMenuLi
+                  active={location.pathname === "/guest/mypage"}
+                  onClick={navigateMyPage}
+                >
                   내가 신청한 목록
                 </StMenuLi>
               </StMenuUl>
@@ -142,10 +151,16 @@ const Navbar = () => {
           ) : menu === "admin" ? (
             <StMenuDiv>
               <StMenuUl>
-                <StMenuLi active={location.pathname === "/admin/dashboard"} onClick={navigateDashBoard}>
+                <StMenuLi
+                  active={location.pathname === "/admin/dashboard"}
+                  onClick={navigateDashBoard}
+                >
                   출입현황
                 </StMenuLi>
-                <StMenuLi active={location.pathname === "/admin/approvelist"} onClick={navigateApproveList}>
+                <StMenuLi
+                  active={location.pathname === "/admin/approvelist"}
+                  onClick={navigateApproveList}
+                >
                   승인현황
                 </StMenuLi>
               </StMenuUl>
@@ -155,7 +170,9 @@ const Navbar = () => {
             <StName>
               <StNotification onClick={handleClickNotification}>
                 <NotificationImportantIcon />
-                {notificationCnt > 0 && <StNotificationCnt>{notificationCnt}</StNotificationCnt>}
+                {notificationCnt > 0 && (
+                  <StNotificationCnt>{notificationCnt}</StNotificationCnt>
+                )}
               </StNotification>
               {showNotification && (
                 <NotificationModal
@@ -165,7 +182,16 @@ const Navbar = () => {
                   refetch={refetch}
                 />
               )}
-              {localStorage.getItem("name")}
+              {menu === "guest" ? (
+                <Link to={"/change_pw/guest"}>
+                  <StLogOut>{localStorage.getItem("name")}</StLogOut>
+                </Link>
+              ) : (
+                <Link to={"/change_pw/admin"}>
+                  <StLogOut>{localStorage.getItem("name")}</StLogOut>
+                </Link>
+              )}
+
               <StNameDes>님 반갑습니다</StNameDes>
             </StName>
 
@@ -173,21 +199,12 @@ const Navbar = () => {
               <Link to={"/"}>
                 <StLogOut onClick={logoutHandler}>LOGOUT</StLogOut>
 
-                <StLogOutImg src={logout} alt="logoutImg" onClick={logoutBtn}></StLogOutImg>
+                <StLogOutImg
+                  src={logout}
+                  alt="logoutImg"
+                  onClick={logoutBtn}
+                ></StLogOutImg>
               </Link>
-              {menu === "guest" ? (
-                <Link to={"/change_pw/guest"}>
-                  <StLogOut>
-                    <SettingsIcon />
-                  </StLogOut>
-                </Link>
-              ) : (
-                <Link to={"/change_pw/admin"}>
-                  <StLogOut>
-                    <SettingsIcon />
-                  </StLogOut>
-                </Link>
-              )}
             </StLogOutContainer>
           </StUser>
         </StNavbarContainer>
@@ -242,7 +259,8 @@ const StLogOutContainer = styled.div`
 `;
 const StLogOut = styled.button`
   color: white;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: bolder;
   background-color: transparent;
   cursor: pointer;
 `;
@@ -261,7 +279,7 @@ const StMenuUl = styled.ul`
 `;
 const StMenuLi = styled.li`
   color: ${(props) => (props.active ? "white" : "#e0e0e0")};
-  font-size: 16px;
+  font-size: 17px;
   font-weight: ${(props) => (props.active ? "900" : "400")};
   margin: 0 10px;
   cursor: pointer;
@@ -276,6 +294,7 @@ const StNotification = styled.button`
   font-size: 16px;
   font-weight: 800;
   margin-right: 5px;
+  top: 3px;
 `;
 const StNotificationCnt = styled.div`
   position: absolute;

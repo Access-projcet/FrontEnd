@@ -11,6 +11,7 @@ import MarkerModal from "../modal/MarkerModal";
 import ConfirmForm from "../../pages/ConfirmForm";
 import { ModifyForm } from "../modal/ModifyForm";
 import Swal from "sweetalert2";
+import styled from "styled-components";
 
 export default function GuestMyPageTable() {
   const [isMofify, setIsModify] = useState(false);
@@ -136,6 +137,7 @@ export default function GuestMyPageTable() {
           },
         }}
         muiTableHeadCellProps={{
+          align: "center",
           //simple styling with the `sx` prop, works just like a style prop in this example
           sx: {
             fontWeight: "bold",
@@ -144,6 +146,24 @@ export default function GuestMyPageTable() {
             color: `${color.textWhite}`,
           },
         }}
+        muiTableBodyCellProps={({ cell, column }) => ({
+          style: {
+            color:
+              column.id === "status"
+                ? cell.getValue() === "대기"
+                  ? "blue"
+                  : cell.getValue() === "승인"
+                  ? "green"
+                  : cell.getValue() === "거절"
+                  ? "red"
+                  : cell.getValue() === "완료"
+                  ? "black"
+                  : "black"
+                : "black",
+            fontWeight: "bold",
+            textAlign: "center",
+          },
+        })}
         muiToolbarAlertBannerProps={
           isError
             ? {
@@ -167,7 +187,14 @@ export default function GuestMyPageTable() {
           },
         }}
         renderRowActions={({ row }) => (
-          <Box sx={{ display: "flex", gap: "1rem" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "1rem",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
             <Tooltip arrow placement="left" title="수정">
               <IconButton
                 onClick={(e) => {
@@ -175,9 +202,10 @@ export default function GuestMyPageTable() {
                 }}
                 sx={{ fontSize: "14px" }}
               >
-                <span>수정</span>
+                <StSpanAlert>수정</StSpanAlert>
               </IconButton>
             </Tooltip>
+            <span>|</span>
             <Tooltip arrow placement="right" title="삭제">
               <IconButton
                 color="error"
@@ -186,7 +214,7 @@ export default function GuestMyPageTable() {
                 }}
                 sx={{ fontSize: "14px" }}
               >
-                <span>삭제</span>
+                <StSpanAlert>삭제</StSpanAlert>
               </IconButton>
             </Tooltip>
           </Box>
@@ -217,3 +245,10 @@ export default function GuestMyPageTable() {
     </>
   );
 }
+
+const StSpanAlert = styled.span`
+  width: 40px;
+  border: 1px solid black;
+  border-radius: 10%;
+  padding: 1% 3%;
+`;

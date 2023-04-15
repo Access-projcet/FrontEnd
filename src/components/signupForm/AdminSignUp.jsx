@@ -39,6 +39,8 @@ const AdminSignUp = () => {
   const [checkPassword, setCheckPassword] = useState("");
   const [name, setName] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
+  const [showPW, setShowPW] = useState(false);
+  const [showCheckPW, setShowCheckPW] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -87,6 +89,7 @@ const AdminSignUp = () => {
             autoFocus
             className={classes.root}
             sx={{
+              marginTop: "-15px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -103,7 +106,9 @@ const AdminSignUp = () => {
               },
             }}
             error={companyName.trim() === ""}
-            helperText={companyName.trim() === "" ? "회사이름을 입력해주세요" : " "}
+            helperText={
+              companyName.trim() === "" ? "회사이름을 입력해주세요" : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -118,6 +123,7 @@ const AdminSignUp = () => {
             id="businessNum"
             label="사업자 등록번호"
             name="businessNum"
+            type="tel"
             value={businessNum}
             onChange={(e) => {
               let value = e.target.value.replace(/-/g, "");
@@ -131,6 +137,7 @@ const AdminSignUp = () => {
             }}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -146,9 +153,13 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={businessNum.trim() !== "" && !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)}
+            error={
+              businessNum.trim() !== "" &&
+              !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)
+            }
             helperText={
-              businessNum.trim() !== "" && !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)
+              businessNum.trim() !== "" &&
+              !/^\d{3}-\d{2}-\d{5}$/.test(businessNum)
                 ? "사업자 등록번호는 XXX-XX-XXXXX 형식의 숫자만 입력 가능합니다"
                 : " "
             }
@@ -170,6 +181,7 @@ const AdminSignUp = () => {
             onChange={(e) => setCompanyToken(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -185,7 +197,9 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            helperText={companyToken.trim() === "" ? "회사코드를 입력해주세요" : " "}
+            helperText={
+              companyToken.trim() === "" ? "회사코드를 입력해주세요" : " "
+            }
             FormHelperTextProps={{
               sx: {
                 color: "red",
@@ -204,6 +218,7 @@ const AdminSignUp = () => {
             onChange={(e) => setUserId(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -238,12 +253,13 @@ const AdminSignUp = () => {
             fullWidth
             name="password"
             label="비밀번호"
-            type="password"
+            type={showPW ? "tel" : "password"}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -259,9 +275,13 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)}
+            error={
+              password.trim() !== "" &&
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
+            }
             helperText={
-              password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
+              password.trim() !== "" &&
+              !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
                 ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                 : " "
             }
@@ -272,17 +292,32 @@ const AdminSignUp = () => {
               },
             }}
           />
+          <StShowPW>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="allowExtraEmails"
+                  color="primary"
+                  onClick={() => {
+                    setShowPW(!showPW);
+                  }}
+                />
+              }
+              label="비밀번호 표시"
+            />
+          </StShowPW>
           <TextField
             required
             fullWidth
             name="checkPassword"
             label="비밀번호 확인"
-            type="password"
+            type={showCheckPW ? "tel" : "password"}
             id="checkPassword"
             value={checkPassword}
             onChange={(e) => setCheckPassword(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -300,7 +335,9 @@ const AdminSignUp = () => {
             }}
             error={checkPassword.trim() !== "" && password !== checkPassword}
             helperText={
-              checkPassword.trim() !== "" && password !== checkPassword ? "비밀번호가 일치하지 않습니다." : " "
+              checkPassword.trim() !== "" && password !== checkPassword
+                ? "비밀번호가 일치하지 않습니다."
+                : " "
             }
             FormHelperTextProps={{
               sx: {
@@ -309,6 +346,20 @@ const AdminSignUp = () => {
               },
             }}
           />
+          <StShowPW>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="allowExtraEmails"
+                  color="primary"
+                  onClick={() => {
+                    setShowCheckPW(!showCheckPW);
+                  }}
+                />
+              }
+              label="비밀번호 표시"
+            />
+          </StShowPW>
           <TextField
             name="name"
             required
@@ -319,6 +370,7 @@ const AdminSignUp = () => {
             onChange={(e) => setName(e.target.value)}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -362,6 +414,8 @@ const AdminSignUp = () => {
             }}
             className={classes.root}
             sx={{
+              marginTop: "-5px",
+              marginBottom: "-30px",
               "& label": {
                 "&.Mui-focused": {
                   color: "#49CDB5",
@@ -377,7 +431,9 @@ const AdminSignUp = () => {
                 },
               },
             }}
-            error={phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)}
+            error={
+              phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
+            }
             helperText={
               phoneNum.trim() !== "" && !/^010-\d{4}-\d{4}$/.test(phoneNum)
                 ? "전화번호는 010-xxxx-xxxx 형식의 숫자만 입력 가능합니다"
@@ -391,7 +447,10 @@ const AdminSignUp = () => {
             }}
           />
           <FormControlLabel
-            control={<Checkbox value="allowExtraEmails" color="primary" required />}
+            sx={{ marginLeft: "0px" }}
+            control={
+              <Checkbox value="allowExtraEmails" color="primary" required />
+            }
             label="개인정보 제공에 동의합니다"
           />
           <StLoginBtn>
@@ -417,7 +476,9 @@ const AdminSignUp = () => {
             <StloginImg src={arrow} alt="로그인버튼" />
           </StLoginBtn>
         </StForm>
-        <StAlready onClick={gotoLogin}>이미 회원이신가요? 로그인 하러 가기</StAlready>
+        <StAlready onClick={gotoLogin}>
+          이미 회원이신가요? 로그인 하러 가기
+        </StAlready>
       </DivLoginContainer>
       {isModalOpen && (
         <Modal
@@ -460,6 +521,8 @@ const StForm = styled.form`
 `;
 const StLoginBtn = styled.div`
   position: relative;
+  margin-top: -25px;
+  margin-bottom: -10px;
 `;
 const StloginImg = styled.img`
   position: absolute;
@@ -473,5 +536,11 @@ const StAlready = styled.button`
   font-weight: 700;
   background-color: transparent;
   border: 0;
+  margin-bottom: -15px;
   cursor: pointer;
+`;
+
+const StShowPW = styled.div`
+  margin-top: -22px;
+  margin-left: 10px;
 `;

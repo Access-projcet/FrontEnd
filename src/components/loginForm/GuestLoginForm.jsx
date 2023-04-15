@@ -11,6 +11,8 @@ import SearchGuestId from "../modal/SearchGuestID";
 import SearchGuestPw from "../modal/SearchGuestPW";
 import arrow from "../../utils/img/arrow_icon.png";
 import Swal from "sweetalert2";
+import { Checkbox, FormControlLabel } from "@mui/material";
+
 //mui custom css
 
 const useStyles = makeStyles({
@@ -40,6 +42,7 @@ export default function GuestLoginForm() {
   const [password, setPassword] = useState("");
   const [showIDModal, setShowIDModal] = useState(false);
   const [showPWModal, setShowPWModal] = useState(false);
+  const [showPW, setShowPW] = useState(false);
   const classes = useStyles();
   const mutation = useMutation(loginGuest, {
     onSuccess: (data) => {
@@ -106,8 +109,8 @@ export default function GuestLoginForm() {
             <TextField
               margin="normal"
               label="비밀번호"
-              type="password"
-              autoComplete="current-password"
+              type={showPW ? "tel" : "password"}
+              autoComplete={showPW ? "off" : "current-password"}
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -132,6 +135,20 @@ export default function GuestLoginForm() {
                 },
               }}
             />
+            <StShowPW>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="allowExtraEmails"
+                    color="primary"
+                    onClick={() => {
+                      setShowPW(!showPW);
+                    }}
+                  />
+                }
+                label="비밀번호 표시"
+              />
+            </StShowPW>
           </InputForm>
           <StLoginBtn>
             <Button
@@ -262,4 +279,8 @@ const LoginFindForm = styled.div`
   margin-top: -20px;
   margin-bottom: 30px;
   gap: 30px;
+`;
+
+const StShowPW = styled.div`
+  margin-left: 10px;
 `;
