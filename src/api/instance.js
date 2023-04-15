@@ -21,7 +21,7 @@ instance.interceptors.request.use(
 
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 instance.interceptors.response.use(
@@ -38,12 +38,9 @@ instance.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     if (error.response.status === 400) {
-      console.log("400에러");
     }
 
     if (error.response.status === 401 && !originalRequest._retry) {
-      console.log("401에러");
-
       try {
         originalRequest._retry = true;
 
@@ -61,6 +58,6 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );
 export default instance;

@@ -46,7 +46,6 @@ export default function GuestLoginForm() {
   const classes = useStyles();
   const mutation = useMutation(loginGuest, {
     onSuccess: (data) => {
-      console.log(data);
       setCookie("ACCESS_TOKEN", data.headers.authorization.split(" ")[1]);
       localStorage.setItem(
         "REFRESH_TOKEN",
@@ -71,7 +70,6 @@ export default function GuestLoginForm() {
       password: password,
     };
     mutation.mutate(user);
-    console.log("로그인");
   };
 
   return (

@@ -6,6 +6,7 @@ import { submitLobbyCheckInQr } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const QrReaderRebuilding = ({ onClose }) => {
   const [result, setResult] = useState("");
@@ -51,7 +52,7 @@ const QrReaderRebuilding = ({ onClose }) => {
   };
 
   let handleError = (err) => {
-    // alert(err);
+    Swal.fire("실패", "요청 실패", "error");
   };
   return (
     <>

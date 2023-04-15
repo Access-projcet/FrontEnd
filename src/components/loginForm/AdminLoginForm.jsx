@@ -70,7 +70,6 @@ export default function AdminLoginForm() {
       password: password,
     };
     mutation.mutate(user);
-    console.log("로그인");
   };
 
   return (

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { ChangeGuestPW } from "../api/api";
 import HomeIcon from "@mui/icons-material/Home";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import Swal from "sweetalert2";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -41,13 +42,12 @@ function ChangeGuestPw() {
   const queryClient = useQueryClient();
   const mutation = useMutation(ChangeGuestPW, {
     onSuccess: (response) => {
-      console.log(response.data.message);
-      alert(response.data.message);
+      Swal.fire("성공", response.response.data.messag, "success");
       queryClient.invalidateQueries("user");
       navigate("/");
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("실패", error.response.data.message, "error");
     },
   });
 
@@ -58,11 +58,7 @@ function ChangeGuestPw() {
       newPassword,
       checkPassword,
     };
-    console.log({
-      password,
-      newPassword,
-      checkPassword,
-    });
+
     mutation.mutate(changeAdminPW);
   };
 

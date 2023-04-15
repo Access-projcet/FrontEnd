@@ -34,7 +34,6 @@ export default function GuestMyPageTable() {
 
   const deleteMutaion = useMutation(guestDeleteVisit, {
     onSuccess: (data) => {
-      console.log(data);
       Swal.fire("삭제 완료", "신청이 취소되었습니다.", "success");
       refetch();
     },
@@ -60,8 +59,6 @@ export default function GuestMyPageTable() {
   };
 
   const HandlerEditVisit = (row) => {
-    console.log("edit;", row.original.id);
-
     setTarget(row.original);
     setIsModify(true);
   };

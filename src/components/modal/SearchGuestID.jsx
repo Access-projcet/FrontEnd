@@ -5,6 +5,7 @@ import { TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
+import Swal from "sweetalert2";
 
 //mui custom css
 const useStyles = makeStyles({
@@ -33,13 +34,13 @@ function SearchGuestId({ onClose }) {
   const queryClient = useQueryClient();
   const mutation = useMutation(SearchGuestID, {
     onSuccess: (response) => {
-      console.log(response.data.message);
-      alert("이메일로 아이디를 발송했습니다.");
+      Swal.fire("성공", "이메일로 아이디를 발송했습니다.", "success");
+
       queryClient.invalidateQueries("user");
       onClose();
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      Swal.fire("실패", error.response.data.message, "error");
     },
   });
 
@@ -51,11 +52,6 @@ function SearchGuestId({ onClose }) {
       phoneNum,
       email,
     };
-    console.log({
-      name,
-      phoneNum,
-      email,
-    });
 
     mutation.mutate(search_ID);
   };

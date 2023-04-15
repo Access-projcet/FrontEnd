@@ -6,6 +6,7 @@ import { submitLobbyCheckOutQr } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 import CloseIcon from "@mui/icons-material/Close";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const QrReaderRebuilding2 = ({ onClose }) => {
   const [result, setResult] = useState("");
@@ -51,7 +52,7 @@ const QrReaderRebuilding2 = ({ onClose }) => {
   };
 
   let handleError = (err) => {
-    // alert(err);
+    Swal.fire("실패", "요청 실패", "error");
   };
   return (
     <>
@@ -110,7 +111,7 @@ const ModalWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   border-radius: 11px;
-  border: 5px solid #57D4D4;
+  border: 5px solid #57d4d4;
 `;
 
 const ModalInner = styled.div`
@@ -143,6 +144,6 @@ const Header = styled.div`
 const QrLine = styled.div`
   width: 200px;
   height: 200px;
-  border: 10px dashed #57D4D4;
+  border: 10px dashed #57d4d4;
   position: absolute;
 `;

@@ -5,11 +5,9 @@ import { readNotification } from "../../api/api";
 import { QueryClient } from "react-query";
 
 export const NotificationModal = ({ position, onClose, data, refetch }) => {
-  console.log(position);
   // const queryClient = new QueryClient();
   const deleteMutation = useMutation(readNotification, {
     onSuccess: (res) => {
-      console.log("알림 삭제 성공", res);
       // queryClient.invalidateQueries("notification");
       refetch();
     },
