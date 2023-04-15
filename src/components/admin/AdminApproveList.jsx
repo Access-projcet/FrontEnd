@@ -264,7 +264,7 @@ export default function AdminApproveList() {
                     }}
                     sx={{ fontSize: "14px" }}
                   >
-                    <StSpanAlert>승인</StSpanAlert>
+                    <StSpanPositiveAlert>승인</StSpanPositiveAlert>
                   </IconButton>
                 </Tooltip>
                 <span>|</span>
@@ -276,7 +276,7 @@ export default function AdminApproveList() {
                     }}
                     sx={{ fontSize: "14px" }}
                   >
-                    <StSpanAlert>거절</StSpanAlert>
+                    <StSpanNegativeAlert>거절</StSpanNegativeAlert>
                   </IconButton>
                 </Tooltip>
               </Box>
@@ -306,7 +306,7 @@ const DivApprove = styled.div`
 `;
 
 const DivTable = styled.div`
-  width: 70%;
+  width: 75%;
   height: 100vh;
 `;
 const StDashBoardGnb = styled.div`
@@ -319,9 +319,19 @@ const StDashBoardGnb = styled.div`
 `;
 const StDashBoardTitleArea = styled.div``;
 
-const StSpanAlert = styled.span`
+const StSpanPositiveAlert = styled.span`
   width: 40px;
-  border: 1px solid black;
+  border: 1px solid #00aaee;
   border-radius: 10%;
   padding: 1% 3%;
+  color: #00aaee;
+`;
+
+const StSpanNegativeAlert = styled.span`
+  width: 40px;
+  border: 1px solid red;
+  border-radius: 10%;
+  padding: 1% 3%;
+  color: white;
+  background-color: red;
 `;

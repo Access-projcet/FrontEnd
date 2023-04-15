@@ -214,7 +214,7 @@ export default function GuestMyPageTable() {
                 }}
                 sx={{ fontSize: "14px" }}
               >
-                <StSpanAlert>삭제</StSpanAlert>
+                <StSpanDelBtnAlert>삭제</StSpanDelBtnAlert>
               </IconButton>
             </Tooltip>
           </Box>
@@ -245,10 +245,19 @@ export default function GuestMyPageTable() {
     </>
   );
 }
-
 const StSpanAlert = styled.span`
   width: 40px;
   border: 1px solid black;
   border-radius: 10%;
   padding: 1% 3%;
+  color: black;
+`;
+
+const StSpanDelBtnAlert = styled.span`
+  width: 40px;
+  border: 1px solid;
+  border-radius: 10%;
+  padding: 1% 3%;
+  color: white;
+  background-color: red;
 `;

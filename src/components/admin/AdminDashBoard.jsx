@@ -137,7 +137,7 @@ const SimpleLineChart = () => {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "Out Time" },
       },
     ],
-    [],
+    []
   );
 
   return (
@@ -173,9 +173,24 @@ const SimpleLineChart = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="총 신청 수" stroke="#8884d8" strokeWidth={3} />
-              <Line type="monotone" dataKey="총 승인 수" stroke="#82ca9d" strokeWidth={3} />
-              <Line type="monotone" dataKey="총 출입 수" stroke="#15c4fe" strokeWidth={3} />
+              <Line
+                type="monotone"
+                dataKey="총 신청 수"
+                stroke="#8884d8"
+                strokeWidth={3}
+              />
+              <Line
+                type="monotone"
+                dataKey="총 승인 수"
+                stroke="#82ca9d"
+                strokeWidth={3}
+              />
+              <Line
+                type="monotone"
+                dataKey="총 출입 수"
+                stroke="#15c4fe"
+                strokeWidth={3}
+              />
             </LineChart>
           </ResponsiveContainer>
         </StContainer>
@@ -213,6 +228,12 @@ const SimpleLineChart = () => {
               color: `${color.textWhite}`,
             },
           }}
+          muiTableBodyCellProps={() => ({
+            style: {
+              fontWeight: "bold",
+              // textAlign: "center",
+            },
+          })}
           muiToolbarAlertBannerProps={
             isError
               ? {
