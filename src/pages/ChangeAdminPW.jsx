@@ -101,7 +101,6 @@ function ChangeGuestPw() {
                 fullWidth
                 className={classes.root}
                 sx={{
-                  marginTop: "-50px",
                   "& label": {
                     "&.Mui-focused": {
                       color: "#49CDB5",
@@ -197,7 +196,7 @@ function ChangeGuestPw() {
                   },
                 }}
               />
-              {/* <StShowPW>
+              <StShowPW>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -210,7 +209,7 @@ function ChangeGuestPw() {
                   }
                   label="비밀번호 표시"
                 />
-              </StShowPW> */}
+              </StShowPW>
               <TextField
                 margin="normal"
                 label="새 비밀번호 확인"
@@ -303,13 +302,14 @@ const StMainBackground = styled.img`
 `;
 
 const InputForm = styled.div`
-  margin: 70px;
+  min-width: 300px;
+  width: 25vw;
+  margin: 20px 20px;
   align-items: center;
-  /* margin-top: -20px; */
-  margin-bottom: 10px;
 `;
 
 const DivLoginContainer = styled.div`
+  min-width: 500px;
   position: fixed;
   width: 30%;
   height: 65%;
@@ -339,6 +339,7 @@ const StForm = styled.form`
   align-items: center;
   padding-top: -40px;
   gap: 10px;
+  width: 100%;
 `;
 
 const StShowPW = styled.div`
