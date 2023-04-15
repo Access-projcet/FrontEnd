@@ -73,21 +73,22 @@ function ChangeGuestPw() {
 
       <StContainer>
         <DivLoginContainer>
+          <HomeIcon
+            fontSize="large"
+            type="button"
+            onClick={() => {
+              navigate("/");
+            }}
+            style={{
+              cursor: "pointer",
+              position: "absolute",
+              top: "25px",
+              left: "40px",
+            }}
+          />
           <StForm onSubmit={onSubmitHandler}>
             <h2>비밀번호 변경</h2>
-            <HomeIcon
-              fontSize="large"
-              type="button"
-              onClick={() => {
-                navigate("/");
-              }}
-              style={{
-                cursor: "pointer",
-                position: "absolute",
-                top: "25px",
-                left: "40px",
-              }}
-            />
+
             <InputForm>
               <TextField
                 margin="normal"
@@ -101,7 +102,6 @@ function ChangeGuestPw() {
                 fullWidth
                 className={classes.root}
                 sx={{
-                  marginTop: "-50px",
                   "& label": {
                     "&.Mui-focused": {
                       color: "#636FD7",
@@ -117,17 +117,9 @@ function ChangeGuestPw() {
                     },
                   },
                 }}
-                error={
-                  password.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    password
-                  )
-                }
+                error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)}
                 helperText={
-                  password.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    password
-                  )
+                  password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
                     ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                     : " "
                 }
@@ -178,16 +170,10 @@ function ChangeGuestPw() {
                   },
                 }}
                 error={
-                  newPassword.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    newPassword
-                  )
+                  newPassword.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(newPassword)
                 }
                 helperText={
-                  newPassword.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    newPassword
-                  )
+                  newPassword.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(newPassword)
                     ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                     : " "
                 }
@@ -197,7 +183,7 @@ function ChangeGuestPw() {
                   },
                 }}
               />
-              {/* <StShowPW>
+              <StShowPW>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -210,7 +196,7 @@ function ChangeGuestPw() {
                   }
                   label="비밀번호 표시"
                 />
-              </StShowPW> */}
+              </StShowPW>
               <TextField
                 margin="normal"
                 label="새 비밀번호 확인"
@@ -237,13 +223,9 @@ function ChangeGuestPw() {
                     },
                   },
                 }}
-                error={
-                  checkPassword.trim() !== "" && newPassword !== checkPassword
-                }
+                error={checkPassword.trim() !== "" && newPassword !== checkPassword}
                 helperText={
-                  checkPassword.trim() !== "" && newPassword !== checkPassword
-                    ? "비밀번호가 일치하지 않습니다."
-                    : " "
+                  checkPassword.trim() !== "" && newPassword !== checkPassword ? "비밀번호가 일치하지 않습니다." : " "
                 }
                 FormHelperTextProps={{
                   sx: {
@@ -303,10 +285,8 @@ const StMainBackground = styled.img`
 `;
 
 const InputForm = styled.div`
-  margin: 70px;
   align-items: center;
-  /* margin-top: -20px; */
-  margin-bottom: 10px;
+  width: 20vw;
 `;
 
 const DivLoginContainer = styled.div`
@@ -319,6 +299,7 @@ const DivLoginContainer = styled.div`
   justify-content: center;
   background-color: white;
   border-radius: 30px;
+  min-width: 500px;
 `;
 
 const StCheckBtn = styled.button`
@@ -337,8 +318,6 @@ const StForm = styled.form`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-top: -40px;
-  gap: 10px;
 `;
 
 const StShowPW = styled.div`
