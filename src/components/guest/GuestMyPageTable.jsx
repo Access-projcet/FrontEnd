@@ -109,7 +109,7 @@ export default function GuestMyPageTable() {
         header: "상태",
         size: 50,
         filterVariant: "select",
-        filterSelectOptions: ["1", "2", "3", "4"],
+        filterSelectOptions: ["승인", "대기", "거절", "완료"],
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
@@ -186,39 +186,42 @@ export default function GuestMyPageTable() {
             header: "수정/삭제", //change header text
           },
         }}
-        renderRowActions={({ row }) => (
-          <Box
-            sx={{
-              display: "flex",
-              gap: "1rem",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            <Tooltip arrow placement="left" title="수정">
-              <IconButton
-                onClick={(e) => {
-                  HandlerEditVisit(row);
-                }}
-                sx={{ fontSize: "14px" }}
-              >
-                <StSpanAlert>수정</StSpanAlert>
-              </IconButton>
-            </Tooltip>
-            <span>|</span>
-            <Tooltip arrow placement="right" title="삭제">
-              <IconButton
-                color="error"
-                onClick={(e) => {
-                  HandlerDeleteVisit(row);
-                }}
-                sx={{ fontSize: "14px" }}
-              >
-                <StSpanDelBtnAlert>삭제</StSpanDelBtnAlert>
-              </IconButton>
-            </Tooltip>
-          </Box>
-        )}
+        renderRowActions={({ row }) => {
+          if (row.original.status === "완료") return null;
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                gap: "1rem",
+                justifyContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Tooltip arrow placement="left" title="수정">
+                <IconButton
+                  onClick={(e) => {
+                    HandlerEditVisit(row);
+                  }}
+                  sx={{ fontSize: "14px" }}
+                >
+                  <StSpanAlert>수정</StSpanAlert>
+                </IconButton>
+              </Tooltip>
+              <span>|</span>
+              <Tooltip arrow placement="right" title="삭제">
+                <IconButton
+                  color="error"
+                  onClick={(e) => {
+                    HandlerDeleteVisit(row);
+                  }}
+                  sx={{ fontSize: "14px" }}
+                >
+                  <StSpanDelBtnAlert>삭제</StSpanDelBtnAlert>
+                </IconButton>
+              </Tooltip>
+            </Box>
+          );
+        }}
         rowCount={data?.meta?.totalRowCount ?? 0}
         state={{
           isLoading,
