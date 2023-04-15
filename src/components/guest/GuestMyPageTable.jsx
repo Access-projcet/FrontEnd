@@ -255,9 +255,9 @@ const StSpanAlert = styled.span`
 
 const StSpanDelBtnAlert = styled.span`
   width: 40px;
-  border: 1px solid;
+  border: 1px solid #ef0505;
   border-radius: 10%;
   padding: 1% 3%;
   color: white;
-  background-color: red;
+  background-color: #ef0505;
 `;
