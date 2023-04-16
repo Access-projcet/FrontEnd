@@ -2,7 +2,7 @@
     <h1> VISIT US </h1>
 </div>
 
-![배너(https://github.com/Access-projcet/.github/blob/main/banner.png)](https://visitus.vercel.app/)
+[배너(https://github.com/Access-projcet/.github/blob/main/banner.png)](https://visitus.vercel.app/)
 
 <br>
 <br>
