@@ -3,8 +3,11 @@
 </div>
 
 ![배너](https://github.com/Access-projcet/.github/blob/main/banner.png)
-[](https://visitus.vercel.app/)
+
 <br>
+
+[서비스 이용하기](https://visitus.vercel.app/)
+
 <br>
 
 ## 👩‍👧‍👧 프로젝트 소개
