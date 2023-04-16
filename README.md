@@ -48,7 +48,7 @@
 
 ---
 ## ✏ 와이어프레임 및 디자인 상세
-![피그마 바로가기](https://figma.com/file/TkLcfaVlJTj4CW8xuTwlVO/%EB%B0%A9%EB%AC%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=0-1&t=j8a0hSYKjzlEVM0G-0)
+[피그마 바로가기](https://figma.com/file/TkLcfaVlJTj4CW8xuTwlVO/%EB%B0%A9%EB%AC%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=0-1&t=j8a0hSYKjzlEVM0G-0)
 
 
 <br>
@@ -95,40 +95,6 @@
 | 해결 | 충돌된 상태에서 계속 PR을 날려 갱신되지 않은 도커 파일들을 먼저 삭제하고 충돌로 생긴 Cache 파일들도 제거한 후에 코드 </br>영역을 합친 하나의 PR을 날려 정상 작동을 확인. |
 
 
-# 익명 감성글 소통 공간 [ㄱr끔...:별:️]
-### "ㄱr끔"은 그 시절 추억의 감성글을 익명으로 소통하는 공간입니다.
-가끔 옛날 그 시절, 그 감성 느껴보고 싶으신 당신을 위해 !
----
-## :압정: About Project
-- Deploy :오른쪽을_가리키는_손_모양: [[__바로가기__]](http://sometimes.store)
-- 와이어프레임 :오른쪽을_가리키는_손_모양: [[__바로가기__]](https://www.figma.com/file/evGvkJUvOnSHYkChe8tOVX/%E3%84%B1r%EB%81%94?node-id=0%3A1&t=snNQx5yvuZw4CGMq-0)
-- Notion :오른쪽을_가리키는_손_모양: [[__바로가기__]](https://joyous-node-f7f.notion.site/99-r-75a6c2df2f344d11a9ece43d4927dd5f)
----
-## :압정: 기능
-### 회원가입
-- 닉네임 중복 체크
-- nickname : 2~10자 구성
-- username : 4~10자 구성, 알파벳 소문자(a-z), 숫자(0-9)로 구성
-- password : 8~24자 구성, 알파벳 대소문자(a-z,A-Z), 숫자(0-9)로 구성
-### 로그인
-- 회원 유무 확인
-### 카드
-- 감성글 확인,추가,수정,삭제
-- 유저네임별 필터링
-- 좋아요 추가 :양방향_화살표: 취소
----
-<div align=center><h1>:책: STACKS</h1></div>
-<div align=center>
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
-<img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white">
-<img src="https://img.shields.io/badge/mui-007FFF?style=for-the-badge&logo=mui&logoColor=white">
-<img src="https://img.shields.io/badge/framer-0055FF?
-style=for-the-badge&logo=framer&logoColor=white">
-<img src="https://img.shields.io/badge/reactQuery-FF4154?style=for-the-badge&logo=reactQuery&logoColor=white">
-<img src="https://img.shields.io/badge/reactRouter-CA4245?style=for-the-badge&logo=reactRouter&logoColor=white">
-<img src="https://img.shields.io/badge/styledComponents-DB7093?style=for-the-badge&logo=styledComponents&logoColor=white">
-</div>
 ---
 ## :압정: Trouble Shooting
 | 내용                                            | 해결 방법                                                                                                                                                         |
