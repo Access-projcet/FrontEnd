@@ -48,8 +48,8 @@
 
 ---
 ## ✏ 와이어프레임 및 디자인 상세
-Created with Figma (21kB)
-https://www.figma.com/file/TkLcfaVlJTj4CW8xuTwlVO/%EB%B0%A9%EB%AC%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=0-1&t=j8a0hSYKjzlEVM0G-0
+[피그마 바로가기](https://www.figma.com/file/TkLcfaVlJTj4CW8xuTwlVO/%EB%B0%A9%EB%AC%B8%EC%8B%9C%EC%8A%A4%ED%85%9C?node-id=0-1&t=j8a0hSYKjzlEVM0G-0)
+
 
 <br>
 ---
