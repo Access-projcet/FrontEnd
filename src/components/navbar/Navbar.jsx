@@ -1,19 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { EventSourcePolyfill } from "event-source-polyfill";
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
 import { useQuery, QueryClient } from "react-query";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { useCookies } from "react-cookie";
-
 import logo from "../../utils/img/VISITUS_logo.png";
 import logout from "../../utils/img/logout_icon.png";
 import { Link } from "react-router-dom";
-
 import { getCookie } from "./../../api/cookies";
 import { NotificationModal } from "../modal/NotificationModal";
 import { getNotifications } from "../../api/api";
@@ -65,8 +61,6 @@ const Navbar = () => {
       setMessage(event.data);
       notify(message);
       refetch();
-      // refetch();
-      // queryClient.invalidateQueries("notification");
     };
 
     eventSource.onerror = (e) => {
@@ -107,6 +101,9 @@ const Navbar = () => {
   };
 
   // navigate 이동 함수
+  const navigateGuestMain = () => {
+    navigate("/guest/main");
+  };
   const navigateMap = () => {
     navigate("/guest/company");
   };
@@ -127,11 +124,14 @@ const Navbar = () => {
           {menu === "guest" ? (
             <StMenuDiv>
               <StMenuUl>
+                <StMenuLi active={location.pathname === "/guest/main"} onClick={navigateGuestMain}>
+                  메인 화면
+                </StMenuLi>
                 <StMenuLi active={location.pathname === "/guest/company"} onClick={navigateMap}>
-                  맵보러가기
+                  방문 신청
                 </StMenuLi>
                 <StMenuLi active={location.pathname === "/guest/mypage"} onClick={navigateMyPage}>
-                  내가 신청한 목록
+                  방문 이력
                 </StMenuLi>
               </StMenuUl>
             </StMenuDiv>

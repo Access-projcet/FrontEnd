@@ -1,12 +1,10 @@
 import { Box, IconButton, Tooltip } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import SaveIcon from "@mui/icons-material/Save";
 import MaterialReactTable from "material-react-table";
 import { useQuery, useMutation } from "react-query";
 import styled from "styled-components";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import { saveAs } from "file-saver";
 import Swal from "sweetalert2";
 import { adminVisit, adminModify, DownLoadExcel } from "../../api/api";
@@ -15,7 +13,7 @@ import Navbar from "../navbar/Navbar";
 
 export default function AdminApproveList() {
   const { data, isError, isFetching, isLoading, refetch } = useQuery(
-    "guests", // 쿼리키
+    "guests",
 
     () => {
       return adminVisit();
@@ -23,7 +21,7 @@ export default function AdminApproveList() {
     {
       keepPreviousData: true,
       cacheTime: 0,
-    }
+    },
   );
 
   const adminModifyMutation = useMutation(adminModify, {
@@ -104,17 +102,18 @@ export default function AdminApproveList() {
         muiTableHeadCellFilterTextFieldProps: { placeholder: "status" },
       },
     ],
-    []
+    [],
   );
 
   const HandlerExcel = () => {
     const date = new Date();
-    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1)
+    const dateString = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
+      .getDate()
       .toString()
-      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}_${date
-      .getHours()
+      .padStart(2, "0")}_${date.getHours().toString().padStart(2, "0")}시${date
+      .getMinutes()
       .toString()
-      .padStart(2, "0")}시${date.getMinutes().toString().padStart(2, "0")}분`;
+      .padStart(2, "0")}분`;
     DownLoadExcel()
       .then((res) => {
         const blob = new Blob([res.data], {
@@ -143,7 +142,7 @@ export default function AdminApproveList() {
                 startDate: item.startDate + " " + item.startTime.split("T")[1],
                 endDate: item.endDate + " " + item.endTime.split("T")[1],
               })) ?? []
-            } //data is undefined on first render
+            }
             initialState={{
               showColumnFilters: false,
             }}
@@ -155,7 +154,6 @@ export default function AdminApproveList() {
             }}
             muiTableHeadCellProps={{
               align: "center",
-              //simple styling with the `sx` prop, works just like a style prop in this example
               sx: {
                 fontWeight: "bold",
                 fontSize: "15px",
@@ -214,7 +212,7 @@ export default function AdminApproveList() {
             positionActionsColumn="last"
             displayColumnDefOptions={{
               "mrt-row-actions": {
-                header: "승인/거절", //change header text
+                header: "승인/거절",
               },
             }}
             renderRowActions={({ row }) => {
