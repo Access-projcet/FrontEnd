@@ -35,6 +35,7 @@ function ChangeGuestPw() {
   const [showPW, setShowPW] = useState(false);
   const [showNewPW, setShowNewPW] = useState(false);
   const [showCheckPW, setShowCheckPW] = useState(false);
+
   const navigate = useNavigate();
 
   const classes = useStyles();
@@ -112,17 +113,9 @@ function ChangeGuestPw() {
                     },
                   },
                 }}
-                error={
-                  password.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    password
-                  )
-                }
+                error={password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)}
                 helperText={
-                  password.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    password
-                  )
+                  password.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(password)
                     ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                     : " "
                 }
@@ -173,16 +166,10 @@ function ChangeGuestPw() {
                   },
                 }}
                 error={
-                  newPassword.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    newPassword
-                  )
+                  newPassword.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(newPassword)
                 }
                 helperText={
-                  newPassword.trim() !== "" &&
-                  !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(
-                    newPassword
-                  )
+                  newPassword.trim() !== "" && !/^([a-zA-Z0-9!@#$%^&*()_+={}|:;"'`<>,.?]){8,15}$/.test(newPassword)
                     ? "비밀번호는 8~15자리의 영대소문자, 숫자, 특수문자로만 입력 가능합니다"
                     : " "
                 }
@@ -232,13 +219,9 @@ function ChangeGuestPw() {
                     },
                   },
                 }}
-                error={
-                  checkPassword.trim() !== "" && newPassword !== checkPassword
-                }
+                error={checkPassword.trim() !== "" && newPassword !== checkPassword}
                 helperText={
-                  checkPassword.trim() !== "" && newPassword !== checkPassword
-                    ? "비밀번호가 일치하지 않습니다."
-                    : " "
+                  checkPassword.trim() !== "" && newPassword !== checkPassword ? "비밀번호가 일치하지 않습니다." : " "
                 }
                 FormHelperTextProps={{
                   sx: {
